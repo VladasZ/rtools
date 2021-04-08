@@ -3,4 +3,9 @@
 #![crate_name = "tools"]
 #![crate_type = "lib"]
 
-mod log;
+pub mod log;
+pub mod refs;
+pub mod regex;
+pub mod platform;
+pub mod weak_self;
+pub mod array_view;

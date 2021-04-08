@@ -1,4 +1,4 @@
-use crate::utils::{MutWeak, Shared};
+use crate::refs::{Shared, MutWeak};
 
 pub trait HasWeakSelf {
     fn new() -> Self where Self: Sized;
