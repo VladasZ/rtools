@@ -4,8 +4,11 @@
 #![crate_type = "lib"]
 
 pub mod log;
+pub mod new;
 pub mod refs;
 pub mod regex;
 pub mod platform;
 pub mod weak_self;
 pub mod array_view;
+
+pub use new::New;
