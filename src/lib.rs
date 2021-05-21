@@ -4,13 +4,13 @@
 #![crate_type = "lib"]
 
 pub mod log;
-pub mod new;
 pub mod refs;
 pub mod regex;
 pub mod as_any;
+pub mod has_new;
 pub mod platform;
 pub mod weak_self;
 pub mod array_view;
 
-pub use new::New;
+pub use has_new::HasNew;
 pub use as_any::AsAny;
