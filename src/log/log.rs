@@ -43,16 +43,6 @@ macro_rules! code_location {
 }
 
 #[macro_export]
-macro_rules! log {
-    () => {
-        println!("{}", code_location!());
-    };
-    ($message:expr) => {
-        println!("{} {:?}", code_location!(), $message);
-    }
-}
-
-#[macro_export]
 macro_rules! assert_null {
     ($prt:expr) => {
         assert_eq!($prt.is_null(), false);
