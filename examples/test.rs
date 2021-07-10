@@ -1,8 +1,11 @@
-
 extern crate tools;
 
 use tools::*;
 
 fn main() {
-    log!()
+    dbg!();
+
+    let kokjure = |kok| {
+        dbg!(kok);
+    };
 }

@@ -1,4 +1,3 @@
-
 use regex::Regex;
 
 pub fn find_match(str: &String, query: &str) -> String {
@@ -8,9 +7,9 @@ pub fn find_match(str: &String, query: &str) -> String {
 }
 
 pub fn find_matches(str: &String, query: &str) -> Vec<String> {
-   Regex::new(query)
-       .unwrap()
-       .find_iter(&str)
-       .map(|x| String::from(x.as_str()))
-       .collect()
+    Regex::new(query)
+        .unwrap()
+        .find_iter(&str)
+        .map(|x| String::from(x.as_str()))
+        .collect()
 }

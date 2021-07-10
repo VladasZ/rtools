@@ -1,4 +1,5 @@
-
 pub trait HasNew {
-    fn new() -> Self where Self: Sized;
+    fn new() -> Self
+    where
+        Self: Sized;
 }

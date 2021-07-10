@@ -1,4 +1,3 @@
-
 use std::any::Any;
 
 pub trait AsAny {

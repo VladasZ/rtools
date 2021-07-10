@@ -1,5 +1,5 @@
-use std::rc::{Rc, Weak};
 use std::cell::RefCell;
+use std::rc::{Rc, Weak};
 
 pub type Shared<T> = Rc<RefCell<T>>;
 pub type MutWeak<T> = Weak<RefCell<T>>;

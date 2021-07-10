@@ -1,4 +1,3 @@
-
 pub struct Platform;
 
 impl Platform {
