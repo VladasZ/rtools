@@ -9,18 +9,17 @@ pub struct ArrayView<T> {
 }
 
 impl<T: num_traits::Num + Debug> ArrayView<T> {
-    pub fn from_vector<VecT>(vector: &Vec<VecT>) -> ArrayView<T> {
-        ArrayView::<T> {
+    pub fn from_vector<VecT>(vector: &Vec<VecT>) -> Self {
+        Self {
             data: &vector[0] as *const VecT as *const T,
             size: vector.len() * (std::mem::size_of::<VecT>() / std::mem::size_of::<T>()),
         }
     }
-    pub fn from_data(data: &T, size: usize) -> ArrayView<T> {
-        ArrayView::<T> { data, size }
+
+    pub fn from_array(array: &[T]) -> Self {
+        Self { data: &array[0], size: array.len() }
     }
-    pub fn empty(&self) -> bool {
-        self.size == 0
-    }
+
     pub fn print(&self) {
         unsafe {
             let mut ptr = self.data;
