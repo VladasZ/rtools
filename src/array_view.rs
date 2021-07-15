@@ -17,7 +17,10 @@ impl<T: num_traits::Num + Debug> ArrayView<T> {
     }
 
     pub fn from_array(array: &[T]) -> Self {
-        Self { data: &array[0], size: array.len() }
+        Self {
+            data: &array[0],
+            size: array.len(),
+        }
     }
 
     pub fn print(&self) {
