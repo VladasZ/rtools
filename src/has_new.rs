@@ -3,3 +3,7 @@ pub trait HasNew {
     where
         Self: Sized;
 }
+
+pub fn new<T: HasNew>() -> T {
+    T::new()
+}
