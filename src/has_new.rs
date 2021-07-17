@@ -1,9 +1,9 @@
-pub trait HasNew {
+pub trait New {
     fn new() -> Self
     where
         Self: Sized;
 }
 
-pub fn new<T: HasNew>() -> T {
+pub fn new<T: New>() -> T {
     T::new()
 }

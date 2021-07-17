@@ -15,5 +15,5 @@ pub mod weak_self;
 
 pub use as_any::AsAny;
 pub use event::Event;
-pub use has_new::HasNew;
+pub use has_new::New;
 pub use property_wrapper::PropertyWrapper;

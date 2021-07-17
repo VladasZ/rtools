@@ -1,4 +1,4 @@
-use crate::HasNew;
+use crate::New;
 use std::fmt::{Debug, Formatter};
 
 pub struct Event<T> {
@@ -17,7 +17,7 @@ impl<T> Event<T> {
     }
 }
 
-impl<T> HasNew for Event<T> {
+impl<T> New for Event<T> {
     fn new() -> Self {
         Event {
             subscribers: vec![],

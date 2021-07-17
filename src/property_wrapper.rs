@@ -1,12 +1,12 @@
-use crate::HasNew;
+use crate::New;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use std::fs;
 use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
 
-pub trait Wrappable: Serialize + DeserializeOwned + HasNew {}
-impl<T: Serialize + DeserializeOwned + HasNew> Wrappable for T {}
+pub trait Wrappable: Serialize + DeserializeOwned + New {}
+impl<T: Serialize + DeserializeOwned + New> Wrappable for T {}
 
 fn executable_name() -> String {
     std::env::current_exe()
