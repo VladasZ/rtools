@@ -1,7 +1,7 @@
 use crate::New;
 use std::fmt::{Debug, Formatter};
 
-pub struct Event<T> {
+pub struct Event<T = ()> {
     subscribers: Vec<Box<dyn Fn(&T)>>,
 }
 
