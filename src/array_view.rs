@@ -9,20 +9,6 @@ pub struct ArrayView<T> {
 }
 
 impl<T: num_traits::Num + Debug> ArrayView<T> {
-    pub fn from_vector<VecT>(vector: &Vec<VecT>) -> Self {
-        Self {
-            data: &vector[0] as *const VecT as *const T,
-            size: vector.len() * (std::mem::size_of::<VecT>() / std::mem::size_of::<T>()),
-        }
-    }
-
-    pub fn from_array(array: &[T]) -> Self {
-        Self {
-            data: &array[0],
-            size: array.len(),
-        }
-    }
-
     pub fn print(&self) {
         unsafe {
             let mut ptr = self.data;
@@ -31,6 +17,24 @@ impl<T: num_traits::Num + Debug> ArrayView<T> {
                 ptr = ptr.offset(1);
             }
             println!();
+        }
+    }
+}
+
+impl<T, const N: usize> From<&'static [T; N]> for ArrayView<T> {
+    fn from(arr: &'static [T; N]) -> Self {
+        Self {
+            data: &arr[0],
+            size: N,
+        }
+    }
+}
+
+impl<T: num_traits::Num + Debug, VecT> From<&Vec<VecT>> for ArrayView<T> {
+    fn from(vector: &Vec<VecT>) -> Self {
+        Self {
+            data: &vector[0] as *const VecT as *const T,
+            size: vector.len() * (std::mem::size_of::<VecT>() / std::mem::size_of::<T>()),
         }
     }
 }
