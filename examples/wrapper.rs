@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use tools::{HasNew, PropertyWrapper};
+use tools::{New, PropertyWrapper};
 
 #[derive(Serialize, Deserialize, Debug)]
 struct TestGest {
@@ -7,7 +7,7 @@ struct TestGest {
     pub stro: String,
 }
 
-impl HasNew for TestGest {
+impl New for TestGest {
     fn new() -> TestGest {
         TestGest {
             i: 100100,
