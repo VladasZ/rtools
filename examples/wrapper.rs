@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use tools::{New, PropertyWrapper};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 struct TestGest {
     pub i: u32,
     pub stro: String,
