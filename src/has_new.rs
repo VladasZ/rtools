@@ -7,3 +7,9 @@ pub trait New {
 pub fn new<T: New>() -> T {
     T::new()
 }
+
+impl<T: Default> New for T {
+    fn new() -> Self {
+        Self::default()
+    }
+}
