@@ -12,7 +12,9 @@ pub mod property_wrapper;
 pub mod refs;
 pub mod regex;
 pub mod weak_self;
+pub mod own;
 
+pub use own::Own;
 pub use as_any::AsAny;
 pub use event::Event;
 pub use has_new::new;
