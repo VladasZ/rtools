@@ -1,19 +1,14 @@
-use std::fmt::{Debug, Formatter};
-use std::alloc::{Layout, alloc, dealloc};
-use std::ops::{Deref, DerefMut};
 use crate::refs::Shared;
-use crate::refs::make_shared;
+use std::fmt::{Debug, Formatter};
+use std::ops::{Deref, DerefMut};
 
 pub struct Own<T: ?Sized> {
     pub pointer: Shared<T>,
 }
 
 impl<T: ?Sized> Own<T> {
-
     pub fn from(value: Shared<T>) -> Self {
-        Self {
-            pointer: value
-        }
+        Self { pointer: value }
     }
 
     // pub fn from<Value: ?Sized>(value: Value) -> Self {
