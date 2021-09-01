@@ -1,7 +1,8 @@
-use crate::refs::Shared;
-use crate::New;
-use std::ops::{Deref, DerefMut};
-use std::ptr::NonNull;
+use crate::{refs::Shared, New};
+use std::{
+    ops::{Deref, DerefMut},
+    ptr::NonNull,
+};
 
 pub struct Rglica<T: ?Sized> {
     ptr: Option<NonNull<T>>,
@@ -26,11 +27,11 @@ impl<T: ?Sized> Rglica<T> {
         }
     }
 
-    pub fn from_box(bx: &mut Box<T>) -> Self {
-        Self {
-            ptr: NonNull::new(bx.as_mut()).unwrap().into(),
-        }
-    }
+    // pub fn from_box(bx: &mut Box<T>) -> Self {
+    //     Self {
+    //         ptr: NonNull::new(bx.as_mut()).unwrap().into(),
+    //     }
+    // }
 
     pub fn is_null(&self) -> bool {
         self.ptr.is_none()
@@ -57,5 +58,17 @@ impl<T: ?Sized> DerefMut for Rglica<T> {
 impl<T: ?Sized> New for Rglica<T> {
     fn new() -> Self {
         Self { ptr: None }
+    }
+}
+
+pub trait ToRglica<T> {
+    fn to_rglica(&mut self) -> Rglica<T>;
+}
+
+impl<T> ToRglica<T> for Box<T> {
+    fn to_rglica(&mut self) -> Rglica<T> {
+        Rglica {
+            ptr: NonNull::new(self.as_mut()).unwrap().into(),
+        }
     }
 }
