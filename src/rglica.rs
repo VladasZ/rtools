@@ -8,6 +8,12 @@ pub struct Rglica<T: ?Sized> {
     ptr: Option<NonNull<T>>,
 }
 
+impl<T> Clone for Rglica<T> {
+    fn clone(&self) -> Self {
+        Self { ptr: self.ptr }
+    }
+}
+
 impl<T: ?Sized> Rglica<T> {
     pub fn from_ptr(ptr: *mut T) -> Self {
         Self {
@@ -26,7 +32,7 @@ impl<T: ?Sized> Rglica<T> {
             ptr: NonNull::new(sh.borrow_mut().deref_mut()).unwrap().into(),
         }
     }
-    
+
     pub fn is_null(&self) -> bool {
         self.ptr.is_none()
     }
