@@ -15,9 +15,9 @@ impl<T: ?Sized> Rglica<T> {
         }
     }
 
-    pub fn from_ref(rf: &mut T) -> Self {
+    pub fn from_ref(rf: &T) -> Self {
         Self {
-            ptr: NonNull::new(rf).unwrap().into(),
+            ptr: NonNull::new(rf as *const T as *mut T).unwrap().into(),
         }
     }
 
@@ -26,13 +26,7 @@ impl<T: ?Sized> Rglica<T> {
             ptr: NonNull::new(sh.borrow_mut().deref_mut()).unwrap().into(),
         }
     }
-
-    // pub fn from_box(bx: &mut Box<T>) -> Self {
-    //     Self {
-    //         ptr: NonNull::new(bx.as_mut()).unwrap().into(),
-    //     }
-    // }
-
+    
     pub fn is_null(&self) -> bool {
         self.ptr.is_none()
     }
@@ -62,13 +56,15 @@ impl<T: ?Sized> New for Rglica<T> {
 }
 
 pub trait ToRglica<T> {
-    fn to_rglica(&mut self) -> Rglica<T>;
+    fn to_rglica(&self) -> Rglica<T>;
 }
 
 impl<T> ToRglica<T> for Box<T> {
-    fn to_rglica(&mut self) -> Rglica<T> {
+    fn to_rglica(&self) -> Rglica<T> {
         Rglica {
-            ptr: NonNull::new(self.as_mut()).unwrap().into(),
+            ptr: NonNull::new(self.as_ref() as *const T as *mut T)
+                .unwrap()
+                .into(),
         }
     }
 }

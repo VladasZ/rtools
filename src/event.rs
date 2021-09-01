@@ -2,16 +2,16 @@ use crate::New;
 use std::fmt::{Debug, Formatter};
 
 pub struct Event<T = ()> {
-    subscribers: Vec<Box<dyn Fn(&T)>>,
+    subscribers: Vec<Box<dyn FnMut(&T)>>,
 }
 
 impl<T> Event<T> {
-    pub fn subscribe(&mut self, action: impl Fn(&T) + 'static) {
+    pub fn subscribe(&mut self, action: impl FnMut(&T) + 'static) {
         self.subscribers.push(Box::new(action))
     }
 
-    pub fn trigger(&self, value: &T) {
-        for sub in &self.subscribers {
+    pub fn trigger(&mut self, value: &T) {
+        for sub in &mut self.subscribers {
             sub(value)
         }
     }
