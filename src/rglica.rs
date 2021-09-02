@@ -1,4 +1,5 @@
 use crate::{refs::Shared, New};
+use std::fmt::{Debug, Formatter};
 use std::{
     ops::{Deref, DerefMut},
     ptr::NonNull,
@@ -72,5 +73,11 @@ impl<T> ToRglica<T> for Box<T> {
                 .unwrap()
                 .into(),
         }
+    }
+}
+
+impl<T: Debug> Debug for Rglica<T> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.deref().fmt(f)
     }
 }
