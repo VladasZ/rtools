@@ -22,3 +22,4 @@ pub use has_new::New;
 pub use own::Own;
 pub use property_wrapper::PropertyWrapper;
 pub use rglica::Rglica;
+pub use rglica::ToRglica;
