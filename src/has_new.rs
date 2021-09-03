@@ -15,5 +15,7 @@ impl<T: Default> New for T {
 }
 
 pub trait Boxed {
-    fn boxed() -> Box<Self> where Self: Sized;
+    fn boxed() -> Box<Self>
+    where
+        Self: Sized;
 }
