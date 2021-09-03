@@ -13,3 +13,7 @@ impl<T: Default> New for T {
         Self::default()
     }
 }
+
+pub trait Boxed {
+    fn boxed() -> Box<Self> where Self: Sized;
+}

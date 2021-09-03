@@ -1,4 +1,5 @@
 use crate::New;
+use crate::Boxed;
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
 
