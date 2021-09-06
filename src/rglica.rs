@@ -62,11 +62,11 @@ impl<T: ?Sized> New for Rglica<T> {
     }
 }
 
-pub trait ToRglica<T> {
+pub trait ToRglica<T: ?Sized> {
     fn to_rglica(&self) -> Rglica<T>;
 }
 
-impl<T> ToRglica<T> for Box<T> {
+impl<T: ?Sized> ToRglica<T> for Box<T> {
     fn to_rglica(&self) -> Rglica<T> {
         Rglica {
             ptr: NonNull::new(self.as_ref() as *const T as *mut T)
