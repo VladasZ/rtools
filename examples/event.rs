@@ -13,5 +13,5 @@ fn main() {
         dbg!(kok + 1);
     });
 
-    kok_changed.trigger(&500);
+    kok_changed.trigger(500);
 }
