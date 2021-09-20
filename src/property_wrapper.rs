@@ -10,7 +10,6 @@ impl<T: Serialize + DeserializeOwned + New> Wrappable for T {}
 
 fn executable_name() -> String {
     std::env::current_exe()
-        .ok()
         .expect("Failed to get std::env::current_exe()")
         .file_name()
         .expect("Failed to get executable name")
