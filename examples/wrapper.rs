@@ -3,14 +3,14 @@ use tools::{New, PropertyWrapper};
 
 #[derive(Debug, Serialize, Deserialize)]
 struct TestGest {
-    pub i: u32,
+    pub i:    u32,
     pub stro: String,
 }
 
 impl New for TestGest {
     fn new() -> TestGest {
         TestGest {
-            i: 100100,
+            i:    100100,
             stro: "rglo".into(),
         }
     }

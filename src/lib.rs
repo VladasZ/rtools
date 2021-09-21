@@ -17,10 +17,7 @@ pub mod weak_self;
 
 pub use as_any::AsAny;
 pub use event::Event;
-pub use has_new::new;
-pub use has_new::Boxed;
-pub use has_new::New;
+pub use has_new::{new, Boxed, New};
 pub use own::Own;
 pub use property_wrapper::PropertyWrapper;
-pub use rglica::Rglica;
-pub use rglica::ToRglica;
+pub use rglica::{Rglica, ToRglica};

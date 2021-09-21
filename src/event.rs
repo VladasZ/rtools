@@ -1,5 +1,6 @@
-use crate::New;
 use std::fmt::{Debug, Formatter};
+
+use crate::New;
 
 pub struct Event<T = ()> {
     subscriber: Option<Box<dyn FnMut(T) + 'static>>,

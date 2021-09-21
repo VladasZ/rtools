@@ -17,9 +17,7 @@ macro_rules! get_last_method_path {
 macro_rules! function {
     () => {{
         fn f() {}
-        fn type_name_of<T>(_: T) -> &'static str {
-            std::any::type_name::<T>()
-        }
+        fn type_name_of<T>(_: T) -> &'static str { std::any::type_name::<T>() }
         let name = type_name_of(f);
         get_last_method_path!(&name[..name.len() - 3])
     }};

@@ -4,14 +4,10 @@ pub trait New {
         Self: Sized;
 }
 
-pub fn new<T: New>() -> T {
-    T::new()
-}
+pub fn new<T: New>() -> T { T::new() }
 
 impl<T: Default> New for T {
-    fn new() -> Self {
-        Self::default()
-    }
+    fn new() -> Self { Self::default() }
 }
 
 pub trait Boxed {

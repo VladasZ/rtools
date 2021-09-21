@@ -1,7 +1,9 @@
-use crate::refs::make_shared;
-use crate::refs::{MutWeak, Shared};
-use crate::New;
 use std::rc::Rc;
+
+use crate::{
+    refs::{make_shared, MutWeak, Shared},
+    New,
+};
 
 pub trait HasWeakSelf: New {
     fn weak(&self) -> MutWeak<Self>
