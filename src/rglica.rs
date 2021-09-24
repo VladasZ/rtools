@@ -4,7 +4,7 @@ use std::{
     ptr::NonNull,
 };
 
-use crate::{refs::Shared, New};
+use crate::New;
 
 pub struct Rglica<T: ?Sized> {
     ptr: Option<NonNull<T>>,
@@ -15,27 +15,17 @@ impl<T> Clone for Rglica<T> {
 }
 
 impl<T: ?Sized> Rglica<T> {
-    pub fn from_ptr(ptr: *mut T) -> Self {
-        Self {
-            ptr: NonNull::new(ptr).unwrap().into(),
-        }
-    }
-
     pub fn from_ref(rf: &T) -> Self {
         Self {
             ptr: NonNull::new(rf as *const T as *mut T).unwrap().into(),
         }
     }
 
-    pub fn from_shared(sh: Shared<T>) -> Self {
-        Self {
-            ptr: NonNull::new(sh.borrow_mut().deref_mut()).unwrap().into(),
-        }
-    }
-
     pub fn is_null(&self) -> bool { self.ptr.is_none() }
 
     pub fn is_ok(&self) -> bool { self.ptr.is_some() }
+
+    pub fn invalidate(&mut self) { self.ptr = None }
 }
 
 impl<T: ?Sized> Deref for Rglica<T> {
