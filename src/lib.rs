@@ -21,3 +21,25 @@ pub use has_new::{new, Boxed, New};
 pub use own::Own;
 pub use property_wrapper::PropertyWrapper;
 pub use rglica::{Rglica, ToRglica};
+
+pub trait Delete<T> {
+    fn delete(&mut self, val: &T);
+}
+
+impl<T: PartialEq> Delete<T> for Vec<T> {
+    fn delete(&mut self, val: &T) {
+        if let Some(pos) = self.iter().position(|a| a == val) {
+            self.remove(pos);
+        } else {
+            dbg!("Nothing to delete");
+        }
+    }
+}
+
+pub trait Address {
+    fn address(&self) -> u64;
+}
+
+impl<T: ?Sized> Address for &T {
+    fn address(&self) -> u64 { *self as *const T as *const () as u64 }
+}

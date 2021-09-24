@@ -10,12 +10,12 @@ pub struct Rglica<T: ?Sized> {
     ptr: Option<NonNull<T>>,
 }
 
-impl<T> Clone for Rglica<T> {
-    fn clone(&self) -> Self { Self { ptr: self.ptr } }
+impl<T: ?Sized> Clone for Rglica<T> {
+    fn clone(&self) -> Rglica<T> { Self { ptr: self.ptr } }
 }
 
 impl<T: ?Sized> Rglica<T> {
-    pub fn from_ref(rf: &T) -> Self {
+    pub fn from_ref(rf: &T) -> Rglica<T> {
         Self {
             ptr: NonNull::new(rf as *const T as *mut T).unwrap().into(),
         }
@@ -30,15 +30,15 @@ impl<T: ?Sized> Rglica<T> {
 
 impl<T: ?Sized> Deref for Rglica<T> {
     type Target = T;
-    fn deref(&self) -> &Self::Target { unsafe { self.ptr.unwrap().as_ref() } }
+    fn deref(&self) -> &T { unsafe { self.ptr.unwrap().as_ref() } }
 }
 
 impl<T: ?Sized> DerefMut for Rglica<T> {
-    fn deref_mut(&mut self) -> &mut Self::Target { unsafe { self.ptr.unwrap().as_mut() } }
+    fn deref_mut(&mut self) -> &mut T { unsafe { self.ptr.unwrap().as_mut() } }
 }
 
 impl<T: ?Sized> New for Rglica<T> {
-    fn new() -> Self { Self { ptr: None } }
+    fn new() -> Rglica<T> { Self { ptr: None } }
 }
 
 pub trait ToRglica<T: ?Sized> {
