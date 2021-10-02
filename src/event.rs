@@ -8,9 +8,7 @@ pub struct Event<T = ()> {
 
 impl<T> Event<T> {
     pub fn subscribe(&mut self, action: impl FnMut(T) + 'static) {
-        if self.subscriber.is_some() {
-            panic!("Event already has a subscriber");
-        }
+        debug_assert!(self.subscriber.is_none(), "Event already has a subscriber");
         self.subscriber = Some(Box::new(action))
     }
 
