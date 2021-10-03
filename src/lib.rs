@@ -1,6 +1,6 @@
-//#![allow(dead_code)]
 #![crate_name = "tools"]
 #![crate_type = "lib"]
+#![feature(option_result_unwrap_unchecked)]
 
 pub mod array_view;
 pub mod as_any;

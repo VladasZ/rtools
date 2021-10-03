@@ -16,8 +16,10 @@ impl<T: ?Sized> Clone for Rglica<T> {
 
 impl<T: ?Sized> Rglica<T> {
     pub fn from_ref(rf: &T) -> Rglica<T> {
+        let ptr = NonNull::new(rf as *const T as *mut T);
+        debug_assert!(ptr.is_some(), "Failed to cast ref to Rglica");
         Self {
-            ptr: NonNull::new(rf as *const T as *mut T).unwrap().into(),
+            ptr: unsafe { ptr.unwrap_unchecked().into() },
         }
     }
 
@@ -30,11 +32,17 @@ impl<T: ?Sized> Rglica<T> {
 
 impl<T: ?Sized> Deref for Rglica<T> {
     type Target = T;
-    fn deref(&self) -> &T { unsafe { self.ptr.unwrap().as_ref() } }
+    fn deref(&self) -> &T {
+        debug_assert!(self.ptr.is_some(), "Null Rglica");
+        unsafe { self.ptr.unwrap_unchecked().as_ref() }
+    }
 }
 
 impl<T: ?Sized> DerefMut for Rglica<T> {
-    fn deref_mut(&mut self) -> &mut T { unsafe { self.ptr.unwrap().as_mut() } }
+    fn deref_mut(&mut self) -> &mut T {
+        debug_assert!(self.ptr.is_some(), "Null Rglica");
+        unsafe { self.ptr.unwrap_unchecked().as_mut() }
+    }
 }
 
 impl<T: ?Sized> New for Rglica<T> {
@@ -47,10 +55,10 @@ pub trait ToRglica<T: ?Sized> {
 
 impl<T: ?Sized> ToRglica<T> for Box<T> {
     fn to_rglica(&self) -> Rglica<T> {
+        let ptr = NonNull::new(self.as_ref() as *const T as *mut T);
+        debug_assert!(ptr.is_some(), "Failed to make Rglica from Box");
         Rglica {
-            ptr: NonNull::new(self.as_ref() as *const T as *mut T)
-                .unwrap()
-                .into(),
+            ptr: unsafe { ptr.unwrap_unchecked().into() },
         }
     }
 }
