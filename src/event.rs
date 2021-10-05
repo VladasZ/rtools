@@ -13,9 +13,12 @@ impl<T> Event<T> {
     }
 
     pub fn trigger(&mut self, value: T) {
-        if let Some(sub) = &mut self.subscriber {
-            sub(value)
-        }
+        debug_assert!(
+            self.subscriber.is_some(),
+            "Event triggered without subscriber"
+        );
+        let sub = unsafe { self.subscriber.as_mut().unwrap_unchecked() };
+        sub(value)
     }
 }
 
