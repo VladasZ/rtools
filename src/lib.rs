@@ -3,7 +3,6 @@
 #![feature(option_result_unwrap_unchecked)]
 
 pub mod array_view;
-pub mod as_any;
 pub mod event;
 pub mod has_new;
 pub mod log;
@@ -15,7 +14,6 @@ pub mod regex;
 pub mod rglica;
 pub mod weak_self;
 
-pub use as_any::AsAny;
 pub use event::Event;
 pub use has_new::{new, Boxed, New};
 pub use own::Own;
