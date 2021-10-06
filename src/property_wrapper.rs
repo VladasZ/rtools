@@ -6,10 +6,8 @@ use std::{
 
 use serde::{de::DeserializeOwned, Serialize};
 
-use crate::New;
-
-pub trait Wrappable: Serialize + DeserializeOwned + New {}
-impl<T: Serialize + DeserializeOwned + New> Wrappable for T {}
+pub trait Wrappable: Serialize + DeserializeOwned + Default {}
+impl<T: Serialize + DeserializeOwned + Default> Wrappable for T {}
 
 fn executable_name() -> String {
     std::env::current_exe()
@@ -42,7 +40,7 @@ fn get_value<T: Wrappable>(key: &str) -> T {
         fs::create_dir(dir).expect("Failed to create dir");
     }
     if !path.exists() {
-        let new = T::new();
+        let new = T::default();
         set_value(&new, key);
         return new;
     }
@@ -59,7 +57,7 @@ impl<T: Wrappable> PropertyWrapper<T> {
     pub fn new(name: &'static str) -> Self {
         let mut new = Self {
             name,
-            data: T::new(),
+            data: T::default(),
         };
         new.get();
         new

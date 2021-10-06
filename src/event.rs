@@ -1,7 +1,5 @@
 use std::fmt::{Debug, Formatter};
 
-use crate::New;
-
 pub struct Event<T = ()> {
     subscriber: Option<Box<dyn FnMut(T) + 'static>>,
 }
@@ -22,8 +20,8 @@ impl<T> Event<T> {
     }
 }
 
-impl<T> New for Event<T> {
-    fn new() -> Self {
+impl<T> Default for Event<T> {
+    fn default() -> Self {
         Self {
             subscriber: Default::default(),
         }

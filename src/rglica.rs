@@ -4,8 +4,6 @@ use std::{
     ptr::NonNull,
 };
 
-use crate::New;
-
 pub struct Rglica<T: ?Sized> {
     pub ptr: Option<NonNull<T>>,
 }
@@ -55,8 +53,8 @@ impl<T: ?Sized> DerefMut for Rglica<T> {
     }
 }
 
-impl<T: ?Sized> New for Rglica<T> {
-    fn new() -> Rglica<T> { Self { ptr: None } }
+impl<T: ?Sized> Default for Rglica<T> {
+    fn default() -> Rglica<T> { Self { ptr: None } }
 }
 
 pub trait ToRglica<T: ?Sized> {

@@ -1,22 +1,19 @@
 #![crate_name = "tools"]
 #![crate_type = "lib"]
 #![feature(option_result_unwrap_unchecked)]
+#![feature(default_free_fn)]
 
 pub mod array_view;
+pub mod boxed;
 pub mod event;
-pub mod has_new;
 pub mod log;
-pub mod own;
 pub mod platform;
 pub mod property_wrapper;
-pub mod refs;
 pub mod regex;
 pub mod rglica;
-pub mod weak_self;
 
+pub use boxed::Boxed;
 pub use event::Event;
-pub use has_new::{new, Boxed, New};
-pub use own::Own;
 pub use property_wrapper::PropertyWrapper;
 pub use rglica::{Rglica, ToRglica};
 
