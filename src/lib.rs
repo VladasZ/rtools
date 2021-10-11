@@ -7,6 +7,7 @@ pub mod array_view;
 pub mod boxed;
 pub mod event;
 pub mod log;
+pub mod math;
 pub mod platform;
 pub mod property_wrapper;
 pub mod regex;
@@ -36,5 +37,7 @@ pub trait Address {
 }
 
 impl<T: ?Sized> Address for &T {
-    fn address(&self) -> u64 { *self as *const T as *const () as u64 }
+    fn address(&self) -> u64 {
+        *self as *const T as *const () as u64
+    }
 }

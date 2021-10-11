@@ -63,16 +63,24 @@ impl<T: Wrappable> PropertyWrapper<T> {
         new
     }
 
-    pub fn get(&mut self) { self.data = get_value(self.name) }
+    pub fn get(&mut self) {
+        self.data = get_value(self.name)
+    }
 
-    pub fn store(&self) { set_value(&self.data, self.name) }
+    pub fn store(&self) {
+        set_value(&self.data, self.name)
+    }
 }
 
 impl<T: Wrappable> Deref for PropertyWrapper<T> {
     type Target = T;
-    fn deref(&self) -> &Self::Target { &self.data }
+    fn deref(&self) -> &Self::Target {
+        &self.data
+    }
 }
 
 impl<T: Wrappable> DerefMut for PropertyWrapper<T> {
-    fn deref_mut(&mut self) -> &mut Self::Target { &mut self.data }
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.data
+    }
 }

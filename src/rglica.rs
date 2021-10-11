@@ -9,7 +9,9 @@ pub struct Rglica<T: ?Sized> {
 }
 
 impl<T: ?Sized> Clone for Rglica<T> {
-    fn clone(&self) -> Rglica<T> { Self { ptr: self.ptr } }
+    fn clone(&self) -> Rglica<T> {
+        Self { ptr: self.ptr }
+    }
 }
 
 impl<T: ?Sized> Rglica<T> {
@@ -21,11 +23,17 @@ impl<T: ?Sized> Rglica<T> {
         }
     }
 
-    pub fn is_null(&self) -> bool { self.ptr.is_none() }
+    pub fn is_null(&self) -> bool {
+        self.ptr.is_none()
+    }
 
-    pub fn is_ok(&self) -> bool { self.ptr.is_some() }
+    pub fn is_ok(&self) -> bool {
+        self.ptr.is_some()
+    }
 
-    pub fn invalidate(&mut self) { self.ptr = None }
+    pub fn invalidate(&mut self) {
+        self.ptr = None
+    }
 }
 
 impl<T: ?Sized> Deref for Rglica<T> {
@@ -54,7 +62,9 @@ impl<T: ?Sized> DerefMut for Rglica<T> {
 }
 
 impl<T: ?Sized> Default for Rglica<T> {
-    fn default() -> Rglica<T> { Self { ptr: None } }
+    fn default() -> Rglica<T> {
+        Self { ptr: None }
+    }
 }
 
 pub trait ToRglica<T: ?Sized> {
@@ -72,5 +82,7 @@ impl<T: ?Sized> ToRglica<T> for Box<T> {
 }
 
 impl<T: Debug> Debug for Rglica<T> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result { self.deref().fmt(f) }
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.deref().fmt(f)
+    }
 }

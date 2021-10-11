@@ -7,5 +7,7 @@ pub trait Boxed {
 }
 
 impl<T: Default> Boxed for T {
-    fn boxed() -> Box<Self> { Box::new(default()) }
+    fn boxed() -> Box<Self> {
+        Box::new(default())
+    }
 }
