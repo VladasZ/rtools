@@ -8,6 +8,12 @@ impl IntoF32 for i32 {
     }
 }
 
+impl IntoF32 for u32 {
+    fn into_f32(self) -> f32 {
+        self as f32
+    }
+}
+
 impl IntoF32 for f32 {
     fn into_f32(self) -> f32 {
         self

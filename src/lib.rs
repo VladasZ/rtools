@@ -12,6 +12,7 @@ pub mod platform;
 pub mod property_wrapper;
 pub mod regex;
 pub mod rglica;
+pub mod file;
 
 pub use boxed::Boxed;
 pub use event::Event;
