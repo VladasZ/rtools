@@ -42,3 +42,7 @@ pub fn clamped_by(low: impl IntoF32, high: impl IntoF32, value: impl IntoF32) ->
         value
     }
 }
+
+pub fn mm_to_inch(mm: f32) -> f32 {
+    mm * 0.0393701
+}
