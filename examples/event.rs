@@ -3,11 +3,7 @@ extern crate tools;
 use tools::*;
 
 fn main() {
-    let mut kok_changed = Event::<u32>::new();
-
-    kok_changed.subscribe(|kok| {
-        dbg!(kok);
-    });
+    let mut kok_changed = Event::<u32>::default();
 
     kok_changed.subscribe(|kok| {
         dbg!(kok + 1);

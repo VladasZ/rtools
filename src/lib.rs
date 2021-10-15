@@ -4,6 +4,7 @@
 #![feature(default_free_fn)]
 
 pub mod array_view;
+pub mod as_any;
 pub mod boxed;
 pub mod event;
 pub mod log;

@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use tools::{New, PropertyWrapper};
+use tools::PropertyWrapper;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct TestGest {
@@ -7,8 +7,8 @@ struct TestGest {
     pub stro: String,
 }
 
-impl New for TestGest {
-    fn new() -> TestGest {
+impl Default for TestGest {
+    fn default() -> TestGest {
         TestGest {
             i:    100100,
             stro: "rglo".into(),
