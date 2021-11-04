@@ -1,6 +1,5 @@
 #![crate_name = "tools"]
 #![crate_type = "lib"]
-#![feature(option_result_unwrap_unchecked)]
 #![feature(default_free_fn)]
 
 pub mod array_view;
@@ -13,6 +12,7 @@ pub mod platform;
 pub mod property_wrapper;
 pub mod regex;
 pub mod rglica;
+pub mod run;
 
 pub use boxed::Boxed;
 pub use event::Event;
