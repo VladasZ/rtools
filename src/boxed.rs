@@ -1,5 +1,3 @@
-use std::default::default;
-
 pub trait Boxed {
     fn boxed() -> Box<Self>
     where
@@ -8,6 +6,6 @@ pub trait Boxed {
 
 impl<T: Default> Boxed for T {
     fn boxed() -> Box<Self> {
-        Box::new(default())
+        Box::new(Default::default())
     }
 }

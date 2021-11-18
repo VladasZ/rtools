@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use tools::PropertyWrapper;
+use tools::Persistent;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct TestGest {
@@ -17,7 +17,7 @@ impl Default for TestGest {
 }
 
 fn main() {
-    let mut wrapper = PropertyWrapper::<TestGest>::new("sokol");
+    let mut wrapper = Persistent::<TestGest>::new("sokol");
 
     dbg!(&wrapper.i);
     dbg!(&wrapper.stro);

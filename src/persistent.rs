@@ -48,12 +48,12 @@ fn get_value<T: Wrappable>(key: &str) -> T {
     serde_json::from_str(&json).expect("Failet to parse json")
 }
 
-pub struct PropertyWrapper<T: Wrappable> {
+pub struct Persistent<T: Wrappable> {
     name: &'static str,
     data: T,
 }
 
-impl<T: Wrappable> PropertyWrapper<T> {
+impl<T: Wrappable> Persistent<T> {
     pub fn new(name: &'static str) -> Self {
         let mut new = Self {
             name,
@@ -72,14 +72,14 @@ impl<T: Wrappable> PropertyWrapper<T> {
     }
 }
 
-impl<T: Wrappable> Deref for PropertyWrapper<T> {
+impl<T: Wrappable> Deref for Persistent<T> {
     type Target = T;
     fn deref(&self) -> &Self::Target {
         &self.data
     }
 }
 
-impl<T: Wrappable> DerefMut for PropertyWrapper<T> {
+impl<T: Wrappable> DerefMut for Persistent<T> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.data
     }

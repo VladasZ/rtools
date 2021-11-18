@@ -8,15 +8,18 @@ pub mod boxed;
 pub mod event;
 pub mod log;
 pub mod math;
+pub mod persistent;
 pub mod platform;
-pub mod property_wrapper;
+mod property;
 pub mod regex;
 pub mod rglica;
 pub mod run;
 
 pub use boxed::Boxed;
 pub use event::Event;
-pub use property_wrapper::PropertyWrapper;
+pub use math::{mm_to_inch, IntoF32};
+pub use persistent::Persistent;
+pub use property::Property;
 pub use rglica::{Rglica, ToRglica};
 
 pub trait Delete<T> {
