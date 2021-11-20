@@ -86,3 +86,19 @@ impl<T: Debug> Debug for Rglica<T> {
         self.deref().fmt(f)
     }
 }
+
+struct Test<T> {
+    data: T
+}
+
+impl<T: Debug> Debug for Test<T> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.data.fmt(f)
+    }
+}
+
+// impl<T: !Debug> Debug for Test<T> {
+//     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+//         todo!()
+//     }
+// }
