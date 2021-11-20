@@ -1,9 +1,12 @@
-use std::{fmt::{Debug, Display}, ops::{Deref, DerefMut}};
+use std::{
+    fmt::{Debug, Display},
+    ops::{Deref, DerefMut},
+};
 
 use crate::Event;
 
 pub struct Property<T> {
-    data: T,
+    data:       T,
     pub on_set: Event,
 }
 
@@ -33,7 +36,10 @@ impl<T> DerefMut for Property<T> {
 
 impl<T> From<T> for Property<T> {
     fn from(data: T) -> Self {
-        Self { data, on_set: Default::default() }
+        Self {
+            data,
+            on_set: Default::default(),
+        }
     }
 }
 
@@ -45,12 +51,14 @@ impl<T: Debug> Debug for Property<T> {
 
 impl<T: Default> Default for Property<T> {
     fn default() -> Self {
-        Self { data: T::default(), on_set: Default::default() }
+        Self {
+            data:   T::default(),
+            on_set: Default::default(),
+        }
     }
 }
 
-
-impl <T: Display> Display for Property<T> {
+impl<T: Display> Display for Property<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         self.data.fmt(f)
     }

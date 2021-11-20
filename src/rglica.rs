@@ -88,7 +88,7 @@ impl<T: Debug> Debug for Rglica<T> {
 }
 
 struct Test<T> {
-    data: T
+    data: T,
 }
 
 impl<T: Debug> Debug for Test<T> {
