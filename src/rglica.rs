@@ -81,24 +81,8 @@ impl<T: ?Sized> ToRglica<T> for Box<T> {
     }
 }
 
-impl<T: Debug> Debug for Rglica<T> {
+impl<T> Debug for Rglica<T> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        self.deref().fmt(f)
+        self.ptr.fmt(f)
     }
 }
-
-struct Test<T> {
-    data: T,
-}
-
-impl<T: Debug> Debug for Test<T> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        self.data.fmt(f)
-    }
-}
-
-// impl<T: !Debug> Debug for Test<T> {
-//     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-//         todo!()
-//     }
-// }
