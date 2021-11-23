@@ -1,5 +1,7 @@
-use tokio::task;
-use tokio::time::{sleep, Duration};
+use tokio::{
+    task,
+    time::{sleep, Duration},
+};
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
@@ -13,7 +15,6 @@ async fn main() -> Result<(), Error> {
         }
         result
     });
-
 
     let result = join.await?;
 

@@ -2,12 +2,16 @@
 #![crate_type = "lib"]
 #![feature(default_free_fn)]
 
+#[macro_use]
+extern crate log;
+
 pub mod array_view;
 pub mod as_any;
 pub mod boxed;
 pub mod event;
-pub mod log;
+pub mod file;
 pub mod math;
+pub mod log_macro;
 pub mod persistent;
 pub mod platform;
 mod property;

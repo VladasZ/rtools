@@ -12,6 +12,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "android-ndk-sys"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3ec6ef28479835db378e2202b3911608e2269405e924fabb02ac3c8fb50284fe"
+
+[[package]]
 name = "autocfg"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -383,7 +389,10 @@ dependencies = [
 name = "tools"
 version = "0.1.0"
 dependencies = [
+ "android-ndk-sys",
+ "cfg-if",
  "dirs",
+ "log",
  "num-traits",
  "path-absolutize",
  "regex",
