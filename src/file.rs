@@ -1,9 +1,13 @@
 use std::{fs, path::Path};
-use android_ndk_sys::AAsset_getLength;
-use android_ndk_sys::AASSET_MODE_STREAMING;
-use android_ndk_sys::AAssetManager_open;
-use android_ndk_sys::AAssetManager_fromJava;
-use android_ndk_sys::AAsset_read;
+
+cfg_if::cfg_if! {if #[cfg(target_os = "android")] {
+    use android_ndk_sys::AAsset_getLength;
+    use android_ndk_sys::AASSET_MODE_STREAMING;
+    use android_ndk_sys::AAssetManager_open;
+    use android_ndk_sys::AAssetManager_fromJava;
+    use android_ndk_sys::AAsset_read;
+}}
+
 pub struct File {}
 
 #[cfg(target_os = "android")]
@@ -16,13 +20,11 @@ pub fn set_asset_manager(env: android_ndk_sys::JNIEnv, asset_manager: android_nd
 
 impl File {
     pub fn read_to_string(path: impl AsRef<Path>) -> std::io::Result<String> {
-        cfg_if::cfg_if! {
-            if #[cfg(target_os = "android")] {
-                unsafe { android_read_to_string(path) }
-            } else {
-                fs::read_to_string(path)
-            }
-        }
+        cfg_if::cfg_if! {if #[cfg(target_os = "android")] {
+            unsafe { android_read_to_string(path) }
+        } else {
+            fs::read_to_string(path)
+        }}
     }
 }
 
@@ -50,5 +52,4 @@ pub unsafe fn android_read_to_string(path: impl AsRef<Path>) -> std::io::Result<
     AAsset_read(asset, data.as_mut_ptr() as _, size as _);
     let stro = std::str::from_utf8(&data).unwrap();
     Ok(stro.into())
-
 }
