@@ -1,5 +1,3 @@
-use std::io::Error;
-
 use signal_hook::{consts::SIGINT, iterator::Signals};
 use tokio::{
     task,
@@ -19,7 +17,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         result
     });
 
-
     let mut signals = Signals::new(&[SIGINT])?;
 
     task::spawn(async move {
@@ -27,7 +24,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("Received signal {:?}", sig);
         }
     });
-
 
     let result = join.await?;
 

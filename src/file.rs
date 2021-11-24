@@ -6,6 +6,7 @@ cfg_if::cfg_if! {if #[cfg(target_os = "android")] {
     use android_ndk_sys::AAssetManager_open;
     use android_ndk_sys::AAssetManager_fromJava;
     use android_ndk_sys::AAsset_read;
+    use android_ndk_sys::AAsset_close;
 }}
 
 pub struct File {}
@@ -19,17 +20,37 @@ pub fn set_asset_manager(env: android_ndk_sys::JNIEnv, asset_manager: android_nd
 }
 
 impl File {
-    pub fn read_to_string(path: impl AsRef<Path>) -> std::io::Result<String> {
+    pub fn read_to_string(path: impl AsRef<Path>) -> String {
         cfg_if::cfg_if! {if #[cfg(target_os = "android")] {
-            unsafe { android_read_to_string(path) }
+            std::str::from_utf8(&unsafe { android_read(path) }).unwrap().to_string()
         } else {
-            fs::read_to_string(path)
+            match fs::read_to_string(&path) {
+                Ok(data) => data,
+                Err(err) => {
+                    error!("Failed to read file: {:?}, {}", path.as_ref(), err);
+                    panic!();
+                }
+            }
+        }}
+    }
+
+    pub fn read(path: impl AsRef<Path>) -> Vec<u8> {
+        cfg_if::cfg_if! {if #[cfg(target_os = "android")] {
+            unsafe { android_read(path) }
+        } else {
+            match fs::read(&path) {
+                Ok(data) => data,
+                Err(err) => {
+                    error!("Failed to read file: {:?}, {}", path.as_ref(), err);
+                    panic!();
+                }
+            }
         }}
     }
 }
 
 #[cfg(target_os = "android")]
-pub unsafe fn android_read_to_string(path: impl AsRef<Path>) -> std::io::Result<String> {
+pub unsafe fn android_read(path: impl AsRef<Path>) -> Vec<u8> {
     use std::ffi::CString;
 
     if ASSET_MANAGER.is_null() {
@@ -50,6 +71,6 @@ pub unsafe fn android_read_to_string(path: impl AsRef<Path>) -> std::io::Result<
     let size = AAsset_getLength(asset);
     let mut data: Vec<u8> = vec![0; size as _];
     AAsset_read(asset, data.as_mut_ptr() as _, size as _);
-    let stro = std::str::from_utf8(&data).unwrap();
-    Ok(stro.into())
+    AAsset_close(asset);
+    data
 }
