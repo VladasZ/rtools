@@ -1,7 +1,6 @@
 use std::io::Error;
 
 use signal_hook::{consts::SIGINT, iterator::Signals};
-
 use tokio::{
     task,
     time::{sleep, Duration},
@@ -20,10 +19,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         result
     });
 
-    let ctrl_c = task::spawn(async {
-        tokio::signal::ctrl_c().await.unwrap();
-        dbg!("skidel");
+
+    let mut signals = Signals::new(&[SIGINT])?;
+
+    task::spawn(async move {
+        for sig in signals.forever() {
+            println!("Received signal {:?}", sig);
+        }
     });
+
 
     let result = join.await?;
 
@@ -32,7 +36,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Terminate the signal stream.
 
     dbg!("signals_task");
-    ctrl_c.await?;
 
     dbg!("bye");
 

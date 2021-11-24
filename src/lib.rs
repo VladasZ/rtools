@@ -1,6 +1,5 @@
 #![crate_name = "tools"]
 #![crate_type = "lib"]
-#![feature(default_free_fn)]
 
 #[macro_use]
 extern crate log;
