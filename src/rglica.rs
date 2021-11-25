@@ -8,6 +8,8 @@ pub struct Rglica<T: ?Sized> {
     pub ptr: Option<NonNull<T>>,
 }
 
+impl<T: ?Sized> Rglica<T> {}
+
 impl<T: ?Sized> Clone for Rglica<T> {
     fn clone(&self) -> Rglica<T> {
         Self { ptr: self.ptr }
@@ -78,6 +80,18 @@ impl<T: ?Sized> ToRglica<T> for Box<T> {
         Rglica {
             ptr: unsafe { ptr.unwrap_unchecked().into() },
         }
+    }
+}
+
+impl<T: ?Sized> ToRglica<T> for &T {
+    fn to_rglica(&self) -> Rglica<T> {
+        Rglica::from_ref(self)
+    }
+}
+
+impl<T: ?Sized> ToRglica<T> for &mut T {
+    fn to_rglica(&self) -> Rglica<T> {
+        Rglica::from_ref(self)
     }
 }
 

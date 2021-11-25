@@ -1,36 +1,28 @@
-use std::{
-    fmt::{Debug, Display},
-    ops::{Deref, DerefMut},
-};
+use std::fmt::{Debug, Display};
 
 use crate::Event;
 
 pub struct Property<T> {
     data:       T,
     pub on_set: Event,
+    pub on_get: Event,
+}
+
+impl<T> Property<T> {
+    pub fn set(&mut self, value: T) {
+        self.data = value;
+        self.on_set.trigger(());
+    }
+
+    pub fn get(&mut self) -> &mut T {
+        self.on_get.trigger(());
+        &mut self.data
+    }
 }
 
 impl<T: Copy> Property<T> {
     pub fn copy(&self) -> T {
         self.data
-    }
-
-    pub fn set(&mut self, value: T) {
-        self.data = value;
-        self.on_set.trigger(());
-    }
-}
-
-impl<T> Deref for Property<T> {
-    type Target = T;
-    fn deref(&self) -> &Self::Target {
-        &self.data
-    }
-}
-
-impl<T> DerefMut for Property<T> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.data
     }
 }
 
@@ -39,6 +31,7 @@ impl<T> From<T> for Property<T> {
         Self {
             data,
             on_set: Default::default(),
+            on_get: Default::default(),
         }
     }
 }
@@ -54,6 +47,7 @@ impl<T: Default> Default for Property<T> {
         Self {
             data:   T::default(),
             on_set: Default::default(),
+            on_get: Default::default(),
         }
     }
 }

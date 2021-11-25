@@ -73,7 +73,6 @@ async fn slot() -> Result<(), Box<dyn std::error::Error>> {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-
     let forg = wintrap::trap(
         &signals,
         |signal| {
@@ -93,7 +92,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("Doing work");
         },
     )
-        .unwrap();
+    .unwrap();
 
     slot().await;
 

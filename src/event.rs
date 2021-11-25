@@ -1,7 +1,8 @@
 use std::fmt::{Debug, Formatter};
 
 pub struct Event<T = ()> {
-    subscriber: Option<Box<dyn FnMut(T) + 'static>>,
+    subscriber:         Option<Box<dyn FnMut(T) + 'static>>,
+    pub panic_if_empty: bool,
 }
 
 impl<T> Event<T> {
@@ -11,10 +12,15 @@ impl<T> Event<T> {
     }
 
     pub fn trigger(&mut self, value: T) {
-        debug_assert!(
-            self.subscriber.is_some(),
-            "Event triggered without subscriber"
-        );
+        if self.subscriber.is_none() {
+            if self.panic_if_empty {
+                error!("Event triggered without subscriber");
+                panic!("Event triggered without subscriber");
+            } else {
+                return;
+            }
+        }
+
         let sub = unsafe { self.subscriber.as_mut().unwrap_unchecked() };
         sub(value)
     }
@@ -23,7 +29,8 @@ impl<T> Event<T> {
 impl<T> Default for Event<T> {
     fn default() -> Self {
         Self {
-            subscriber: Default::default(),
+            subscriber:     Default::default(),
+            panic_if_empty: true,
         }
     }
 }
