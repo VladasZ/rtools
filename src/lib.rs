@@ -9,7 +9,6 @@ pub mod as_any;
 pub mod boxed;
 pub mod event;
 pub mod file;
-pub mod log_macro;
 pub mod math;
 pub mod persistent;
 pub mod platform;
