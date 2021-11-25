@@ -31,11 +31,11 @@ fn main() {
 
     dbg!(&spik);
 
-    *spik = 777;
+    spik.set(777);
 
     dbg!(&spik);
 
-    let onto: i32 = *spik;
+    let onto: i32 = spik.copy();
 
     dbg!(onto);
 

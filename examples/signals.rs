@@ -44,13 +44,6 @@ impl SignalsHandler {
     }
 }
 
-const signals: &[wintrap::Signal] = &[
-    wintrap::Signal::CtrlC,
-    wintrap::Signal::CloseWindow,
-    wintrap::Signal::CloseConsole,
-    wintrap::Signal::CtrlBreak,
-];
-
 async fn slot() -> Result<(), Box<dyn std::error::Error>> {
     let handler = SignalsHandler::new();
 
@@ -73,27 +66,6 @@ async fn slot() -> Result<(), Box<dyn std::error::Error>> {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let forg = wintrap::trap(
-        &signals,
-        |signal| {
-            // handle signal here
-            println!("Caught a signal: {:?}", signal);
-            unsafe { windows::Win32::System::Diagnostics::Debug::Beep(2000, 50) };
-        },
-        || {
-            println!("Doing work");
-            // do work
-            for i in 0..200000 {
-                //  result += i;
-                // dbg!(handler.cancelled.load(Ordering::Relaxed));
-                std::thread::sleep(Duration::from_secs(1));
-                //sleep(Duration::from_secs(1)).await;
-            }
-            println!("Doing work");
-        },
-    )
-    .unwrap();
-
     slot().await;
 
     Ok(())
