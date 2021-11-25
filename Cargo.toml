@@ -11,11 +11,24 @@ dirs = "3.0.2"
 tokio = { version = "1", features = ["full"] }
 regex = "1.4.5"
 serde = { version = "1.0.126", features = ["derive"]}
+wintrap = "0.3.1"
 futures = "0.3.18"
 serde_json = "1.0.64"
 num-traits = "0.2.14"
 path-absolutize = "3.0.11"
 signal-hook = "0.3.10"
+
+[dependencies.windows]
+version = "0.28.0"
+features = [
+    "alloc",
+    "Data_Xml_Dom",
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_Threading",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_System_Diagnostics_Debug",
+]
 
 [target.'cfg(target_os="android")'.dependencies]
 android-ndk-sys = "0.2.0"
