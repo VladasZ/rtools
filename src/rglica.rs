@@ -12,7 +12,7 @@ impl<T: ?Sized> Rglica<T> {
     pub fn address(&self) -> u64 {
         match self.ptr {
             None => 0,
-            Some(ptr) => ptr.as_ptr() as *const () as u64
+            Some(ptr) => ptr.as_ptr() as *const () as u64,
         }
     }
 }
