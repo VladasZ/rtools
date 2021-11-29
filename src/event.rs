@@ -21,7 +21,7 @@ impl<T> Event<T> {
             }
         }
 
-        let sub = unsafe { self.subscriber.as_mut().unwrap_unchecked() };
+        let sub = self.subscriber.as_mut().unwrap();
         sub(value)
     }
 }
