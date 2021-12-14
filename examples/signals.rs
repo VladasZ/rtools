@@ -1,16 +1,10 @@
-use std::{
-    future::Future,
-    sync::{
-        atomic::{AtomicBool, AtomicU64, Ordering},
-        Arc,
-    },
+use std::sync::{
+    atomic::{AtomicU64, Ordering},
+    Arc,
 };
 
-use futures::future::FutureExt as _;
-use signal_hook::consts::SIGINT;
 use tokio::{
     task,
-    task::JoinHandle,
     time::{sleep, Duration},
 };
 
@@ -25,7 +19,7 @@ impl SignalsHandler {
         });
 
         let moved = new.clone();
-        let join = task::spawn(async move {
+        task::spawn(async move {
             loop {
                 let cancelled = moved.cancelled.load(Ordering::Relaxed);
 
@@ -66,7 +60,7 @@ async fn slot() -> Result<(), Box<dyn std::error::Error>> {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    slot().await;
+    slot().await?;
 
     Ok(())
 }
