@@ -5,19 +5,19 @@ authors = ["Vladas Zakrevksis <146100@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-log = "0.4"
-cfg-if = "1.0"
-dirs = "3.0"
+log = "0"
+cfg-if = "1"
+dirs = "3"
 tokio = { version = "1", features = ["full"] }
-regex = "1.4"
-serde = { version = "1.0", features = ["derive"]}
-futures = "0.3"
-serde_json = "1.0"
-num-traits = "0.2"
-path-absolutize = "3.0"
+regex = "1"
+serde = { version = "1", features = ["derive"]}
+futures = "0"
+serde_json = "1"
+num-traits = "0"
+path-absolutize = "3"
 
 [target.'cfg(windows)'.dependencies.windows]
-version = "0.28"
+version = "0"
 features = [
     "alloc",
     "Data_Xml_Dom",
@@ -29,4 +29,4 @@ features = [
 ]
 
 [target.'cfg(target_os="android")'.dependencies]
-android-ndk-sys = "0.2.0"
+android-ndk-sys = "0"
