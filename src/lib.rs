@@ -16,6 +16,7 @@ mod property;
 pub mod regex;
 pub mod rglica;
 pub mod run;
+pub mod test;
 
 pub use boxed::Boxed;
 pub use event::Event;
