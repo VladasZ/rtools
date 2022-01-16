@@ -28,7 +28,7 @@ impl File {
                 Ok(data) => data,
                 Err(err) => {
                     error!("Failed to read file: {:?}, {}", path.as_ref(), err);
-                    panic!();
+                    panic!("Failed to read file: {:?}, {}", path.as_ref(), err);
                 }
             }
         }}
@@ -42,7 +42,7 @@ impl File {
                 Ok(data) => data,
                 Err(err) => {
                     error!("Failed to read file: {:?}, {}", path.as_ref(), err);
-                    panic!();
+                    panic!("Failed to read file: {:?}, {}", path.as_ref(), err);
                 }
             }
         }}
