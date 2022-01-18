@@ -10,6 +10,7 @@ pub mod boxed;
 pub mod event;
 pub mod file;
 pub mod math;
+pub mod paths;
 pub mod persistent;
 pub mod platform;
 mod property;

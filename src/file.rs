@@ -1,4 +1,7 @@
-use std::{fs, path::Path};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+};
 
 cfg_if::cfg_if! {if #[cfg(target_os = "android")] {
     use android_ndk_sys::AAsset_getLength;
@@ -10,6 +13,27 @@ cfg_if::cfg_if! {if #[cfg(target_os = "android")] {
 }}
 
 pub struct File {}
+
+impl File {
+    pub fn exists(path: impl AsRef<Path>) -> bool {
+        Path::new(path.as_ref()).exists()
+    }
+
+    pub fn mkdir(path: impl AsRef<Path>) {
+        if File::exists(&path) {
+            return;
+        }
+        fs::create_dir(path.as_ref())
+            .unwrap_or_else(|_| panic!("Failed to mkdir: {}", path.as_ref().display()))
+    }
+
+    pub fn get_files(path: impl AsRef<Path>) -> Vec<PathBuf> {
+        fs::read_dir(path)
+            .unwrap()
+            .map(|a| a.unwrap().path())
+            .collect()
+    }
+}
 
 #[cfg(target_os = "android")]
 static mut ASSET_MANAGER: *mut android_ndk_sys::AAssetManager = std::ptr::null_mut();
