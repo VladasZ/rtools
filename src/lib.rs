@@ -7,6 +7,7 @@ extern crate log;
 pub mod array_view;
 pub mod as_any;
 pub mod boxed;
+pub mod data;
 pub mod event;
 pub mod file;
 pub mod math;
