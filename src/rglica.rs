@@ -8,15 +8,6 @@ pub struct Rglica<T: ?Sized> {
     pub ptr: Option<NonNull<T>>,
 }
 
-impl<T: ?Sized> Rglica<T> {
-    pub fn address(&self) -> u64 {
-        match self.ptr {
-            None => 0,
-            Some(ptr) => ptr.as_ptr() as *const () as u64,
-        }
-    }
-}
-
 impl<T: ?Sized> Clone for Rglica<T> {
     fn clone(&self) -> Rglica<T> {
         Self { ptr: self.ptr }
