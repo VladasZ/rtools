@@ -51,13 +51,13 @@ impl<T: ?Sized> Address for &T {
     }
 }
 
-impl <T: ?Sized> Address for Box<T> {
+impl<T: ?Sized> Address for Box<T> {
     fn address(&self) -> u64 {
         self.as_ref() as *const T as *const () as u64
     }
 }
 
-impl <T: ?Sized> Address for Rglica<T> {
+impl<T: ?Sized> Address for Rglica<T> {
     fn address(&self) -> u64 {
         match self.ptr {
             None => 0,

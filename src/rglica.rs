@@ -93,7 +93,7 @@ impl<T: ?Sized> ToRglica<T> for &mut T {
     }
 }
 
-impl<T> Debug for Rglica<T> {
+impl<T: ?Sized> Debug for Rglica<T> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         self.ptr.fmt(f)
     }
