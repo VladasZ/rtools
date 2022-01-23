@@ -5,8 +5,8 @@ authors = ["Vladas Zakrevksis <146100@gmail.com>"]
 edition = "2021"
 description = "Set of tools for my needs"
 license = "MIT OR Apache-2.0"
-homepage = "https://github.com/VladasZ/tools"
-repository = "https://github.com/VladasZ/tools"
+homepage = "https://github.com/VladasZ/rtools"
+repository = "https://github.com/VladasZ/rtools"
 
 [dependencies]
 log = "0.4"

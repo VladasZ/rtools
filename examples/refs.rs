@@ -1,6 +1,6 @@
 use std::ops::{Deref, DerefMut};
 
-use tools::Property;
+use rtools::Property;
 
 #[derive(Debug, Default)]
 struct RefTest {

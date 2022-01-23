@@ -1,4 +1,6 @@
-use tools::data::{from_bytes, to_bytes};
+#![allow(dead_code)]
+
+use rtools::data::{from_bytes, to_bytes};
 
 #[derive(Debug)]
 struct Test {

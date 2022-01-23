@@ -1,6 +1,4 @@
-extern crate tools;
-
-use tools::*;
+use rtools::Event;
 
 fn main() {
     let mut kok_changed = Event::<u32>::default();
