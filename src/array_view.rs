@@ -1,6 +1,6 @@
-use std::fmt::Debug;
+use std::{fmt::Debug, mem::size_of};
 
-extern crate num_traits;
+use num_traits::Num;
 
 #[derive(Debug)]
 pub struct ArrayView<T> {
@@ -8,7 +8,7 @@ pub struct ArrayView<T> {
     pub size: usize,
 }
 
-impl<T: num_traits::Num + Debug> ArrayView<T> {
+impl<T: Num + Debug> ArrayView<T> {
     pub fn print(&self) {
         unsafe {
             let mut ptr = self.data;
@@ -30,11 +30,11 @@ impl<T, const N: usize> From<&'static [T; N]> for ArrayView<T> {
     }
 }
 
-impl<T: num_traits::Num + Debug, VecT> From<&Vec<VecT>> for ArrayView<T> {
-    fn from(vector: &Vec<VecT>) -> Self {
+impl<T: Num, Value> From<&Vec<Value>> for ArrayView<T> {
+    fn from(vector: &Vec<Value>) -> Self {
         Self {
-            data: &vector[0] as *const VecT as *const T,
-            size: vector.len() * (std::mem::size_of::<VecT>() / std::mem::size_of::<T>()),
+            data: &vector[0] as *const Value as *const T,
+            size: vector.len() * (size_of::<Value>() / size_of::<T>()),
         }
     }
 }
