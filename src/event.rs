@@ -30,7 +30,7 @@ impl<T> Default for Event<T> {
     fn default() -> Self {
         Self {
             subscriber:     Default::default(),
-            panic_if_empty: true,
+            panic_if_empty: false,
         }
     }
 }

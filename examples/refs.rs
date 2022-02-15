@@ -2,7 +2,7 @@ use std::ops::{Deref, DerefMut};
 
 use rtools::Property;
 
-#[derive(Debug, Default)]
+#[derive(Default, Debug)]
 struct RefTest {
     pub sok: i32,
 }
