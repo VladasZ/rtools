@@ -1,3 +1,6 @@
+#![allow(incomplete_features)]
+#![feature(specialization)]
+
 #[macro_use]
 extern crate log;
 

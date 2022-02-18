@@ -96,7 +96,16 @@ impl<T: ?Sized> ToRglica<T> for &mut T {
 }
 
 impl<T: ?Sized> Debug for Rglica<T> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    default fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         self.ptr.fmt(f)
+    }
+}
+
+impl<T: Debug + ?Sized> Debug for Rglica<T> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        if self.is_null() {
+            return self.ptr.fmt(f);
+        }
+        self.deref().fmt(f)
     }
 }
