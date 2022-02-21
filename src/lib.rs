@@ -40,28 +40,3 @@ impl<T: PartialEq> Delete<T> for Vec<T> {
         }
     }
 }
-
-pub trait Address {
-    fn address(&self) -> u64;
-}
-
-impl<T: ?Sized> Address for &T {
-    fn address(&self) -> u64 {
-        *self as *const T as *const () as u64
-    }
-}
-
-impl<T: ?Sized> Address for Box<T> {
-    fn address(&self) -> u64 {
-        self.as_ref() as *const T as *const () as u64
-    }
-}
-
-impl<T: ?Sized> Address for Rglica<T> {
-    fn address(&self) -> u64 {
-        match self.ptr {
-            None => 0,
-            Some(ptr) => ptr.as_ptr() as *const () as u64,
-        }
-    }
-}
