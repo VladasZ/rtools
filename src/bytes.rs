@@ -7,7 +7,7 @@ pub fn to_data<Result: Copy, T>(value: T) -> Vec<Result> {
     let size = size_of::<T>() / size_of::<Result>();
 
     for i in 0..size {
-        result.push(unsafe { *ptr.offset(i as _) });
+        result.push(unsafe { *ptr.add(i) });
     }
 
     result
