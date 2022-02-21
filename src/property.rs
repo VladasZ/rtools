@@ -1,7 +1,8 @@
-use std::fmt::{Debug, Display};
+use std::fmt::Debug;
 
 use crate::Event;
 
+#[derive(Default)]
 pub struct Property<T> {
     data:       T,
     pub on_set: Event,
@@ -37,22 +38,6 @@ impl<T> From<T> for Property<T> {
 }
 
 impl<T: Debug> Debug for Property<T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.data.fmt(f)
-    }
-}
-
-impl<T: Default> Default for Property<T> {
-    fn default() -> Self {
-        Self {
-            data:   T::default(),
-            on_set: Default::default(),
-            on_get: Default::default(),
-        }
-    }
-}
-
-impl<T: Display> Display for Property<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         self.data.fmt(f)
     }

@@ -4,6 +4,8 @@ use std::{
     ptr::NonNull,
 };
 
+use crate::{address::Address, bytes::data_pointer};
+
 pub struct Rglica<T: ?Sized> {
     pub ptr: Option<NonNull<T>>,
 }
@@ -110,18 +112,8 @@ impl<T: Debug + ?Sized> Debug for Rglica<T> {
     }
 }
 
-impl<T: ?Sized> PartialEq for Rglica<T> {
-    fn eq(&self, other: &Self) -> bool {
-        let this = match self.ptr {
-            Some(ptr) => ptr,
-            None => return false,
-        };
-
-        let other = match other.ptr {
-            Some(ptr) => ptr,
-            None => return false,
-        };
-
-        this == other
+impl<T: ?Sized> Address for Rglica<T> {
+    fn address(&self) -> u64 {
+        data_pointer(self.ptr.clone())
     }
 }

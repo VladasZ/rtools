@@ -1,55 +1,41 @@
-use std::ops::{Deref, DerefMut};
+use rtools::bytes::to_data;
 
-use rtools::Property;
+trait Trait {}
 
-#[derive(Default, Debug)]
-struct RefTest {
-    pub sok: i32,
+struct Spok {}
+
+impl Trait for Spok {}
+
+struct Struct {
+    _val:  u16,
+    _val2: u16,
+    _val3: u16,
 }
 
-impl RefTest {
-    fn get_rof(&mut self) -> &mut i32 {
-        &mut self.sok
+impl Default for Struct {
+    fn default() -> Self {
+        Self {
+            _val:  1,
+            _val2: 2,
+            _val3: 3,
+        }
     }
 }
 
-impl Deref for RefTest {
-    type Target = i32;
-    fn deref(&self) -> &Self::Target {
-        &self.sok
-    }
-}
-
-impl DerefMut for RefTest {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.sok
-    }
-}
+impl Trait for Struct {}
 
 fn main() {
-    let mut spik = Property::<i32>::default();
+    let struc = Struct::default();
+    let struc2 = Struct::default();
 
-    dbg!(&spik);
+    mothod(&struc);
+    mothod(&struc);
+    mothod(&struc2);
 
-    spik.set(777);
+    mothod(&Spok {});
+    mothod(&Spok {});
+}
 
-    dbg!(&spik);
-
-    let onto: i32 = spik.copy();
-
-    dbg!(onto);
-
-    println!("vscode pizdato");
-
-    let mut sokil = RefTest::default();
-
-    dbg!(&sokil);
-
-    *sokil.get_rof() = 20;
-
-    dbg!(&sokil);
-
-    *sokil = 25;
-
-    dbg!(&sokil);
+fn mothod(val: &dyn Trait) {
+    dbg!(to_data::<u64, _>(val));
 }
