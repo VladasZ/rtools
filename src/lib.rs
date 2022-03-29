@@ -21,6 +21,7 @@ pub mod regex;
 pub mod rglica;
 pub mod run;
 pub mod test;
+pub mod unwrap;
 
 pub use boxed::Boxed;
 pub use event::Event;
@@ -28,6 +29,7 @@ pub use math::{mm_to_inch, IntoF32};
 pub use persistent::Persistent;
 pub use property::Property;
 pub use rglica::{Rglica, ToRglica};
+pub use unwrap::Unwrap;
 
 pub trait Remove<T> {
     fn remove(&mut self, val: &T);
