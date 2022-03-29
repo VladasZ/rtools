@@ -3,9 +3,10 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
-#[derive(Default)]
+use crate::{Rglica, ToRglica};
+
 pub struct Unwrap<T> {
-    value: Option<T>,
+    value: Option<Box<T>>,
 }
 
 impl<T> Unwrap<T> {
@@ -27,10 +28,16 @@ impl<T> DerefMut for Unwrap<T> {
     }
 }
 
+impl<T> Default for Unwrap<T> {
+    fn default() -> Self {
+        Self { value: None }
+    }
+}
+
 impl<T> From<T> for Unwrap<T> {
     fn from(value: T) -> Self {
         Self {
-            value: value.into(),
+            value: Box::new(value).into(),
         }
     }
 }
@@ -44,5 +51,11 @@ impl<T: Debug> Debug for Unwrap<T> {
 impl<T: ToString> ToString for Unwrap<T> {
     fn to_string(&self) -> String {
         self.value.as_ref().unwrap().to_string()
+    }
+}
+
+impl<T> ToRglica<T> for Unwrap<T> {
+    fn to_rglica(&self) -> Rglica<T> {
+        self.value.as_ref().unwrap().to_rglica()
     }
 }

@@ -6,8 +6,7 @@ fn main() {
     let sol2: Unwrap<i32> = Default::default();
 
     dbg!(&sol);
-    dbg!(&sol2);
 
-    //
-    // dbg!("spek");
+    dbg!(sol.is_ok());
+    dbg!(sol2.is_ok());
 }
