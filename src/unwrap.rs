@@ -3,7 +3,7 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
-use crate::{Rglica, ToRglica};
+use crate::{misc::backtrace, Rglica, ToRglica};
 
 pub struct Unwrap<T> {
     value: Option<Box<T>>,
@@ -18,13 +18,25 @@ impl<T> Unwrap<T> {
 impl<T> Deref for Unwrap<T> {
     type Target = T;
     fn deref(&self) -> &T {
-        self.value.as_ref().unwrap()
+        match self.value.as_ref() {
+            Some(rf) => rf,
+            None => {
+                backtrace();
+                panic!("Invalid Unwrap<{}>", std::any::type_name::<T>());
+            }
+        }
     }
 }
 
 impl<T> DerefMut for Unwrap<T> {
     fn deref_mut(&mut self) -> &mut T {
-        self.value.as_mut().unwrap()
+        match self.value.as_mut() {
+            Some(rf) => rf,
+            None => {
+                backtrace();
+                panic!("Invalid Unwrap<{}>", std::any::type_name::<T>());
+            }
+        }
     }
 }
 
@@ -44,18 +56,18 @@ impl<T> From<T> for Unwrap<T> {
 
 impl<T: Debug> Debug for Unwrap<T> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        self.value.as_ref().unwrap().fmt(f)
+        self.deref().fmt(f)
     }
 }
 
 impl<T: ToString> ToString for Unwrap<T> {
     fn to_string(&self) -> String {
-        self.value.as_ref().unwrap().to_string()
+        self.deref().to_string()
     }
 }
 
 impl<T> ToRglica<T> for Unwrap<T> {
     fn to_rglica(&self) -> Rglica<T> {
-        self.value.as_ref().unwrap().to_rglica()
+        self.deref().to_rglica()
     }
 }

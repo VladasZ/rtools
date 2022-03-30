@@ -9,4 +9,6 @@ fn main() {
 
     dbg!(sol.is_ok());
     dbg!(sol2.is_ok());
+
+    dbg!(&sol2);
 }

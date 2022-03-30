@@ -3,6 +3,7 @@
 
 #[macro_use]
 extern crate log;
+extern crate core;
 
 pub mod address;
 pub mod array_view;
@@ -13,6 +14,7 @@ pub mod data;
 pub mod event;
 pub mod file;
 pub mod math;
+pub mod misc;
 pub mod paths;
 pub mod persistent;
 pub mod platform;
@@ -26,6 +28,7 @@ pub mod unwrap;
 pub use boxed::Boxed;
 pub use event::Event;
 pub use math::{mm_to_inch, IntoF32};
+pub use misc::backtrace;
 pub use persistent::Persistent;
 pub use property::Property;
 pub use rglica::{Rglica, ToRglica};
