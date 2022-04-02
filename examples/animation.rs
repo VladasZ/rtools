@@ -1,7 +1,7 @@
 use rtools::Animation;
 
 fn main() {
-    let animation = Animation::new(1, 2, 10);
+    let animation = Animation::new(-1, 1, 5);
 
     loop {
         use std::{thread, time};
