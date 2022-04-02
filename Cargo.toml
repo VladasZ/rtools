@@ -12,6 +12,7 @@ repository = "https://github.com/VladasZ/rtools"
 log = "0.4"
 cfg-if = "1.0"
 dirs = "3.0"
+chrono = "0.4"
 tokio = { version = "1.15", features = ["full"] }
 regex = "1.5"
 serde = { version = "1.0", features = ["derive"]}

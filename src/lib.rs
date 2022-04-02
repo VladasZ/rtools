@@ -6,6 +6,7 @@ extern crate log;
 extern crate core;
 
 pub mod address;
+pub mod animation;
 pub mod array_view;
 pub mod as_any;
 pub mod boxed;
@@ -25,6 +26,7 @@ pub mod run;
 pub mod test;
 pub mod unwrap;
 
+pub use animation::Animation;
 pub use boxed::Boxed;
 pub use event::Event;
 pub use math::{mm_to_inch, IntoF32};
