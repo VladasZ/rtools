@@ -1,36 +1,26 @@
 use std::fmt::{Debug, Formatter};
 
+use crate::Unwrap;
+
 pub struct Event<T = ()> {
-    subscriber:         Option<Box<dyn FnMut(T) + 'static>>,
-    pub panic_if_empty: bool,
+    subscriber: Unwrap<dyn FnMut(T) + 'static>,
 }
 
 impl<T> Event<T> {
     pub fn subscribe(&mut self, action: impl FnMut(T) + 'static) {
-        debug_assert!(self.subscriber.is_none(), "Event already has a subscriber");
-        self.subscriber = Some(Box::new(action))
+        debug_assert!(self.subscriber.is_null(), "Event already has a subscriber");
+        self.subscriber = Unwrap::from_box(Box::new(action));
     }
 
     pub fn trigger(&mut self, value: T) {
-        if self.subscriber.is_none() {
-            if self.panic_if_empty {
-                error!("Event triggered without subscriber");
-                panic!("Event triggered without subscriber");
-            } else {
-                return;
-            }
-        }
-
-        let sub = self.subscriber.as_mut().unwrap();
-        sub(value)
+        (self.subscriber)(value)
     }
 }
 
 impl<T> Default for Event<T> {
     fn default() -> Self {
         Self {
-            subscriber:     Default::default(),
-            panic_if_empty: false,
+            subscriber: Default::default(),
         }
     }
 }

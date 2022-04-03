@@ -27,13 +27,12 @@ impl Animation {
 
     pub fn value(&self) -> f32 {
         debug_assert!(self.span != 0.0);
-        let duration = self.duration;
         let now = Utc::now().timestamp_millis();
         let delta = (now - self.stamp) as f32;
-        let passed = (delta / duration) as u64;
+        let passed = (delta / self.duration) as u64;
         let even = passed.is_even();
         let passed = passed as f32;
-        let delta = delta - (passed * duration);
+        let delta = delta - (passed * self.duration);
         let ratio = delta / (self.duration);
         let span = if even {
             self.span * ratio

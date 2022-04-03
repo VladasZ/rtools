@@ -103,7 +103,7 @@ impl<T: ?Sized> Debug for Rglica<T> {
     }
 }
 
-impl<T: Debug + ?Sized> Debug for Rglica<T> {
+impl<T: ?Sized + Debug> Debug for Rglica<T> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         if self.is_null() {
             return self.ptr.fmt(f);
