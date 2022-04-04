@@ -13,6 +13,11 @@ impl<T> Event<T> {
     }
 
     pub fn trigger(&mut self, value: T) {
+        if self.subscriber.is_null() {
+            dbg!("event triggered without subscriber");
+            dbg!(std::any::type_name::<T>());
+            return;
+        }
         (self.subscriber)(value)
     }
 }
