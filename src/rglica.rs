@@ -23,7 +23,7 @@ impl<T: ?Sized> Rglica<T> {
         let ptr = NonNull::new(rf as *const T as *mut T);
         debug_assert!(ptr.is_some(), "Failed to cast ref to Rglica");
         Self {
-            ptr: ptr.unwrap().into(),
+            ptr: unsafe { ptr.unwrap_unchecked().into() },
         }
     }
 
@@ -49,7 +49,7 @@ impl<T: ?Sized> Deref for Rglica<T> {
             "Null Rglica: ",
             std::any::type_name::<T>()
         );
-        unsafe { self.ptr.unwrap().as_ref() }
+        unsafe { self.ptr.unwrap_unchecked().as_ref() }
     }
 }
 
@@ -61,7 +61,7 @@ impl<T: ?Sized> DerefMut for Rglica<T> {
             "Null Rglica: ",
             std::any::type_name::<T>()
         );
-        unsafe { self.ptr.unwrap().as_mut() }
+        unsafe { self.ptr.unwrap_unchecked().as_mut() }
     }
 }
 
@@ -80,7 +80,7 @@ impl<T: ?Sized> ToRglica<T> for Box<T> {
         let ptr = NonNull::new(self.as_ref() as *const T as *mut T);
         debug_assert!(ptr.is_some(), "Failed to make Rglica from Box");
         Rglica {
-            ptr: ptr.unwrap().into(),
+            ptr: unsafe { ptr.unwrap_unchecked().into() },
         }
     }
 }
