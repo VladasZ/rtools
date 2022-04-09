@@ -1,5 +1,8 @@
 #![allow(incomplete_features)]
 #![feature(specialization)]
+#![feature(const_trait_impl)]
+#![feature(const_fn_floating_point_arithmetic)]
+#![feature(const_for)]
 
 #[macro_use]
 extern crate log;
@@ -8,7 +11,6 @@ extern crate core;
 pub mod address;
 pub mod animation;
 pub mod array_view;
-pub mod as_any;
 pub mod boxed;
 pub mod bytes;
 pub mod data;
