@@ -1,8 +1,11 @@
-use std::{marker::PhantomData, ops::Deref};
+use std::{
+    fmt::{Debug, Formatter},
+    marker::PhantomData,
+    ops::Deref,
+};
 
 use crate::data_manager::Managed;
 
-#[derive(Debug)]
 pub struct Handle<T: Managed> {
     hash:  u64,
     _data: PhantomData<T>,
@@ -59,5 +62,11 @@ impl<T: Managed> Clone for Handle<T> {
             hash:  self.hash,
             _data: Default::default(),
         }
+    }
+}
+
+impl<T: Managed> Debug for Handle<T> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.hash.fmt(f)
     }
 }
