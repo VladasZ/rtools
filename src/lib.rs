@@ -14,6 +14,7 @@ pub mod array_view;
 pub mod boxed;
 pub mod bytes;
 pub mod data;
+pub mod data_manager;
 pub mod event;
 pub mod file;
 pub mod math;
