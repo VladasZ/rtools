@@ -1,7 +1,7 @@
 use std::{
     fmt::{Debug, Formatter},
     marker::PhantomData,
-    ops::Deref,
+    ops::{Deref, DerefMut},
 };
 
 use crate::data_manager::Managed;
@@ -20,7 +20,7 @@ impl<T: Managed> Handle<T> {
         self.hash == u64::MAX
     }
 
-    pub fn get(&self) -> Option<&T> {
+    pub fn get(&self) -> Option<&mut T> {
         if self.is_null() {
             return None;
         }
@@ -31,6 +31,13 @@ impl<T: Managed> Handle<T> {
 impl<T: Managed> Deref for Handle<T> {
     type Target = T;
     fn deref(&self) -> &T {
+        debug_assert!(self.is_ok());
+        T::get_by_hash(self.hash)
+    }
+}
+
+impl<T: Managed> DerefMut for Handle<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
         debug_assert!(self.is_ok());
         T::get_by_hash(self.hash)
     }

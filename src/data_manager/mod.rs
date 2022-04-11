@@ -30,8 +30,8 @@ pub trait DataManager<T: 'static + Managed> {
         hash.into()
     }
 
-    fn get_by_hash(hash: u64) -> &'static T {
-        &Self::storage()[&hash]
+    fn get_by_hash(hash: u64) -> &'static mut T {
+        Self::storage().get_mut(&hash).unwrap()
     }
 
     fn get(name: &str) -> Handle<T> {
