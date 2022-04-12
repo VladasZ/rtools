@@ -45,8 +45,7 @@ impl<T: ?Sized> Deref for Rglica<T> {
     fn deref(&self) -> &T {
         debug_assert!(
             self.ptr.is_some(),
-            "{}{}",
-            "Null Rglica: ",
+            "Null Rglica: {}",
             std::any::type_name::<T>()
         );
         unsafe { self.ptr.unwrap_unchecked().as_ref() }
@@ -57,8 +56,7 @@ impl<T: ?Sized> DerefMut for Rglica<T> {
     fn deref_mut(&mut self) -> &mut T {
         debug_assert!(
             self.ptr.is_some(),
-            "{}{}",
-            "Null Rglica: ",
+            "Null Rglica: {}",
             std::any::type_name::<T>()
         );
         unsafe { self.ptr.unwrap_unchecked().as_mut() }
