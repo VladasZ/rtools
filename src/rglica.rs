@@ -4,7 +4,7 @@ use std::{
     ptr::NonNull,
 };
 
-use crate::{address::Address, bytes::data_pointer, backtrace};
+use crate::{address::Address, backtrace, bytes::data_pointer};
 
 pub struct Rglica<T: ?Sized> {
     pub ptr: Option<NonNull<T>>,

@@ -39,7 +39,8 @@ pub trait DataManager<T: 'static + Managed> {
         error!("Hash: OK");
         let storage = Self::storage();
         error!("Storage: OK");
-        storage.entry(hash)
+        storage
+            .entry(hash)
             .or_insert_with(|| T::load(&Self::path().join(name)));
         error!("Load: OK");
         hash.into()
