@@ -8,6 +8,7 @@ use backtrace::Backtrace;
 pub fn backtrace() {
     let bt = Backtrace::new();
     println!("{:?}", bt);
+    error!("{:?}", bt);
 }
 
 pub fn hash(obj: impl Hash) -> u64 {

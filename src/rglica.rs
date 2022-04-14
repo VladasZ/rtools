@@ -4,7 +4,7 @@ use std::{
     ptr::NonNull,
 };
 
-use crate::{address::Address, bytes::data_pointer};
+use crate::{address::Address, bytes::data_pointer, backtrace};
 
 pub struct Rglica<T: ?Sized> {
     pub ptr: Option<NonNull<T>>,
@@ -43,22 +43,22 @@ impl<T: ?Sized> Rglica<T> {
 impl<T: ?Sized> Deref for Rglica<T> {
     type Target = T;
     fn deref(&self) -> &T {
-        debug_assert!(
-            self.ptr.is_some(),
-            "Null Rglica: {}",
-            std::any::type_name::<T>()
-        );
+        if self.is_null() {
+            error!("Null Rglica: {}", std::any::type_name::<T>());
+            backtrace();
+            panic!("Null Rglica: {}", std::any::type_name::<T>());
+        }
         unsafe { self.ptr.unwrap_unchecked().as_ref() }
     }
 }
 
 impl<T: ?Sized> DerefMut for Rglica<T> {
     fn deref_mut(&mut self) -> &mut T {
-        debug_assert!(
-            self.ptr.is_some(),
-            "Null Rglica: {}",
-            std::any::type_name::<T>()
-        );
+        if self.is_null() {
+            error!("Null Rglica: {}", std::any::type_name::<T>());
+            backtrace();
+            panic!("Null Rglica: {}", std::any::type_name::<T>());
+        }
         unsafe { self.ptr.unwrap_unchecked().as_mut() }
     }
 }
