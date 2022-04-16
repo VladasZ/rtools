@@ -1,35 +1,25 @@
 use std::{
     cell::RefCell,
     fmt::{Debug, Formatter},
+    ops::DerefMut,
 };
 
-use crate::Unwrap;
+use crate::{ToRglica, Unwrap};
 
 pub struct Event<T = ()> {
     subscriber: RefCell<Unwrap<dyn FnMut(T) + 'static>>,
 }
 
 impl<T> Event<T> {
-    pub fn subscrifdfbe(&self, action: impl FnMut(T) + 'static) {
+    pub fn set<Obj: 'static>(&self, obj: &Obj, mut action: impl FnMut(T, &mut Obj) + 'static) {
         debug_assert!(
             self.subscriber.borrow().is_null(),
             "Event already has a subscriber"
         );
-        self.subscriber.replace(Unwrap::from_box(Box::new(action)));
-    }
-
-    pub fn subscribe<Obj: 'static + Copy>(
-        &self,
-        obj: Obj,
-        mut action: impl FnMut(T, Obj) + 'static,
-    ) {
-        debug_assert!(
-            self.subscriber.borrow().is_null(),
-            "Event already has a subscriber"
-        );
+        let mut rglica = obj.to_rglica();
         self.subscriber
             .replace(Unwrap::from_box(Box::new(move |value| {
-                action(value, obj);
+                action(value, rglica.deref_mut());
             })));
     }
 
