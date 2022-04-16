@@ -1,9 +1,9 @@
 use rtools::Event;
 
 fn main() {
-    let mut kok_changed = Event::<u32>::default();
+    let kok_changed = Event::<u32>::default();
 
-    kok_changed.subscribe(|kok| {
+    kok_changed.subscribe((), |kok, _| {
         dbg!(kok + 1);
     });
 
