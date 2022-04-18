@@ -1,9 +1,11 @@
+#![allow(clippy::mismatched_target_os)]
+
 use std::{
     fs,
     path::{Path, PathBuf},
 };
 
-cfg_if::cfg_if! {if #[cfg(target_os = "android")] {
+cfg_if::cfg_if! { if #[cfg(android)] {
     use android_ndk_sys::AAsset_getLength;
     use android_ndk_sys::AASSET_MODE_STREAMING;
     use android_ndk_sys::AAssetManager_open;
@@ -35,17 +37,17 @@ impl File {
     }
 }
 
-#[cfg(target_os = "android")]
+#[cfg(android)]
 static mut ASSET_MANAGER: *mut android_ndk_sys::AAssetManager = std::ptr::null_mut();
 
-#[cfg(target_os = "android")]
+#[cfg(android)]
 pub fn set_asset_manager(env: android_ndk_sys::JNIEnv, asset_manager: android_ndk_sys::jobject) {
     unsafe { ASSET_MANAGER = AAssetManager_fromJava(env as _, asset_manager) }
 }
 
 impl File {
     pub fn read_to_string(path: impl AsRef<Path>) -> String {
-        cfg_if::cfg_if! {if #[cfg(target_os = "android")] {
+        cfg_if::cfg_if! { if #[cfg(android)] {
             std::str::from_utf8(&unsafe { android_read(path) }).unwrap().to_string()
         } else {
             match fs::read_to_string(&path) {
@@ -59,7 +61,7 @@ impl File {
     }
 
     pub fn read(path: impl AsRef<Path>) -> Vec<u8> {
-        cfg_if::cfg_if! {if #[cfg(target_os = "android")] {
+        cfg_if::cfg_if! { if #[cfg(android)] {
             unsafe { android_read(path) }
         } else {
             match fs::read(&path) {
@@ -73,7 +75,7 @@ impl File {
     }
 }
 
-#[cfg(target_os = "android")]
+#[cfg(android)]
 pub unsafe fn android_read(path: impl AsRef<Path>) -> Vec<u8> {
     use std::ffi::CString;
 

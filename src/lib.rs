@@ -1,4 +1,5 @@
 #![allow(incomplete_features)]
+#![allow(clippy::mismatched_target_os)]
 #![feature(specialization)]
 #![feature(const_trait_impl)]
 #![feature(const_fn_floating_point_arithmetic)]
