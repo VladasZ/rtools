@@ -5,5 +5,6 @@ impl Platform {
     pub const WIN: bool = cfg!(target_os = "windows");
     pub const IOS: bool = cfg!(target_os = "ios");
     pub const ANDROID: bool = cfg!(target_os = "android");
-    pub const MOBILE: bool = Platform::IOS || Platform::ANDROID;
+    pub const MOBILE: bool = Self::IOS || Self::ANDROID;
+    pub const DESKTOP: bool = !Self::MOBILE;
 }
