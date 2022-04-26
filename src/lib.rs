@@ -20,6 +20,7 @@ pub mod event;
 pub mod file;
 pub mod math;
 pub mod misc;
+pub mod passed;
 pub mod paths;
 pub mod persistent;
 pub mod platform;
