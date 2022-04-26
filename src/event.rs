@@ -11,6 +11,14 @@ pub struct Event<T = ()> {
 }
 
 impl<T> Event<T> {
+    pub fn sub(&self, action: impl FnMut(T) + 'static) {
+        debug_assert!(
+            self.subscriber.borrow().is_null(),
+            "Event already has a subscriber"
+        );
+        self.subscriber.replace(Unwrap::from_box(Box::new(action)));
+    }
+
     pub fn set<Obj: 'static>(&self, obj: &Obj, mut action: impl FnMut(T, &mut Obj) + 'static) {
         debug_assert!(
             self.subscriber.borrow().is_null(),
