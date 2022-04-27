@@ -14,6 +14,12 @@ impl const IntoF32 for u32 {
     }
 }
 
+impl const IntoF32 for usize {
+    fn into_f32(self) -> f32 {
+        self as f32
+    }
+}
+
 impl const IntoF32 for f32 {
     fn into_f32(self) -> f32 {
         self
