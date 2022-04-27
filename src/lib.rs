@@ -29,6 +29,7 @@ pub mod regex;
 pub mod rglica;
 pub mod run;
 pub mod test;
+mod time;
 pub mod unwrap;
 
 pub use animation::Animation;
@@ -39,6 +40,7 @@ pub use misc::backtrace;
 pub use persistent::Persistent;
 pub use property::Property;
 pub use rglica::{Rglica, ToRglica};
+pub use time::Time;
 pub use unwrap::Unwrap;
 
 pub trait Remove<T> {
