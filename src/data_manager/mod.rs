@@ -30,7 +30,19 @@ pub trait DataManager<T: 'static + Managed> {
         hash.into()
     }
 
-    fn get_by_hash(hash: u64) -> &'static mut T {
+    fn handle_with_name(name: &str) -> Option<Handle<T>> {
+        Self::handle_with_hash(hash(name))
+    }
+
+    fn handle_with_hash(hash: u64) -> Option<Handle<T>> {
+        if Self::storage().contains_key(&hash) {
+            Some(hash.into())
+        } else {
+            None
+        }
+    }
+
+    fn get_ref_by_hash(hash: u64) -> &'static mut T {
         Self::storage().get_mut(&hash).unwrap()
     }
 
