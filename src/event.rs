@@ -19,7 +19,7 @@ impl<T> Event<T> {
         self.subscriber.replace(Unwrap::from_box(Box::new(action)));
     }
 
-    pub fn set<Obj: 'static>(&self, obj: &Obj, mut action: impl FnMut(T, &mut Obj) + 'static) {
+    pub fn set<Obj: 'static>(&self, obj: &Obj, mut action: impl FnMut(&mut Obj, T) + 'static) {
         debug_assert!(
             self.subscriber.borrow().is_null(),
             "Event already has a subscriber"
@@ -27,7 +27,7 @@ impl<T> Event<T> {
         let mut rglica = obj.to_rglica();
         self.subscriber
             .replace(Unwrap::from_box(Box::new(move |value| {
-                action(value, rglica.deref_mut());
+                action(rglica.deref_mut(), value);
             })));
     }
 
