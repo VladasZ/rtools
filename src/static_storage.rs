@@ -46,6 +46,7 @@ impl<T: 'static, S: StaticStorage<T>> StaticStorageInternal<T, S> for S {
 #[macro_export]
 macro_rules! static_storage {
     ($name:ident, $type:ident) => {
+        use rtools::static_storage::*;
         pub struct $name;
         impl StaticStorage<$type> for $name {
             fn default() -> $type {
@@ -54,6 +55,7 @@ macro_rules! static_storage {
         }
     };
     ($name:ident, $type:ident, $default:expr) => {
+        use rtools::static_storage::*;
         pub struct $name;
         impl StaticStorage<$type> for $name {
             fn default() -> $type {

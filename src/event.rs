@@ -32,12 +32,11 @@ impl<T> Event<T> {
     }
 
     pub fn trigger(&self, value: T) {
-        if self.subscriber.borrow().is_null() {
-            dbg!("event triggered without subscriber");
-            dbg!(std::any::type_name::<T>());
+        let mut sub = self.subscriber.borrow_mut();
+        if sub.is_null() {
             return;
         }
-        (self.subscriber.borrow_mut())(value)
+        sub(value);
     }
 }
 

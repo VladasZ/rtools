@@ -28,7 +28,7 @@ mod property;
 pub mod regex;
 pub mod rglica;
 pub mod run;
-mod static_storage;
+pub mod static_storage;
 pub mod test;
 mod time;
 pub mod unwrap;
