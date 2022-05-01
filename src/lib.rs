@@ -28,6 +28,7 @@ mod property;
 pub mod regex;
 pub mod rglica;
 pub mod run;
+mod static_storage;
 pub mod test;
 mod time;
 pub mod unwrap;
@@ -40,6 +41,7 @@ pub use misc::backtrace;
 pub use persistent::Persistent;
 pub use property::Property;
 pub use rglica::{Rglica, ToRglica};
+pub use static_storage::StaticStorage;
 pub use time::Time;
 pub use unwrap::Unwrap;
 
