@@ -16,6 +16,17 @@ pub trait StaticStorage<T: 'static>: Sized {
         bx.downcast_ref().unwrap()
     }
 
+    fn get_mut() -> &'static mut T {
+        let bx = match Self::storage().get_mut(Self::type_name()) {
+            Some(val) => val,
+            None => {
+                Self::set(Self::default());
+                Self::storage().get_mut(Self::type_name()).unwrap()
+            }
+        };
+        bx.downcast_mut().unwrap()
+    }
+
     fn set(value: T) {
         Self::storage().insert(Self::type_name(), Box::new(value));
     }
@@ -44,7 +55,7 @@ impl<T: 'static, S: StaticStorage<T>> StaticStorageInternal<T, S> for S {
 }
 
 #[macro_export]
-macro_rules! static_storage {
+macro_rules! pub_static_storage {
     ($name:ident, $type:ident) => {
         use rtools::static_storage::*;
         pub struct $name;
@@ -57,6 +68,26 @@ macro_rules! static_storage {
     ($name:ident, $type:ident, $default:expr) => {
         use rtools::static_storage::*;
         pub struct $name;
+        impl StaticStorage<$type> for $name {
+            fn default() -> $type {
+                $default
+            }
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! static_storage {
+    ($name:ident, $type:ident) => {
+        struct $name;
+        impl StaticStorage<$type> for $name {
+            fn default() -> $type {
+                Default::default()
+            }
+        }
+    };
+    ($name:ident, $type:ident, $default:expr) => {
+        struct $name;
         impl StaticStorage<$type> for $name {
             fn default() -> $type {
                 $default

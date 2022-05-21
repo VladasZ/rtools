@@ -16,6 +16,7 @@ pub mod boxed;
 pub mod bytes;
 pub mod data;
 pub mod data_manager;
+mod dispatch;
 pub mod event;
 pub mod file;
 pub mod math;
@@ -35,6 +36,7 @@ pub mod unwrap;
 
 pub use animation::Animation;
 pub use boxed::Boxed;
+pub use dispatch::Dispatch;
 pub use event::Event;
 pub use math::{mm_to_inch, IntoF32};
 pub use misc::backtrace;
