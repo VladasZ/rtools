@@ -1,9 +1,15 @@
 use rtools::Dispatch;
 
-fn main() {
-    Dispatch::dispatch(|| {
-        dbg!("sopokokolesverak4inikoled");
-    });
+#[tokio::main]
+async fn main() {
+    Dispatch::dispatch(
+        async {
+            return 5;
+        },
+        |value| {
+            dbg!(value);
+        },
+    );
 
     Dispatch::call();
     Dispatch::call();
