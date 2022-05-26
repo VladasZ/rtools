@@ -10,6 +10,9 @@ pub struct Rglica<T: ?Sized> {
     pub ptr: Option<NonNull<T>>,
 }
 
+unsafe impl<T: ?Sized> Send for Rglica<T> {}
+unsafe impl<T: ?Sized> Sync for Rglica<T> {}
+
 impl<T: ?Sized> Copy for Rglica<T> {}
 
 impl<T: ?Sized> Clone for Rglica<T> {
@@ -65,6 +68,12 @@ impl<T: ?Sized> DerefMut for Rglica<T> {
 
 impl<T: ?Sized> Default for Rglica<T> {
     fn default() -> Rglica<T> {
+        Self { ptr: None }
+    }
+}
+
+impl<T: ?Sized> Rglica<T> {
+    pub const fn const_default() -> Self {
         Self { ptr: None }
     }
 }

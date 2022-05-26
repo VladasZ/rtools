@@ -4,16 +4,16 @@ use tokio::spawn;
 
 use crate::{static_storage, StaticStorage};
 
-type Storage = Mutex<Vec<Box<dyn Fn()>>>;
+type Storage = Mutex<Vec<Box<dyn FnOnce()>>>;
 
 static_storage!(Actions, Storage);
 
 pub struct Dispatch;
 
 impl Dispatch {
-    pub fn dispatch<T: Copy + 'static>(
+    pub fn dispatch<T: 'static>(
         fut: impl Future<Output = T> + Send + 'static,
-        completion: impl Fn(T) + Send + 'static,
+        completion: impl FnOnce(T) + Send + 'static,
     ) {
         spawn(async {
             let val = fut.await;
@@ -24,9 +24,8 @@ impl Dispatch {
 
     pub fn call() {
         let data = Actions::get_mut().get_mut().unwrap();
-        for action in data.iter() {
+        while let Some(action) = data.pop() {
             action()
         }
-        data.clear()
     }
 }
