@@ -5,7 +5,7 @@ use crate::IntoF32;
 
 const SEC: f32 = 1_000.0;
 
-#[derive(Debug, Default)]
+#[derive(Default, Debug)]
 pub struct Animation {
     start:    f32,
     span:     f32,
