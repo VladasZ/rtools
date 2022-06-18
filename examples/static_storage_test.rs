@@ -1,4 +1,4 @@
-use rtools::static_storage;
+use rtools::{static_storage, StaticStorage};
 
 static_storage!(Meslo, i32);
 static_storage!(Kreslo, i32, 77);
