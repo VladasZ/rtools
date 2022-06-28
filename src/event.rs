@@ -10,7 +10,12 @@ pub struct Event<T = ()> {
     subscriber: RefCell<Unwrap<dyn FnMut(T) + 'static>>,
 }
 
-impl<T> Event<T> {
+impl<T: 'static> Event<T> {
+    pub fn link(&self, event: &Self) {
+        let event = event.to_rglica();
+        self.sub(move |val| event.trigger(val));
+    }
+
     pub fn sub(&self, action: impl FnMut(T) + 'static) {
         debug_assert!(
             self.subscriber.borrow().is_null(),
