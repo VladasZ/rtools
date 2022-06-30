@@ -43,6 +43,10 @@ impl<T: 'static> Event<T> {
         }
         sub(value);
     }
+
+    pub fn unsubscribe(&self) {
+        self.subscriber.replace(Default::default());
+    }
 }
 
 impl<T> Default for Event<T> {
