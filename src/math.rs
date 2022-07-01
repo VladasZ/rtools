@@ -1,4 +1,4 @@
-pub trait IntoF32: Copy + Sized {
+pub trait IntoF32: Copy + Sized + Sync + Send + 'static {
     fn into_f32(self) -> f32;
 }
 
