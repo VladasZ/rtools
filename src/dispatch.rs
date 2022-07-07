@@ -1,14 +1,14 @@
-use std::{future::Future, sync::Mutex};
+use std::{future::Future, ops::DerefMut, sync::Mutex};
 
 use lazy_static::lazy_static;
 use tokio::spawn;
 
-use crate::{misc::sleep, IntoF32};
+use crate::{misc::sleep, rglica::ToRglica, IntoF32};
 
 type Storage = Mutex<Vec<Box<dyn FnOnce() + Send>>>;
 
 lazy_static! {
-    static ref NEW_STORAGE: Storage = Default::default();
+    static ref STORAGE: Storage = Default::default();
 }
 
 pub struct Dispatch;
@@ -20,21 +20,30 @@ impl Dispatch {
     ) {
         spawn(async {
             let val = fut.await;
-            let mut data = NEW_STORAGE.lock().unwrap();
-            data.push(Box::new(move || completion(val)));
+            STORAGE
+                .lock()
+                .unwrap()
+                .push(Box::new(move || completion(val)));
         });
     }
 
-    pub fn after(delay: impl IntoF32, action: impl FnOnce() + Send + 'static) {
+    pub fn after<Obj: 'static>(
+        obj: &Obj,
+        delay: impl IntoF32,
+        action: impl FnOnce(&mut Obj) + Send + 'static,
+    ) {
+        let mut rglica = obj.to_rglica();
         spawn(async move {
             sleep(delay);
-            let mut data = NEW_STORAGE.lock().unwrap();
-            data.push(Box::new(action));
+            STORAGE
+                .lock()
+                .unwrap()
+                .push(Box::new(move || action(rglica.deref_mut())));
         });
     }
 
     pub fn call() {
-        let mut data = NEW_STORAGE.lock().unwrap();
+        let mut data = STORAGE.lock().unwrap();
         while let Some(action) = data.pop() {
             action()
         }

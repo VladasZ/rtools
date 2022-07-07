@@ -31,8 +31,8 @@ pub trait DataManager<T: 'static + Managed> {
         hash.into()
     }
 
-    fn handle_with_name(name: &str) -> Option<Handle<T>> {
-        Self::handle_with_hash(hash(name))
+    fn handle_with_name(name: impl ToString) -> Option<Handle<T>> {
+        Self::handle_with_hash(hash(&name.to_string()))
     }
 
     fn handle_with_hash(hash: u64) -> Option<Handle<T>> {
@@ -47,8 +47,9 @@ pub trait DataManager<T: 'static + Managed> {
         Self::storage().get_mut(&hash).unwrap()
     }
 
-    fn get(name: &str) -> Handle<T> {
-        let hash = hash(name);
+    fn get(name: impl ToString) -> Handle<T> {
+        let name = name.to_string();
+        let hash = hash(&name);
         Self::storage()
             .entry(hash)
             .or_insert_with(|| T::load(&Self::path().join(name)));
