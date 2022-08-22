@@ -43,11 +43,11 @@ pub const fn clamped_by<Low: ~const IntoF32, High: ~const IntoF32, Value: ~const
 ) -> f32 {
     let value = value.into_f32();
     let low = low.into_f32();
-    let hight = high.into_f32();
+    let high = high.into_f32();
     if value < low {
         low
-    } else if value > hight {
-        hight
+    } else if value > high {
+        high
     } else {
         value
     }

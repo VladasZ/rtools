@@ -25,12 +25,12 @@ impl Default for Struct {
 impl Trait for Struct {}
 
 fn main() {
-    let struc = Struct::default();
-    let struc2 = Struct::default();
+    let struct = Struct::default();
+    let struct2 = Struct::default();
 
-    mothod(&struc);
-    mothod(&struc);
-    mothod(&struc2);
+    mothod(&struct);
+    mothod(&struct);
+    mothod(&struct2);
 
     mothod(&Spok {});
     mothod(&Spok {});
