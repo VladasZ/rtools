@@ -1,15 +1,15 @@
 use regex::Regex;
 
-pub fn find_match(str: impl AsRef<str>, query: impl AsRef<str>) -> String {
-    let re = Regex::new(query.as_ref()).unwrap();
-    let mat = re.find(str.as_ref()).unwrap();
+pub fn find_match(str: &str, query: &str) -> String {
+    let re = Regex::new(query).unwrap();
+    let mat = re.find(str).unwrap();
     String::from(mat.as_str())
 }
 
-pub fn find_matches(str: impl AsRef<str>, query: impl AsRef<str>) -> Vec<String> {
-    Regex::new(query.as_ref())
+pub fn find_matches(str: &str, query: &str) -> Vec<String> {
+    Regex::new(query)
         .unwrap()
-        .find_iter(str.as_ref())
-        .map(|x| String::from(x.as_str()))
+        .find_iter(str)
+        .map(|x| x.as_str().to_string())
         .collect()
 }
