@@ -12,15 +12,15 @@ pub struct Handle<T: Managed> {
 }
 
 impl<T: Managed> Handle<T> {
-    pub fn is_ok(&self) -> bool {
-        !self.is_null()
-    }
-
     pub fn is_null(&self) -> bool {
         self.hash == u64::MAX
     }
 
-    pub fn get(&self) -> Option<&mut T> {
+    pub fn is_ok(&self) -> bool {
+        !self.is_null()
+    }
+
+    pub fn get(&self) -> Option<&T> {
         if self.is_null() {
             return None;
         }
@@ -39,7 +39,7 @@ impl<T: Managed> Deref for Handle<T> {
 impl<T: Managed> DerefMut for Handle<T> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         debug_assert!(self.is_ok(), "Null Handle: {}", std::any::type_name::<T>());
-        T::get_ref_by_hash(self.hash)
+        T::get_ref_by_hash_mut(self.hash)
     }
 }
 

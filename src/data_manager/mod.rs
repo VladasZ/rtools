@@ -15,7 +15,7 @@ pub trait LoadFromPath: Sized {
     fn load(path: &Path) -> Self;
 }
 
-pub trait DataManager<T: 'static + Managed> {
+pub trait DataManager<T: Managed> {
     fn path() -> &'static Path;
     fn set_path(path: &Path);
 
@@ -43,7 +43,11 @@ pub trait DataManager<T: 'static + Managed> {
         }
     }
 
-    fn get_ref_by_hash(hash: u64) -> &'static mut T {
+    fn get_ref_by_hash(hash: u64) -> &'static T {
+        Self::storage().get(&hash).unwrap()
+    }
+
+    fn get_ref_by_hash_mut(hash: u64) -> &'static mut T {
         Self::storage().get_mut(&hash).unwrap()
     }
 
