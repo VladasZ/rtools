@@ -21,8 +21,4 @@ impl Default for Test {
     }
 }
 
-fn main() {
-    dbg!(to_bytes(&Test::default()));
-
-    dbg!(from_bytes::<Test>(&vec![11, 22, 33, 44]));
-}
+fn main() {}

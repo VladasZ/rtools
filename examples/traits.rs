@@ -9,18 +9,14 @@ trait SpilkogCallbacks {
 }
 
 impl<T: ?Sized + Spilkog> SpilkogCallbacks for T {
-    default fn setup(&self) {
-        dbg!("Defakto");
-    }
+    default fn setup(&self) {}
 }
 
 #[derive(Default)]
 struct Strekol;
 impl Spilkog for Strekol {}
 impl SpilkogCallbacks for Strekol {
-    fn setup(&self) {
-        dbg!("implomentalnostk!!");
-    }
+    fn setup(&self) {}
 }
 
 #[derive(Default)]

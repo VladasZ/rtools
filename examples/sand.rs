@@ -20,6 +20,4 @@ fn main() {
     let gr = BrokenGreeter;
 
     gr.say_hello();
-
-    // dbg!("hello");
 }

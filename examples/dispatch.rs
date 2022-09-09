@@ -6,9 +6,7 @@ async fn main() {
         async {
             return 5;
         },
-        |value| {
-            dbg!(value);
-        },
+        |_| {},
     );
 
     Dispatch::call();

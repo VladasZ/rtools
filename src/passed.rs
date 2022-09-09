@@ -6,7 +6,7 @@ pub struct Passed {
 
 impl Passed {
     pub fn print(&mut self) {
-        dbg!(&self.passed());
+        info!("{}", &self.passed());
     }
 
     pub fn passed(&mut self) -> i64 {

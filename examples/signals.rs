@@ -23,12 +23,8 @@ impl SignalsHandler {
             loop {
                 let cancelled = moved.cancelled.load(Ordering::Relaxed);
 
-                dbg!(&cancelled);
-
                 let ctrl_c = tokio::signal::ctrl_c();
                 ctrl_c.await.unwrap();
-
-                dbg!("OOO COTRO COO!!");
 
                 moved.cancelled.store(cancelled + 1, Ordering::Relaxed);
             }
@@ -45,15 +41,12 @@ async fn slot() -> Result<(), Box<dyn std::error::Error>> {
         let mut result = 0;
         for i in 0..200000 {
             result += i;
-            dbg!(handler.cancelled.load(Ordering::Relaxed));
             sleep(Duration::from_secs(1)).await;
         }
         result
     });
 
     let result = join.await?;
-
-    dbg!(result);
 
     Ok(())
 }

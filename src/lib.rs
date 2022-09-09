@@ -19,6 +19,7 @@ pub mod data_manager;
 mod dispatch;
 pub mod event;
 pub mod file;
+mod logger;
 pub mod math;
 mod misc;
 pub mod passed;
@@ -38,6 +39,7 @@ pub use animation::Animation;
 pub use boxed::Boxed;
 pub use dispatch::Dispatch;
 pub use event::Event;
+pub use logger::init_log;
 pub use math::{mm_to_inch, IntoF32};
 pub use misc::{backtrace, *};
 pub use persistent::Persistent;
@@ -55,7 +57,7 @@ impl<T: PartialEq> Remove<T> for Vec<T> {
         if let Some(pos) = self.iter().position(|a| a == val) {
             self.remove(pos);
         } else {
-            dbg!("Nothing to remove");
+            info!("Nothing to remove");
         }
     }
 }

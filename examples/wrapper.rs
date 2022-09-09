@@ -19,9 +19,6 @@ impl Default for TestGest {
 fn main() {
     let mut wrapper = Persistent::<TestGest>::new("sokol");
 
-    dbg!(&wrapper.i);
-    dbg!(&wrapper.stro);
-
     wrapper.i += 1;
     wrapper.stro = "guga".into();
 

@@ -6,6 +6,5 @@ fn main() {
     let mut pass = Passed::default();
 
     pass.print();
-    dbg!("hello");
     pass.print();
 }

@@ -36,6 +36,4 @@ fn main() {
     mothod(&Spok {});
 }
 
-fn mothod(val: &dyn Trait) {
-    dbg!(to_data::<u64, _>(val));
-}
+fn mothod(val: &dyn Trait) {}

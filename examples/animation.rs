@@ -7,7 +7,5 @@ fn main() {
         use std::{thread, time};
         let dur = time::Duration::from_millis(10);
         thread::sleep(dur);
-
-        dbg!(animation.value());
     }
 }
