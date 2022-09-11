@@ -1,11 +1,12 @@
-extern crate simplelog;
-
-use log::LevelFilter;
-use simplelog::{
-    ColorChoice, ConfigBuilder, LevelPadding, TermLogger, TerminalMode, ThreadLogMode,
-};
-
+#[cfg(not(android))]
 pub fn init_log() {
+    use log::LevelFilter;
+    extern crate simplelog;
+
+    use simplelog::{
+        ColorChoice, ConfigBuilder, LevelPadding, TermLogger, TerminalMode, ThreadLogMode,
+    };
+
     TermLogger::init(
         LevelFilter::Info,
         ConfigBuilder::new()
@@ -20,4 +21,24 @@ pub fn init_log() {
         ColorChoice::Auto,
     )
     .expect("Failed to initialize logger");
+    trace!("Logger: OK");
+}
+
+#[cfg(android)]
+pub fn init_log() {
+    use android_logger::{Config, FilterBuilder};
+    use log::Level;
+
+    android_logger::init_once(
+        Config::default()
+            .with_min_level(Level::Trace)
+            .with_tag("test_engine")
+            .with_filter(
+                FilterBuilder::new()
+                    .parse("debug,hello::crate=error")
+                    .build(),
+            ),
+    );
+
+    trace!("Android logger: OK");
 }
