@@ -1,5 +1,4 @@
 use chrono::Utc;
-use num_integer::Integer;
 
 use crate::IntoF32;
 
@@ -30,7 +29,7 @@ impl Animation {
         let now = Utc::now().timestamp_millis();
         let delta = (now - self.stamp) as f32;
         let passed = (delta / self.duration) as u64;
-        let even = passed.is_even();
+        let even = passed % 2 == 0;
         let passed = passed as f32;
         let delta = delta - (passed * self.duration);
         let ratio = delta / (self.duration);

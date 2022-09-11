@@ -4,6 +4,7 @@
 #![feature(const_trait_impl)]
 #![feature(const_fn_floating_point_arithmetic)]
 #![feature(const_for)]
+#![feature(const_default_impls)]
 
 #[macro_use]
 extern crate log;

@@ -1,15 +1,12 @@
 use std::{future::Future, ops::DerefMut, sync::Mutex};
 
-use lazy_static::lazy_static;
 use tokio::spawn;
 
 use crate::{misc::sleep, rglica::ToRglica, IntoF32};
 
 type Storage = Mutex<Vec<Box<dyn FnOnce() + Send>>>;
 
-lazy_static! {
-    static ref STORAGE: Storage = Default::default();
-}
+static STORAGE: Storage = Storage::new(Default::default());
 
 pub struct Dispatch;
 
