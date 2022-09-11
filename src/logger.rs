@@ -8,7 +8,7 @@ pub fn init_log() {
     };
 
     TermLogger::init(
-        LevelFilter::Info,
+        LevelFilter::Debug,
         ConfigBuilder::new()
             .set_time_level(LevelFilter::Off)
             .set_level_padding(LevelPadding::Right)
