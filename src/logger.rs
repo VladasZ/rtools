@@ -1,3 +1,5 @@
+#![allow(clippy::mismatched_target_os)]
+
 #[cfg(not(android))]
 pub fn init_log() {
     use log::LevelFilter;
