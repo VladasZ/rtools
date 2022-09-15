@@ -8,7 +8,7 @@ macro_rules! static_get {
                     if _STATIC_GET.is_null() {
                         _STATIC_GET = Box::into_raw(Box::new($type::default()));
                     }
-                    _STATIC_GET.as_ref().unwrap_unchecked()
+                    _STATIC_GET.as_ref().unwrap()
                 }
             }
         }
