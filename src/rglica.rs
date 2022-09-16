@@ -45,6 +45,18 @@ impl<T: ?Sized> Rglica<T> {
     pub fn as_ptr(&self) -> *mut T {
         self.ptr.unwrap().as_ptr()
     }
+
+    pub fn reset(&mut self) {
+        self.ptr = Default::default()
+    }
+
+    pub fn get(&mut self) -> Option<&mut T> {
+        if self.is_ok() {
+            self.deref_mut().into()
+        } else {
+            None
+        }
+    }
 }
 
 impl<T: ?Sized> Deref for Rglica<T> {

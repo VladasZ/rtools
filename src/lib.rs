@@ -31,6 +31,7 @@ mod property;
 pub mod regex;
 pub mod rglica;
 pub mod run;
+mod selectable;
 mod static_get;
 pub mod test;
 mod time;
@@ -46,6 +47,7 @@ pub use misc::{backtrace, *};
 pub use persistent::Persistent;
 pub use property::Property;
 pub use rglica::{Rglica, ToRglica};
+pub use selectable::Selectable;
 pub use time::Time;
 pub use unwrap::Unwrap;
 
