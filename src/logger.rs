@@ -44,7 +44,7 @@ fn from_usize(u: usize) -> LevelFilter {
 }
 
 #[cfg(android)]
-pub fn init_log() {
+pub fn init_log(_location: bool, _level: usize) {
     use android_logger::{Config, FilterBuilder};
     use log::Level;
 
