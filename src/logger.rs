@@ -1,8 +1,9 @@
 #![allow(clippy::mismatched_target_os)]
 
+use log::LevelFilter;
+
 #[cfg(not(android))]
-pub fn init_log() {
-    use log::LevelFilter;
+pub fn init_log(location: bool, level: usize) {
     extern crate simplelog;
 
     use simplelog::{
@@ -10,13 +11,17 @@ pub fn init_log() {
     };
 
     TermLogger::init(
-        LevelFilter::Debug,
+        from_usize(level),
         ConfigBuilder::new()
             .set_time_level(LevelFilter::Off)
             .set_level_padding(LevelPadding::Right)
             .set_thread_level(LevelFilter::Off)
             .set_thread_mode(ThreadLogMode::Both)
-            .set_location_level(LevelFilter::Off)
+            .set_location_level(if location {
+                LevelFilter::Error
+            } else {
+                LevelFilter::Off
+            })
             .set_target_level(LevelFilter::Off)
             .build(),
         TerminalMode::Mixed,
@@ -24,6 +29,18 @@ pub fn init_log() {
     )
     .expect("Failed to initialize logger");
     trace!("Logger: OK");
+}
+
+fn from_usize(u: usize) -> LevelFilter {
+    match u {
+        0 => LevelFilter::Off,
+        1 => LevelFilter::Error,
+        2 => LevelFilter::Warn,
+        3 => LevelFilter::Info,
+        4 => LevelFilter::Debug,
+        5 => LevelFilter::Trace,
+        _ => panic!("Wrong log level. 5 is max"),
+    }
 }
 
 #[cfg(android)]
