@@ -20,6 +20,17 @@ impl Random for String {
     }
 }
 
+impl Random for i32 {
+    fn random() -> Self {
+        let mut rng = thread_rng();
+        rng.gen_range(-100..100)
+    }
+
+    fn random_in(range: Range<Self>) -> Self {
+        thread_rng().gen_range(range)
+    }
+}
+
 impl Random for u32 {
     fn random() -> Self {
         let mut rng = thread_rng();

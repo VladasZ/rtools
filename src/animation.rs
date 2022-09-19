@@ -24,6 +24,10 @@ impl Animation {
         }
     }
 
+    pub fn finished(&self) -> bool {
+        Utc::now().timestamp_millis() >= self.stamp + self.duration as i64
+    }
+
     pub fn value(&self) -> f32 {
         debug_assert!(self.span != 0.0);
         let now = Utc::now().timestamp_millis();
