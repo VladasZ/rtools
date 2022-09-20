@@ -35,7 +35,7 @@ impl SignalsHandler {
 }
 
 async fn slot() -> Result<(), Box<dyn std::error::Error>> {
-    let handler = SignalsHandler::new();
+    let _handler = SignalsHandler::new();
 
     let join = task::spawn(async move {
         let mut result = 0;
@@ -46,7 +46,7 @@ async fn slot() -> Result<(), Box<dyn std::error::Error>> {
         result
     });
 
-    let result = join.await?;
+    let _result = join.await?;
 
     Ok(())
 }
