@@ -13,7 +13,6 @@ extern crate core;
 pub mod address;
 pub mod animation;
 pub mod array_view;
-pub mod boxed;
 pub mod bytes;
 pub mod data;
 pub mod data_manager;
@@ -39,7 +38,6 @@ mod time;
 pub mod unwrap;
 
 pub use animation::Animation;
-pub use boxed::Boxed;
 pub use dispatch::Dispatch;
 pub use event::Event;
 pub use logger::init_log;
