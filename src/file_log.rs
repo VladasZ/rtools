@@ -1,16 +1,21 @@
-use std::fs::{File, OpenOptions};
+use std::{
+    fs::{File, OpenOptions},
+    io::Write,
+};
+
 use crate::static_get;
-use std::io::Write;
 
 pub struct FileLog {
-    file: File
+    file: File,
 }
 
 static_get!(FileLog);
 
 impl FileLog {
     pub fn write(text: impl ToString) {
-        Self::get().file.write_all(format!("{}\n", text.to_string()).as_bytes())
+        Self::get()
+            .file
+            .write_all(format!("{}\n", text.to_string()).as_bytes())
             .expect("Failed to write log");
     }
 }
