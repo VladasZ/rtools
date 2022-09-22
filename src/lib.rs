@@ -17,6 +17,7 @@ pub mod bytes;
 pub mod data;
 pub mod data_manager;
 mod dispatch;
+mod file_log;
 pub mod event;
 pub mod file;
 mod logger;
@@ -37,6 +38,7 @@ pub mod test;
 mod time;
 pub mod unwrap;
 
+pub use file_log::FileLog;
 pub use animation::Animation;
 pub use dispatch::Dispatch;
 pub use event::Event;
