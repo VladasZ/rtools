@@ -36,7 +36,8 @@ mod selectable;
 mod static_get;
 pub mod test;
 mod time;
-pub mod unwrap;
+mod unwrap;
+pub mod unwrap_box;
 
 pub use animation::Animation;
 pub use dispatch::Dispatch;
@@ -52,6 +53,7 @@ pub use rglica::{Rglica, ToRglica};
 pub use selectable::Selectable;
 pub use time::Time;
 pub use unwrap::Unwrap;
+pub use unwrap_box::UnwrapBox;
 
 pub trait Remove<T> {
     fn remove(&mut self, val: &T);

@@ -4,10 +4,10 @@ use std::{
     ops::DerefMut,
 };
 
-use crate::{ToRglica, Unwrap};
+use crate::{ToRglica, UnwrapBox};
 
 pub struct Event<T = ()> {
-    subscriber: RefCell<Unwrap<dyn FnMut(T) + 'static>>,
+    subscriber: RefCell<UnwrapBox<dyn FnMut(T) + 'static>>,
 }
 
 impl<T: 'static> Event<T> {
@@ -17,13 +17,14 @@ impl<T: 'static> Event<T> {
     }
 
     pub fn sub(&self, action: impl FnMut(T) + 'static) {
-        self.subscriber.replace(Unwrap::from_box(Box::new(action)));
+        self.subscriber
+            .replace(UnwrapBox::from_box(Box::new(action)));
     }
 
     pub fn set<Obj: 'static>(&self, obj: &Obj, mut action: impl FnMut(&mut Obj, T) + 'static) {
         let mut rglica = obj.to_rglica();
         self.subscriber
-            .replace(Unwrap::from_box(Box::new(move |value| {
+            .replace(UnwrapBox::from_box(Box::new(move |value| {
                 action(rglica.deref_mut(), value);
             })));
     }

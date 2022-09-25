@@ -5,14 +5,14 @@ use crate::Event;
 #[derive(Default)]
 pub struct Property<T> {
     data:       T,
-    pub on_set: Event,
+    pub on_set: Event<T>,
     pub on_get: Event,
 }
 
-impl<T> Property<T> {
+impl<T: 'static + Clone> Property<T> {
     pub fn set(&mut self, value: T) {
-        self.data = value;
-        self.on_set.trigger(());
+        self.data = value.clone();
+        self.on_set.trigger(value);
     }
 
     pub fn get(&mut self) -> &mut T {
