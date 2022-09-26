@@ -3,13 +3,13 @@ use std::{
     io::Write,
 };
 
-use crate::static_get;
+use crate::static_init;
 
 pub struct FileLog {
     file: File,
 }
 
-static_get!(FileLog);
+static_init!(FileLog);
 
 impl FileLog {
     pub fn write(text: impl ToString) {
