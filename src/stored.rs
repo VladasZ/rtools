@@ -1,10 +1,10 @@
 use std::{
+    cell::RefCell,
+    fmt::{Debug, Formatter},
     fs,
-    ops::{Deref},
+    ops::Deref,
     path::PathBuf,
 };
-use std::cell::RefCell;
-use std::fmt::{Debug, Formatter};
 
 use serde::{de::DeserializeOwned, Serialize};
 
@@ -71,6 +71,10 @@ impl<T: Wrappable> Stored<T> {
     pub fn get(&self) -> &T {
         self.data.replace(get_value(self.name));
         unsafe { self.data.as_ptr().as_ref().unwrap() }
+    }
+
+    pub fn reset(&self) {
+        self.data.replace(T::default());
     }
 }
 
