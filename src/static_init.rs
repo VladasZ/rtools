@@ -15,10 +15,14 @@ macro_rules! static_init {
             pub fn get() -> &'static mut $type {
                 unsafe {
                     if _STATIC_INIT.is_null() {
-                        panic!("Uninitialized static get: {}", stringify!($type));
+                        panic!("Uninitialized static init: {}", stringify!($type));
                     }
                     _STATIC_INIT.as_mut().unwrap_unchecked()
                 }
+            }
+
+            pub fn is_ok() -> bool {
+                unsafe { !_STATIC_INIT.is_null() }
             }
         }
     };

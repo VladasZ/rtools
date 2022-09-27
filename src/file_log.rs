@@ -8,7 +8,6 @@ use crate::static_init;
 pub struct FileLog {
     file: File,
 }
-
 static_init!(FileLog);
 
 impl FileLog {

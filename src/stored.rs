@@ -74,7 +74,7 @@ impl<T: Wrappable> Stored<T> {
     }
 
     pub fn reset(&self) {
-        self.data.replace(T::default());
+        self.set(T::default())
     }
 }
 

@@ -10,9 +10,9 @@ pub struct Property<T> {
 }
 
 impl<T: 'static + Clone> Property<T> {
-    pub fn set(&mut self, value: T) {
-        self.data = value.clone();
-        self.on_set.trigger(value);
+    pub fn set(&mut self, value: impl Into<T>) {
+        self.data = value.into();
+        self.on_set.trigger(self.data.clone());
     }
 
     pub fn get(&mut self) -> &mut T {
