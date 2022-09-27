@@ -3,7 +3,7 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
-use crate::{misc::backtrace, Rglica, ToRglica};
+use crate::misc::backtrace;
 
 pub struct UnwrapBox<T: ?Sized> {
     value: Option<Box<T>>,
@@ -67,11 +67,5 @@ impl<T: ?Sized + Debug> Debug for UnwrapBox<T> {
 impl<T: ?Sized + ToString> ToString for UnwrapBox<T> {
     fn to_string(&self) -> String {
         self.deref().to_string()
-    }
-}
-
-impl<T: ?Sized> ToRglica<T> for UnwrapBox<T> {
-    fn to_rglica(&self) -> Rglica<T> {
-        self.deref().to_rglica()
     }
 }

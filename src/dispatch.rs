@@ -2,7 +2,7 @@ use std::{future::Future, ops::DerefMut, sync::Mutex};
 
 use tokio::spawn;
 
-use crate::{misc::sleep, rglica::ToRglica, IntoF32};
+use crate::{misc::sleep, weak::ToWeak, IntoF32};
 
 type Storage = Mutex<Vec<Box<dyn FnOnce() + Send>>>;
 

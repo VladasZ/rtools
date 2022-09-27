@@ -4,8 +4,7 @@ use std::{
     ops::DerefMut,
 };
 
-use crate::{ToRglica, UnwrapBox};
-
+use crate::{weak::ToWeak, UnwrapBox};
 pub struct Event<T = ()> {
     subscriber: RefCell<UnwrapBox<dyn FnMut(T) + 'static>>,
 }
