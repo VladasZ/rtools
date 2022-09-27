@@ -1,8 +1,10 @@
 use std::{
     fs,
-    ops::{Deref, DerefMut},
+    ops::{Deref},
     path::PathBuf,
 };
+use std::cell::RefCell;
+use std::fmt::{Debug, Formatter};
 
 use serde::{de::DeserializeOwned, Serialize};
 
@@ -48,39 +50,39 @@ fn get_value<T: Wrappable>(key: &str) -> T {
     serde_json::from_str(&json).expect("Failet to parse json")
 }
 
-pub struct Persistent<T: Wrappable> {
+pub struct Stored<T: Wrappable> {
     name: &'static str,
-    data: T,
+    data: RefCell<T>,
 }
 
-impl<T: Wrappable> Persistent<T> {
+impl<T: Wrappable> Stored<T> {
     pub fn new(name: &'static str) -> Self {
-        let mut new = Self {
+        Self {
             name,
-            data: T::default(),
-        };
-        new.get();
-        new
+            data: RefCell::new(T::default()),
+        }
     }
 
-    pub fn get(&mut self) {
-        self.data = get_value(self.name)
-    }
-
-    pub fn store(&self) {
+    pub fn set(&self, val: impl Into<T>) {
+        self.data.replace(val.into());
         set_value(&self.data, self.name)
     }
-}
 
-impl<T: Wrappable> Deref for Persistent<T> {
-    type Target = T;
-    fn deref(&self) -> &Self::Target {
-        &self.data
+    pub fn get(&self) -> &T {
+        self.data.replace(get_value(self.name));
+        unsafe { self.data.as_ptr().as_ref().unwrap() }
     }
 }
 
-impl<T: Wrappable> DerefMut for Persistent<T> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.data
+impl<T: Wrappable> Deref for Stored<T> {
+    type Target = T;
+    fn deref(&self) -> &T {
+        self.get()
+    }
+}
+
+impl<T: Wrappable + Debug> Debug for Stored<T> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.get().fmt(f)
     }
 }
