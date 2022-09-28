@@ -28,19 +28,17 @@ pub mod paths;
 pub mod platform;
 mod property;
 mod random;
+pub mod refs;
 pub mod regex;
-mod rglica;
 pub mod run;
 mod selectable;
 mod static_default;
 mod static_init;
 pub mod stored;
-mod strong;
 pub mod test;
 mod time;
 mod unwrap;
 pub mod unwrap_box;
-pub mod weak;
 
 pub use animation::Animation;
 pub use dispatch::Dispatch;
@@ -51,14 +49,12 @@ pub use math::{mm_to_inch, IntoF32};
 pub use misc::{backtrace, *};
 pub use property::Property;
 pub use random::Random;
-pub use rglica::Rglica;
+pub use refs::*;
 pub use selectable::Selectable;
 pub use stored::Stored;
-pub use strong::Strong;
 pub use time::Time;
 pub use unwrap::Unwrap;
 pub use unwrap_box::UnwrapBox;
-pub use weak::Weak;
 
 pub trait Remove<T> {
     fn remove(&mut self, val: &T);
