@@ -29,7 +29,7 @@ pub mod platform;
 mod property;
 mod random;
 pub mod regex;
-pub mod rglica;
+mod rglica;
 pub mod run;
 mod selectable;
 mod static_default;
@@ -40,7 +40,7 @@ pub mod test;
 mod time;
 mod unwrap;
 pub mod unwrap_box;
-mod weak;
+pub mod weak;
 
 pub use animation::Animation;
 pub use dispatch::Dispatch;

@@ -29,7 +29,7 @@ impl Dispatch {
         delay: impl IntoF32,
         action: impl FnOnce(&mut Obj) + Send + 'static,
     ) {
-        let mut rglica = obj.to_rglica();
+        let mut rglica = obj.weak();
         spawn(async move {
             sleep(delay);
             STORAGE

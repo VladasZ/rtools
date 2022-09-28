@@ -11,7 +11,7 @@ pub struct Event<T = ()> {
 
 impl<T: 'static> Event<T> {
     pub fn link(&self, event: &Self) {
-        let event = event.to_rglica();
+        let event = event.weak();
         self.sub(move |val| event.trigger(val));
     }
 
@@ -21,7 +21,7 @@ impl<T: 'static> Event<T> {
     }
 
     pub fn set<Obj: 'static>(&self, obj: &Obj, mut action: impl FnMut(&mut Obj, T) + 'static) {
-        let mut rglica = obj.to_rglica();
+        let mut rglica = obj.weak();
         self.subscriber
             .replace(UnwrapBox::from_box(Box::new(move |value| {
                 action(rglica.deref_mut(), value);
