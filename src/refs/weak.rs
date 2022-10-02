@@ -48,6 +48,10 @@ impl<T: ?Sized> Weak<T> {
         RefCounters::exists(self.address)
     }
 
+    pub fn freed(&self) -> bool {
+        self.ptr.is_some() && !RefCounters::exists(self.address)
+    }
+
     pub fn get(&mut self) -> Option<&mut T> {
         if self.is_ok() {
             self.deref_mut().into()
