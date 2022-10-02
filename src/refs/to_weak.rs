@@ -1,6 +1,4 @@
-use std::{ops::Deref, ptr::NonNull};
-
-use crate::{Rglica, UnwrapBox, Weak};
+use crate::Weak;
 
 pub trait ToWeak<T: ?Sized> {
     fn weak(&self) -> Weak<T>;

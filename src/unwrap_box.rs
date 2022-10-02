@@ -3,14 +3,14 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
-use crate::misc::backtrace;
+use crate::{misc::backtrace, Strong};
 
 pub struct UnwrapBox<T: ?Sized> {
-    value: Option<Box<T>>,
+    value: Option<Strong<T>>,
 }
 
 impl<T: ?Sized> UnwrapBox<T> {
-    pub fn from_box(bx: Box<T>) -> Self {
+    pub fn from_box(bx: Strong<T>) -> Self {
         Self { value: bx.into() }
     }
 
@@ -50,10 +50,10 @@ impl<T: ?Sized> Default for UnwrapBox<T> {
     }
 }
 
-impl<T> From<T> for UnwrapBox<T> {
+impl<T: 'static> From<T> for UnwrapBox<T> {
     fn from(value: T) -> Self {
         Self {
-            value: Box::new(value).into(),
+            value: Strong::new(value).into(),
         }
     }
 }

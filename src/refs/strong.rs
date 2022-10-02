@@ -1,11 +1,11 @@
 use std::{
     alloc::{dealloc, Layout},
-    collections::HashMap,
     marker::Unsize,
     ops::{CoerceUnsized, Deref, DerefMut},
+    ptr::NonNull,
 };
 
-use crate::{address::Address, static_default, RefCounters, ToWeak, Weak};
+use crate::{address::Address, RefCounters, ToWeak, Weak};
 
 pub struct Strong<T: ?Sized> {
     address: usize,
@@ -60,7 +60,10 @@ impl<T: ?Sized> Drop for Strong<T> {
 
 impl<T: ?Sized> ToWeak<T> for Strong<T> {
     fn weak(&self) -> Weak<T> {
-        todo!()
+        Weak {
+            address: self.address,
+            ptr:     NonNull::new(self.ptr).into(),
+        }
     }
 }
 

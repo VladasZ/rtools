@@ -1,11 +1,9 @@
 use std::{
-    marker::Unsize,
-    mem::{zeroed, MaybeUninit},
-    ops::{CoerceUnsized, Deref, DerefMut},
-    ptr::{from_raw_parts, null_mut, NonNull},
+    ops::{Deref, DerefMut},
+    ptr::NonNull,
 };
 
-use crate::{address::Address, backtrace, RefCounters, Rglica, UnwrapBox};
+use crate::{address::Address, backtrace, RefCounters};
 
 pub struct Weak<T: ?Sized> {
     pub(crate) address: usize,
@@ -31,7 +29,7 @@ impl<T: ?Sized> Weak<T> {
         let address = rf.address();
         assert!(
             RefCounters::exists(address),
-            "Trying to get weak pointer for object which is not yet managed by reference counter."
+            "Trying to get weak pointer for object which is not managed by reference counter."
         );
         let ptr = NonNull::new(rf as *const T as *mut T);
         assert!(ptr.is_some(), "Failed to get ptr from ref");
