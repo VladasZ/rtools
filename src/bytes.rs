@@ -13,6 +13,6 @@ pub fn to_data<Result: Copy, T>(value: T) -> Vec<Result> {
     result
 }
 
-pub fn data_pointer<T>(value: T) -> u64 {
-    unsafe { *((&value) as *const T as *const u64) }
+pub fn data_pointer<T>(value: T) -> usize {
+    unsafe { *((&value) as *const T as *const usize) }
 }

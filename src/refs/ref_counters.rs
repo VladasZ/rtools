@@ -4,16 +4,16 @@ use crate::static_default;
 
 #[derive(Default)]
 pub(crate) struct RefCounters {
-    counters: HashMap<u64, (u64, Box<dyn FnOnce()>)>,
+    counters: HashMap<usize, (u64, Box<dyn FnOnce()>)>,
 }
 static_default!(RefCounters);
 
 impl RefCounters {
-    fn exists(addr: u64) -> bool {
+    pub(crate) fn exists(addr: usize) -> bool {
         Self::get().counters.contains_key(&addr)
     }
 
-    pub(crate) fn strong_count(addr: u64) -> u64 {
+    pub(crate) fn strong_count(addr: usize) -> u64 {
         Self::get()
             .counters
             .get(&addr)
@@ -21,7 +21,7 @@ impl RefCounters {
             .0
     }
 
-    pub(crate) fn add_strong(addr: u64, dealloc_fn: impl FnOnce() + 'static) {
+    pub(crate) fn add_strong(addr: usize, dealloc_fn: impl FnOnce() + 'static) {
         if Self::exists(addr) {
             Self::increase_strong(addr)
         } else {
@@ -29,7 +29,7 @@ impl RefCounters {
         }
     }
 
-    pub(crate) fn increase_strong(addr: u64) {
+    pub(crate) fn increase_strong(addr: usize) {
         Self::get()
             .counters
             .get_mut(&addr)
@@ -37,7 +37,7 @@ impl RefCounters {
             .0 += 1;
     }
 
-    pub(crate) fn decrease_strong(addr: u64) {
+    pub(crate) fn decrease_strong(addr: usize) {
         Self::get()
             .counters
             .get_mut(&addr)
@@ -45,7 +45,7 @@ impl RefCounters {
             .0 -= 1;
     }
 
-    pub(crate) fn remove(addr: u64) {
+    pub(crate) fn remove(addr: usize) {
         let counter = Self::get()
             .counters
             .remove(&addr)

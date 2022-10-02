@@ -110,7 +110,7 @@ impl<T: ?Sized + Debug> Debug for Rglica<T> {
 }
 
 impl<T: ?Sized> Address for Rglica<T> {
-    fn address(&self) -> u64 {
+    fn address(&self) -> usize {
         data_pointer(self.ptr)
     }
 }

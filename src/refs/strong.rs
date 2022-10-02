@@ -1,20 +1,19 @@
 use std::{
     alloc::{dealloc, Layout},
     collections::HashMap,
-    ops::{Deref, DerefMut},
+    marker::Unsize,
+    ops::{CoerceUnsized, Deref, DerefMut},
 };
 
-use crate::{address::Address, static_default, RefCounters};
+use crate::{address::Address, static_default, RefCounters, ToWeak, Weak};
 
-pub type Strong<T> = Box<T>;
-
-pub struct Streng1<T: ?Sized> {
-    address: u64,
+pub struct Strong<T: ?Sized> {
+    address: usize,
     ptr:     *mut T,
 }
 
-impl<T: Sized + 'static> Streng1<T> {
-    fn new(val: T) -> Self {
+impl<T: Sized + 'static> Strong<T> {
+    pub fn new(val: T) -> Self {
         let val = Box::new(val);
         let address = val.deref().address();
         let ptr = Box::leak(val) as *mut T;
@@ -27,20 +26,20 @@ impl<T: Sized + 'static> Streng1<T> {
     }
 }
 
-impl<T: ?Sized> Deref for Streng1<T> {
+impl<T: ?Sized> Deref for Strong<T> {
     type Target = T;
     fn deref(&self) -> &T {
         unsafe { self.ptr.as_ref().unwrap() }
     }
 }
 
-impl<T: ?Sized> DerefMut for Streng1<T> {
+impl<T: ?Sized> DerefMut for Strong<T> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         unsafe { self.ptr.as_mut().unwrap() }
     }
 }
 
-impl<T: ?Sized> Clone for Streng1<T> {
+impl<T: ?Sized> Clone for Strong<T> {
     fn clone(&self) -> Self {
         RefCounters::increase_strong(self.address);
         Self {
@@ -50,11 +49,30 @@ impl<T: ?Sized> Clone for Streng1<T> {
     }
 }
 
-impl<T: ?Sized> Drop for Streng1<T> {
+impl<T: ?Sized> Drop for Strong<T> {
     fn drop(&mut self) {
         RefCounters::decrease_strong(self.address);
         if RefCounters::strong_count(self.address) == 0 {
             RefCounters::remove(self.address);
         }
     }
+}
+
+impl<T: ?Sized> ToWeak<T> for Strong<T> {
+    fn weak(&self) -> Weak<T> {
+        todo!()
+    }
+}
+
+impl<T: Default + Sized + 'static> Default for Strong<T> {
+    fn default() -> Self {
+        Self::new(T::default())
+    }
+}
+
+impl<T, U> CoerceUnsized<Strong<U>> for Strong<T>
+where
+    T: Unsize<U> + ?Sized,
+    U: ?Sized,
+{
 }
