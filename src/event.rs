@@ -4,9 +4,9 @@ use std::{
     ops::DerefMut,
 };
 
-use crate::{refs::to_weak::ToWeak, Strong, UnwrapBox};
+use crate::refs::to_weak::ToWeak;
 pub struct Event<T = ()> {
-    subscriber: RefCell<UnwrapBox<dyn FnMut(T) + 'static>>,
+    subscriber: RefCell<Option<Box<dyn FnMut(T) + 'static>>>,
 }
 
 impl<T: 'static> Event<T> {
@@ -16,24 +16,22 @@ impl<T: 'static> Event<T> {
     }
 
     pub fn sub(&self, action: impl FnMut(T) + 'static) {
-        self.subscriber
-            .replace(UnwrapBox::from_box(Strong::new(action)));
+        self.subscriber.replace(Some(Box::new(action)));
     }
 
     pub fn set<Obj: 'static>(&self, obj: &Obj, mut action: impl FnMut(&mut Obj, T) + 'static) {
         let mut rglica = obj.weak();
-        self.subscriber
-            .replace(UnwrapBox::from_box(Strong::new(move |value| {
-                action(rglica.deref_mut(), value);
-            })));
+        self.subscriber.replace(Some(Box::new(move |value| {
+            action(rglica.deref_mut(), value);
+        })));
     }
 
     pub fn trigger(&self, value: T) {
         let mut sub = self.subscriber.borrow_mut();
-        if sub.is_null() {
+        if sub.is_none() {
             return;
         }
-        sub(value);
+        (sub.as_mut().unwrap())(value);
     }
 
     pub fn unsubscribe(&self) {

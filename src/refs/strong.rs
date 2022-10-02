@@ -18,11 +18,34 @@ impl<T: Sized + 'static> Strong<T> {
         let address = val.deref().address();
         let ptr = Box::leak(val) as *mut T;
 
+        trace!(
+            "New strong: {}, addr: {}, ptr: {:?}",
+            std::any::type_name::<T>(),
+            address,
+            ptr
+        );
+
+        if address == 1 {
+            panic!("Closure?");
+        }
+
         RefCounters::add_strong(address, move || unsafe {
+            trace!(
+                "Deallocating: {}, addr: {}, ptr: {:?}",
+                std::any::type_name::<T>(),
+                address,
+                ptr
+            );
             dealloc(ptr as *mut u8, Layout::new::<T>());
         });
 
         Self { address, ptr }
+    }
+}
+
+impl<T: ?Sized> Strong<T> {
+    pub fn addr(&self) -> usize {
+        self.address
     }
 }
 

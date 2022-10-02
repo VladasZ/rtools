@@ -36,6 +36,10 @@ impl<T: ?Sized> Weak<T> {
         Self { address, ptr }
     }
 
+    pub fn addr(&self) -> usize {
+        self.address
+    }
+
     pub fn is_null(&self) -> bool {
         !self.is_ok()
     }
@@ -76,12 +80,6 @@ impl<T: ?Sized> Weak<T> {
                 std::any::type_name::<T>()
             );
         }
-    }
-}
-
-impl<T: ?Sized> Address for Weak<T> {
-    fn address(&self) -> usize {
-        self.address
     }
 }
 
