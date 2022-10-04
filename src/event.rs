@@ -1,29 +1,15 @@
 use std::{
     cell::RefCell,
     fmt::{Debug, Formatter},
-    ops::DerefMut,
 };
 
-use crate::refs::to_weak::ToWeak;
 pub struct Event<T = ()> {
     subscriber: RefCell<Option<Box<dyn FnMut(T) + 'static>>>,
 }
 
 impl<T: 'static> Event<T> {
-    pub fn link(&self, event: &Self) {
-        let event = event.weak();
-        self.sub(move |val| event.trigger(val));
-    }
-
     pub fn sub(&self, action: impl FnMut(T) + 'static) {
         self.subscriber.replace(Some(Box::new(action)));
-    }
-
-    pub fn set<Obj: 'static>(&self, obj: &Obj, mut action: impl FnMut(&mut Obj, T) + 'static) {
-        let mut rglica = obj.weak();
-        self.subscriber.replace(Some(Box::new(move |value| {
-            action(rglica.deref_mut(), value);
-        })));
     }
 
     pub fn trigger(&self, value: T) {

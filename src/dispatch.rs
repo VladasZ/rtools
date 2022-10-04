@@ -1,8 +1,8 @@
-use std::{future::Future, ops::DerefMut, sync::Mutex};
+use std::{future::Future, sync::Mutex};
 
 use tokio::spawn;
 
-use crate::{misc::sleep, refs::to_weak::ToWeak, IntoF32};
+use crate::{misc::sleep, IntoF32};
 
 type Storage = Mutex<Vec<Box<dyn FnOnce() + Send>>>;
 
@@ -24,18 +24,10 @@ impl Dispatch {
         });
     }
 
-    pub fn after<Obj: 'static>(
-        obj: &Obj,
-        delay: impl IntoF32,
-        action: impl FnOnce(&mut Obj) + Send + 'static,
-    ) {
-        let mut rglica = obj.weak();
+    pub fn after(delay: impl IntoF32, action: impl FnOnce() + Send + 'static) {
         spawn(async move {
             sleep(delay);
-            STORAGE
-                .lock()
-                .unwrap()
-                .push(Box::new(move || action(rglica.deref_mut())));
+            STORAGE.lock().unwrap().push(Box::new(action));
         });
     }
 

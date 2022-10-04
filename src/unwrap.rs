@@ -6,6 +6,12 @@ pub struct Unwrap<T> {
     value: Option<T>,
 }
 
+impl<T> Unwrap<T> {
+    pub fn new(val: T) -> Self {
+        Self { value: Some(val) }
+    }
+}
+
 impl<T> Deref for Unwrap<T> {
     type Target = T;
     fn deref(&self) -> &T {
