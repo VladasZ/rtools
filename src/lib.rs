@@ -19,7 +19,6 @@ pub mod array_view;
 pub mod bytes;
 pub mod data;
 pub mod data_manager;
-mod dispatch;
 pub mod file;
 mod file_log;
 mod logger;
@@ -40,7 +39,6 @@ mod time;
 mod unwrap;
 
 pub use animation::Animation;
-pub use dispatch::Dispatch;
 pub use file_log::FileLog;
 pub use logger::init_log;
 pub use math::{mm_to_inch, IntoF32};
