@@ -32,7 +32,7 @@ pub trait DataManager<T: Managed> {
     }
 
     fn handle_with_name(name: impl ToString) -> Option<Handle<T>> {
-        Self::handle_with_hash(hash(&name.to_string()))
+        Self::handle_with_hash(hash(name.to_string()))
     }
 
     fn handle_with_hash(hash: u64) -> Option<Handle<T>> {

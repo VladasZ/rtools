@@ -10,7 +10,7 @@ pub fn init_log(location: bool, level: usize) {
         ColorChoice, ConfigBuilder, LevelPadding, TermLogger, TerminalMode, ThreadLogMode,
     };
 
-    TermLogger::init(
+    let res = TermLogger::init(
         from_usize(level),
         ConfigBuilder::new()
             .set_time_level(LevelFilter::Off)
@@ -26,9 +26,8 @@ pub fn init_log(location: bool, level: usize) {
             .build(),
         TerminalMode::Mixed,
         ColorChoice::Auto,
-    )
-    .expect("Failed to initialize logger");
-    trace!("Logger: OK");
+    );
+    trace!("Logger: {:?}", res);
 }
 
 fn from_usize(u: usize) -> LevelFilter {
