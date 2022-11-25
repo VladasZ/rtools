@@ -26,6 +26,11 @@ impl<T: Managed> Handle<T> {
         }
         T::get_ref_by_hash(self.hash).into()
     }
+
+    pub fn free(&mut self) {
+        T::remove_with_hash(self.hash);
+        *self = Self::default();
+    }
 }
 
 impl<T: Managed> Deref for Handle<T> {
