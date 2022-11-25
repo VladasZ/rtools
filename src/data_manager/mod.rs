@@ -4,10 +4,11 @@ mod managed;
 use std::{collections::HashMap, path::Path};
 
 pub use handle::Handle;
+use refs::Own;
 
 use crate::misc::hash;
 
-pub type DataStorage<T> = HashMap<u64, T>;
+pub type DataStorage<T> = HashMap<u64, Own<T>>;
 
 pub trait Managed: 'static + LoadFromPath + DataManager<Self> {}
 
@@ -27,7 +28,7 @@ pub trait DataManager<T: Managed> {
             !storage.contains_key(&hash),
             "Object with such hash already exists"
         );
-        storage.insert(hash, resource);
+        storage.insert(hash, Own::new(resource));
         hash.into()
     }
 
@@ -56,7 +57,7 @@ pub trait DataManager<T: Managed> {
         let hash = hash(&name);
         Self::storage()
             .entry(hash)
-            .or_insert_with(|| T::load(&Self::path().join(name)));
+            .or_insert_with(|| Own::new(T::load(&Self::path().join(name))));
         hash.into()
     }
 }
