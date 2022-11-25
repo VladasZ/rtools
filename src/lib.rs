@@ -13,7 +13,6 @@
 extern crate log;
 extern crate core;
 
-pub mod address;
 pub mod animation;
 pub mod array_view;
 pub mod bytes;
