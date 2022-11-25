@@ -44,6 +44,14 @@ pub trait DataManager<T: Managed> {
         }
     }
 
+    fn remove_with_name(name: impl ToString) {
+        Self::remove_with_hash(hash(name.to_string()))
+    }
+
+    fn remove_with_hash(hash: u64) {
+        Self::storage().remove(&hash);
+    }
+
     fn get_ref_by_hash(hash: u64) -> &'static T {
         Self::storage().get(&hash).unwrap()
     }
