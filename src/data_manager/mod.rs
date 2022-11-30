@@ -22,6 +22,10 @@ pub trait DataManager<T: Managed> {
 
     fn storage() -> &'static mut DataStorage<T>;
 
+    fn add_with_name(name: impl ToString, resource: T) -> Handle<T> {
+        Self::add_with_hash(hash(name.to_string()), resource)
+    }
+
     fn add_with_hash(hash: u64, resource: T) -> Handle<T> {
         let storage = Self::storage();
         debug_assert!(
