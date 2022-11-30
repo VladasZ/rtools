@@ -10,6 +10,10 @@ impl<T> Unwrap<T> {
     pub fn new(val: T) -> Self {
         Self { value: Some(val) }
     }
+
+    pub fn is_none(&self) -> bool {
+        self.value.is_none()
+    }
 }
 
 impl<T> Deref for Unwrap<T> {
