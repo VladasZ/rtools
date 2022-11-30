@@ -43,7 +43,7 @@ impl<T> From<T> for Unwrap<T> {
     }
 }
 
-impl<T> Default for Unwrap<T> {
+impl<T> const Default for Unwrap<T> {
     fn default() -> Self {
         Self { value: None }
     }
