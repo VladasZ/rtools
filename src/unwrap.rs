@@ -14,6 +14,10 @@ impl<T> Unwrap<T> {
     pub fn is_none(&self) -> bool {
         self.value.is_none()
     }
+
+    pub fn take(&mut self) -> Option<T> {
+        self.value.take()
+    }
 }
 
 impl<T> Deref for Unwrap<T> {
