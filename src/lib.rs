@@ -14,6 +14,7 @@ extern crate log;
 extern crate core;
 
 pub mod animation;
+mod apply;
 pub mod array_view;
 pub mod bytes;
 pub mod data;
@@ -38,6 +39,7 @@ mod time;
 mod unwrap;
 
 pub use animation::Animation;
+pub use apply::*;
 pub use file_log::FileLog;
 pub use logger::init_log;
 pub use math::{mm_to_inch, IntoF32};
