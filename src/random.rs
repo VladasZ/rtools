@@ -21,6 +21,16 @@ impl Random for bool {
     }
 }
 
+impl Random for char {
+    fn random() -> Self {
+        thread_rng().gen()
+    }
+
+    fn random_in(range: Range<Self>) -> Self {
+        thread_rng().gen_range(range)
+    }
+}
+
 impl Random for String {
     fn random() -> Self {
         let mut rng = thread_rng();
@@ -33,8 +43,7 @@ impl Random for String {
 
 impl Random for i32 {
     fn random() -> Self {
-        let mut rng = thread_rng();
-        rng.gen_range(-100..100)
+        thread_rng().gen_range(-100..100)
     }
 
     fn random_in(range: Range<Self>) -> Self {
@@ -44,8 +53,7 @@ impl Random for i32 {
 
 impl Random for u64 {
     fn random() -> Self {
-        let mut rng = thread_rng();
-        rng.gen_range(0..100)
+        thread_rng().gen_range(0..100)
     }
 
     fn random_in(range: Range<Self>) -> Self {
@@ -55,8 +63,7 @@ impl Random for u64 {
 
 impl Random for i64 {
     fn random() -> Self {
-        let mut rng = thread_rng();
-        rng.gen_range(-100..100)
+        thread_rng().gen_range(-100..100)
     }
 
     fn random_in(range: Range<Self>) -> Self {
@@ -66,8 +73,7 @@ impl Random for i64 {
 
 impl Random for u32 {
     fn random() -> Self {
-        let mut rng = thread_rng();
-        rng.gen_range(0..100)
+        thread_rng().gen_range(0..100)
     }
 
     fn random_in(range: Range<Self>) -> Self {
@@ -77,8 +83,7 @@ impl Random for u32 {
 
 impl Random for isize {
     fn random() -> Self {
-        let mut rng = thread_rng();
-        rng.gen_range(0..100)
+        thread_rng().gen_range(0..100)
     }
 
     fn random_in(range: Range<Self>) -> Self {
@@ -88,8 +93,7 @@ impl Random for isize {
 
 impl Random for usize {
     fn random() -> Self {
-        let mut rng = thread_rng();
-        rng.gen_range(0..100)
+        thread_rng().gen_range(0..100)
     }
 
     fn random_in(range: Range<Self>) -> Self {

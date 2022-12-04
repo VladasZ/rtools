@@ -11,8 +11,8 @@ use crate::IntoF32;
 
 pub fn backtrace() {
     let bt = Backtrace::new();
-    println!("{:?}", bt);
-    error!("{:?}", bt);
+    println!("{bt:?}");
+    error!("{bt:?}");
 }
 
 pub fn hash(obj: impl ToString + Hash) -> u64 {
