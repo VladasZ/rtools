@@ -41,6 +41,16 @@ impl Random for String {
     }
 }
 
+impl Random for u8 {
+    fn random() -> Self {
+        thread_rng().gen()
+    }
+
+    fn random_in(range: Range<Self>) -> Self {
+        thread_rng().gen_range(range)
+    }
+}
+
 impl Random for i32 {
     fn random() -> Self {
         thread_rng().gen_range(-100..100)
