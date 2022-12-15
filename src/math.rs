@@ -1,7 +1,7 @@
-use std::fmt::Debug;
+use std::fmt::{Debug, Display};
 
 #[const_trait]
-pub trait IntoF32: Copy + Sized + Sync + Send + Debug + 'static {
+pub trait IntoF32: Copy + Sized + Sync + Send + Debug + Display + 'static {
     fn into_f32(self) -> f32;
 }
 
