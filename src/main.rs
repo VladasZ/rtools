@@ -1,14 +1,21 @@
 #![allow(clippy::mismatched_target_os)]
 
-use rtools::{passed::Passed, Random};
+use log::{debug, trace, warn};
+use rtools::{init_log, LogBuilder};
+use simplelog::error;
 
 fn main() {
-    let mut pass = Passed::default();
-
-    pass.print();
-    pass.print();
-
-    for _ in 0..100 {
-        dbg!(bool::random());
-    }
+    init_log(
+        LogBuilder::builder()
+            .level(5)
+            .allow_filter("rtools")
+            .target(true)
+            .threads(true)
+            .location(true)
+            .build(),
+    );
+    trace!("Fargel!");
+    debug!("Fargel!");
+    warn!("Fargel!");
+    error!("Fargel!");
 }

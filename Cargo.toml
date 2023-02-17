@@ -1,6 +1,6 @@
 [package]
 name = "rtools"
-version = "0.1.27"
+version = "0.1.28"
 authors = ["Vladas Zakrevksis <146100@gmail.com>"]
 edition = "2021"
 description = "Set of tools for my needs"
@@ -12,32 +12,22 @@ repository = "https://github.com/VladasZ/rtools"
 log = "0.4"
 rand = "0.8"
 dirs = "4.0"
-refs = "0.1.22"
+refs = "0.1.25"
 regex = "1.6"
 cfg-if = "1.0"
 chrono = "0.4"
 backtrace = "0.3"
 serde_json = "1.0"
 num-traits = "0.2"
+typed-builder = "0.12"
 
 simplelog = { version = "0.12", features = ["paris"] }
-tokio = { version = "1.21", features = ["full"] }
+tokio = { version = "1.25", features = ["full"] }
 serde = { version = "1.0", features = ["derive"]}
 
-[target.'cfg(windows)'.dependencies.windows]
-version = "0.29"
-features = [
-    "alloc",
-    "Data_Xml_Dom",
-    "Win32_Foundation",
-    "Win32_Security",
-    "Win32_System_Threading",
-    "Win32_UI_WindowsAndMessaging",
-    "Win32_System_Diagnostics_Debug",
-]
 
 [target.'cfg(target_os="android")'.dependencies]
-android_logger = "0.11"
+android_logger = "0.13"
 android-ndk-sys = "0.2"
 
 [build-dependencies]

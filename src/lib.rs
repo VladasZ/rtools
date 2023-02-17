@@ -41,7 +41,7 @@ mod unwrap;
 pub use animation::Animation;
 pub use apply::*;
 pub use file_log::FileLog;
-pub use logger::init_log;
+pub use logger::*;
 pub use math::{mm_to_inch, IntoF32};
 pub use misc::{backtrace, *};
 pub use random::Random;
