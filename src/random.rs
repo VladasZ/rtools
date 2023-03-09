@@ -112,6 +112,26 @@ impl Random for usize {
     }
 }
 
+impl Random for f32 {
+    fn random() -> Self {
+        thread_rng().gen_range(0.0..100.0)
+    }
+
+    fn random_in(range: Range<Self>) -> Self {
+        thread_rng().gen_range(range)
+    }
+}
+
+impl Random for f64 {
+    fn random() -> Self {
+        thread_rng().gen_range(0.0..100.0)
+    }
+
+    fn random_in(range: Range<Self>) -> Self {
+        thread_rng().gen_range(range)
+    }
+}
+
 impl<T> Random<T> for Vec<T> {
     fn random_member(&self) -> &T {
         self.choose(&mut thread_rng()).unwrap()
