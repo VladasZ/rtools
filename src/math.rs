@@ -11,7 +11,19 @@ impl const IntoF32 for i32 {
     }
 }
 
+impl const IntoF32 for i64 {
+    fn into_f32(self) -> f32 {
+        self as f32
+    }
+}
+
 impl const IntoF32 for u32 {
+    fn into_f32(self) -> f32 {
+        self as f32
+    }
+}
+
+impl const IntoF32 for u64 {
     fn into_f32(self) -> f32 {
         self as f32
     }
