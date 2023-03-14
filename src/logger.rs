@@ -87,7 +87,7 @@ pub fn init_log(_builder: LogBuilder) {
 
     android_logger::init_once(
         Config::default()
-            .with_min_level(Level::Trace)
+            .with_max_level(LevelFilter::Error)
             .with_tag("test_engine")
             .with_filter(
                 FilterBuilder::new()
