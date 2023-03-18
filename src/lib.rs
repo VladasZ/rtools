@@ -37,6 +37,7 @@ pub mod stored;
 pub mod test;
 mod time;
 mod unwrap;
+pub mod vec;
 
 pub use animation::Animation;
 pub use apply::*;
@@ -49,6 +50,7 @@ pub use selectable::Selectable;
 pub use stored::Stored;
 pub use time::Time;
 pub use unwrap::Unwrap;
+pub use vec::*;
 
 pub trait Remove<T> {
     fn remove(&mut self, val: &T);
