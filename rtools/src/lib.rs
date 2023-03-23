@@ -19,6 +19,7 @@ pub mod array_view;
 pub mod bytes;
 pub mod data;
 pub mod data_manager;
+pub mod debug;
 pub mod file;
 mod file_log;
 mod logger;
@@ -41,6 +42,7 @@ pub mod vec;
 
 pub use animation::Animation;
 pub use apply::*;
+pub use debug::*;
 pub use file_log::FileLog;
 pub use logger::*;
 pub use math::{mm_to_inch, IntoF32};
