@@ -10,10 +10,11 @@ use crate::misc::hash;
 
 pub type DataStorage<T> = HashMap<u64, Own<T>>;
 
-pub trait Managed: 'static + LoadFromPath + DataManager<Self> {}
+pub trait Managed: 'static + ResourceLoader + DataManager<Self> {}
 
-pub trait LoadFromPath: Sized {
-    fn load(path: &Path) -> Self;
+pub trait ResourceLoader: Sized {
+    fn load_path(path: &Path) -> Self;
+    fn load_data(path: &[u8]) -> Self;
 }
 
 pub trait DataManager<T: Managed> {
@@ -69,7 +70,16 @@ pub trait DataManager<T: Managed> {
         let hash = hash(&name);
         Self::storage()
             .entry(hash)
-            .or_insert_with(|| Own::new(T::load(&Self::path().join(name))));
+            .or_insert_with(|| Own::new(T::load_path(&Self::path().join(name))));
+        hash.into()
+    }
+
+    fn load(data: &[u8], name: impl ToString) -> Handle<T> {
+        let name = name.to_string();
+        let hash = hash(&name);
+        Self::storage()
+            .entry(hash)
+            .or_insert_with(|| Own::new(T::load_data(data)));
         hash.into()
     }
 }
