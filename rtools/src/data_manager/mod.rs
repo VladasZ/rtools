@@ -14,7 +14,7 @@ pub trait Managed: 'static + ResourceLoader + DataManager<Self> {}
 
 pub trait ResourceLoader: Sized {
     fn load_path(path: &Path) -> Self;
-    fn load_data(path: &[u8]) -> Self;
+    fn load_data(data: &[u8], name: impl ToString) -> Self;
 }
 
 pub trait DataManager<T: Managed> {
@@ -79,7 +79,7 @@ pub trait DataManager<T: Managed> {
         let hash = hash(&name);
         Self::storage()
             .entry(hash)
-            .or_insert_with(|| Own::new(T::load_data(data)));
+            .or_insert_with(|| Own::new(T::load_data(data, name)));
         hash.into()
     }
 }
