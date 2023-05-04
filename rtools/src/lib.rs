@@ -7,7 +7,6 @@
 #![feature(coerce_unsized)]
 #![feature(unsize)]
 #![feature(ptr_metadata)]
-#![feature(const_default_impls)]
 
 #[macro_use]
 extern crate log;

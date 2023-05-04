@@ -7,6 +7,10 @@ pub struct Unwrap<T> {
 }
 
 impl<T> Unwrap<T> {
+    pub const fn const_default() -> Self {
+        Self { value: None }
+    }
+
     pub fn new(val: T) -> Self {
         Self { value: Some(val) }
     }
@@ -51,7 +55,7 @@ impl<T> From<T> for Unwrap<T> {
     }
 }
 
-impl<T> const Default for Unwrap<T> {
+impl<T> Default for Unwrap<T> {
     fn default() -> Self {
         Self { value: None }
     }
