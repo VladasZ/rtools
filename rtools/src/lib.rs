@@ -1,12 +1,6 @@
-#![allow(incomplete_features)]
 #![allow(clippy::mismatched_target_os)]
-#![feature(specialization)]
 #![feature(const_trait_impl)]
 #![feature(const_fn_floating_point_arithmetic)]
-#![feature(const_for)]
-#![feature(coerce_unsized)]
-#![feature(unsize)]
-#![feature(ptr_metadata)]
 
 #[macro_use]
 extern crate log;
