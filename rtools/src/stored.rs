@@ -8,6 +8,8 @@ use std::{
 
 use serde::{de::DeserializeOwned, Serialize};
 
+use crate::platform::Platform;
+
 pub trait Wrappable: Serialize + DeserializeOwned + Default {}
 impl<T: Serialize + DeserializeOwned + Default> Wrappable for T {}
 
@@ -21,9 +23,13 @@ fn executable_name() -> String {
 }
 
 fn storage_dir() -> PathBuf {
-    dirs::home_dir()
-        .expect("Failed to get home directory")
-        .join(".".to_owned() + &executable_name())
+    if Platform::MOBILE {
+        dirs::document_dir()
+    } else {
+        dirs::home_dir()
+    }
+    .expect("Failed to get home directory")
+    .join(".".to_owned() + &executable_name())
 }
 
 fn set_value<T: Serialize>(value: &T, key: &str) {
