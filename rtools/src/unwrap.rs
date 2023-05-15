@@ -2,7 +2,7 @@ use std::ops::{Deref, DerefMut};
 
 use crate::backtrace;
 
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct Unwrap<T> {
     value: Option<T>,
 }
@@ -56,6 +56,12 @@ impl<T> From<T> for Unwrap<T> {
     }
 }
 
+impl<T> Default for Unwrap<T> {
+    fn default() -> Self {
+        Self { value: None }
+    }
+}
+
 #[cfg(test)]
 mod test {
     use crate::Unwrap;
@@ -65,5 +71,7 @@ mod test {
         let val = Unwrap::from(5);
         assert_eq!(5, *val);
         dbg!(val);
+        let no = Unwrap::<u32>::default();
+        assert!(no.is_none());
     }
 }
