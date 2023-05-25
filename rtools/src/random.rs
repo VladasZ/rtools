@@ -16,6 +16,9 @@ pub trait Random<T = Self>: Sized {
     fn random_member(&self) -> &T {
         unimplemented!()
     }
+    fn take_random(&mut self) -> T {
+        unimplemented!()
+    }
 }
 
 impl Random for bool {
@@ -136,6 +139,10 @@ impl<T> Random<T> for Vec<T> {
     fn random_member(&self) -> &T {
         self.choose(&mut thread_rng()).unwrap()
     }
+
+    fn take_random(&mut self) -> T {
+        self.remove(usize::random_in(0..self.len()))
+    }
 }
 
 #[cfg(test)]
@@ -157,6 +164,15 @@ mod test {
             let ve = vec![1, 2, 3, 4, 5];
             let r = ve.random_member();
             assert!(ve.contains(r));
+        }
+    }
+
+    #[test]
+    fn take_random() {
+        for _ in 0..100 {
+            let mut ve = vec![1, 2, 3, 4, 5, 6, 7, 8];
+            let val = ve.take_random();
+            assert!(!ve.contains(&val));
         }
     }
 }
