@@ -39,7 +39,7 @@ pub use debug::*;
 pub use file_log::FileLog;
 pub use logger::*;
 pub use math::{mm_to_inch, IntoF32};
-pub use misc::{backtrace, *};
+pub use misc::*;
 pub use random::Random;
 pub use selectable::Selectable;
 pub use stored::Stored;
