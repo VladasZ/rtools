@@ -22,9 +22,7 @@ pub fn hash(obj: impl ToString + Hash) -> u64 {
 }
 
 pub fn sleep(duration: impl IntoF32) {
-    thread::sleep(Duration::from_nanos(
-        (duration.into_f32() * 1000000000.0) as _,
-    ));
+    thread::sleep(Duration::from_nanos((duration.into_f32() * 1000000000.0) as _));
 }
 
 pub trait Toggle {

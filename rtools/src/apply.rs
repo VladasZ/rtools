@@ -10,11 +10,7 @@ impl<T, I: IntoIterator<Item = T>> Apply<T> for I {
         }
     }
 
-    fn apply2<U, Second: IntoIterator<Item = U>>(
-        self,
-        second: Second,
-        mut action: impl FnMut(T, U),
-    ) {
+    fn apply2<U, Second: IntoIterator<Item = U>>(self, second: Second, mut action: impl FnMut(T, U)) {
         for (item, second) in self.into_iter().zip(second.into_iter()) {
             action(item, second);
         }

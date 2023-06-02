@@ -30,10 +30,7 @@ impl File {
     }
 
     pub fn get_files(path: impl AsRef<Path>) -> Vec<PathBuf> {
-        fs::read_dir(path)
-            .unwrap()
-            .map(|a| a.unwrap().path())
-            .collect()
+        fs::read_dir(path).unwrap().map(|a| a.unwrap().path()).collect()
     }
 }
 

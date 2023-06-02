@@ -23,9 +23,7 @@ pub struct LogBuilder {
 pub fn init_log(builder: LogBuilder) {
     extern crate simplelog;
 
-    use simplelog::{
-        ColorChoice, ConfigBuilder, LevelPadding, TermLogger, TerminalMode, ThreadLogMode,
-    };
+    use simplelog::{ColorChoice, ConfigBuilder, LevelPadding, TermLogger, TerminalMode, ThreadLogMode};
 
     let mut config = ConfigBuilder::new();
 
@@ -89,11 +87,7 @@ pub fn init_log(_builder: LogBuilder) {
         Config::default()
             .with_max_level(LevelFilter::Error)
             .with_tag("test_engine")
-            .with_filter(
-                FilterBuilder::new()
-                    .parse("debug,hello::crate=error")
-                    .build(),
-            ),
+            .with_filter(FilterBuilder::new().parse("debug,hello::crate=error").build()),
     );
 
     trace!("Android logger: OK");

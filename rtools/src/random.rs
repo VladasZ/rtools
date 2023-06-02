@@ -1,5 +1,6 @@
 use std::ops::Range;
 
+use itertools::Itertools;
 use rand::{
     distributions::{Alphanumeric, DistString},
     prelude::SliceRandom,
@@ -7,12 +8,20 @@ use rand::{
 };
 
 pub trait Random<T = Self>: Sized {
-    fn random() -> T {
+    fn random() -> Self {
         unimplemented!()
     }
-    fn random_in(_: Range<Self>) -> T {
+
+    fn random_count(_: usize) -> Self {
         unimplemented!()
     }
+
+    fn random_in(_: Range<Self>) -> Self {
+        unimplemented!()
+    }
+}
+
+pub trait RandomContainer<T>: Sized {
     fn random_member(&self) -> &T {
         unimplemented!()
     }
@@ -135,7 +144,17 @@ impl Random for f64 {
     }
 }
 
-impl<T> Random<T> for Vec<T> {
+impl<T: Random> Random<T> for Vec<T> {
+    fn random() -> Self {
+        (0..usize::random_in(5..10)).map(|_| T::random()).collect_vec()
+    }
+
+    fn random_count(count: usize) -> Self {
+        (0..count).map(|_| T::random()).collect_vec()
+    }
+}
+
+impl<T> RandomContainer<T> for Vec<T> {
     fn random_member(&self) -> &T {
         self.choose(&mut thread_rng()).unwrap()
     }
@@ -147,7 +166,7 @@ impl<T> Random<T> for Vec<T> {
 
 #[cfg(test)]
 mod test {
-    use crate::Random;
+    use crate::{random::RandomContainer, Random};
 
     #[test]
     fn random_int() {
@@ -174,5 +193,14 @@ mod test {
             let val = ve.take_random();
             assert!(!ve.contains(&val));
         }
+    }
+
+    #[test]
+    fn random_ver_gen() {
+        let random = Vec::<u32>::random();
+        dbg!(&random);
+        let random_count = Vec::<u32>::random_count(10);
+        dbg!(&random_count);
+        assert_eq!(random_count.len(), 10);
     }
 }

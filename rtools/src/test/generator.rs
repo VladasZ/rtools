@@ -19,10 +19,7 @@ impl Generator {
             for _ in 0..val {
                 genic.value += 1;
 
-                sender
-                    .send(genic.value)
-                    .await
-                    .expect("Failed to do this thing.");
+                sender.send(genic.value).await.expect("Failed to do this thing.");
 
                 sleep(Duration::from_secs(1)).await;
             }
