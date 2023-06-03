@@ -8,7 +8,6 @@ extern crate core;
 
 pub mod animation;
 mod apply;
-pub mod array_view;
 pub mod bytes;
 pub mod data;
 pub mod data_manager;
