@@ -24,8 +24,7 @@ mod random;
 pub mod regex;
 pub mod run;
 mod selectable;
-mod static_default;
-mod static_init;
+
 pub mod stored;
 pub mod test;
 mod time;
