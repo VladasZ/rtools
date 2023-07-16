@@ -70,10 +70,7 @@ impl<T: Managed> Copy for Handle<T> {}
 
 impl<T: Managed> Clone for Handle<T> {
     fn clone(&self) -> Self {
-        Self {
-            hash:  self.hash,
-            _data: Default::default(),
-        }
+        *self
     }
 }
 
