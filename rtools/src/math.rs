@@ -47,6 +47,6 @@ impl const IntoF32 for f64 {
     }
 }
 
-pub const fn mm_to_inch<T: ~const IntoF32>(mm: T) -> f32 {
+pub fn mm_to_inch<T: IntoF32>(mm: T) -> f32 {
     mm.into_f32() * 0.0393701
 }
