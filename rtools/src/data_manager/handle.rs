@@ -27,6 +27,10 @@ impl<T: Managed> Handle<T> {
         T::get_ref_by_hash(self.hash).into()
     }
 
+    pub fn hash(&self) -> u64 {
+        self.hash
+    }
+
     pub fn free(&mut self) {
         T::remove_with_hash(self.hash);
         *self = Self::default();

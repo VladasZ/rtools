@@ -18,8 +18,8 @@ pub trait ResourceLoader: Sized {
 }
 
 pub trait DataManager<T: Managed> {
-    fn path() -> &'static Path;
-    fn set_path(path: &Path);
+    fn root_path() -> &'static Path;
+    fn set_root_path(path: &Path);
 
     fn storage() -> &'static mut DataStorage<T>;
 
@@ -70,7 +70,7 @@ pub trait DataManager<T: Managed> {
         let hash = hash(&name);
         Self::storage()
             .entry(hash)
-            .or_insert_with(|| Own::new(T::load_path(&Self::path().join(name))));
+            .or_insert_with(|| Own::new(T::load_path(&Self::root_path().join(name))));
         hash.into()
     }
 

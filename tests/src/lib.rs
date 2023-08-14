@@ -1,3 +1,5 @@
+mod managed;
+
 #[cfg(test)]
 mod test {
 

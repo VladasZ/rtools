@@ -1,6 +1,6 @@
 [package]
 name = "rtools"
-version = "0.3.2"
+version = "0.3.3"
 authors = ["Vladas Zakrevksis <146100@gmail.com>"]
 edition = "2021"
 description = "Set of tools for my needs"

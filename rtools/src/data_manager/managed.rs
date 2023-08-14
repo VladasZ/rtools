@@ -1,23 +1,27 @@
 #[macro_export]
 macro_rules! managed {
     ($type:ident) => {
-        static mut PATH: *const std::path::PathBuf = std::ptr::null_mut();
-        static mut STORAGE: *mut DataStorage<$type> = std::ptr::null_mut();
+        static _MANAGED_ROOT_PATH: std::sync::OnceLock<PathBuf> = std::sync::OnceLock::new();
+        static mut STORAGE: *mut rtools::data_manager::DataStorage<$type> = std::ptr::null_mut();
 
-        impl Managed for $type {}
+        impl rtools::data_manager::Managed for $type {}
 
-        impl DataManager<$type> for $type {
-            fn path() -> &'static std::path::Path {
-                unsafe { PATH.as_ref().unwrap() }
+        impl rtools::data_manager::DataManager<$type> for $type {
+            fn root_path() -> &'static std::path::Path {
+                _MANAGED_ROOT_PATH.get().expect(&format!(
+                    "Managed root path for type {} is not set.",
+                    stringify!($type)
+                ))
             }
 
-            fn set_path(path: &std::path::Path) {
-                unsafe {
-                    PATH = Box::into_raw(Box::new(path.to_path_buf()));
-                }
+            fn set_root_path(path: &std::path::Path) {
+                _MANAGED_ROOT_PATH.set(path.to_path_buf()).expect(&format!(
+                    "Managed root path for type {} was already set set.",
+                    stringify!($type)
+                ))
             }
 
-            fn storage() -> &'static mut DataStorage<$type> {
+            fn storage() -> &'static mut rtools::data_manager::DataStorage<$type> {
                 unsafe {
                     if STORAGE.is_null() {
                         STORAGE = Box::into_raw(Box::new(Default::default()));
