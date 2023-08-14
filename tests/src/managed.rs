@@ -1,7 +1,5 @@
 #![cfg(test)]
 
-use std::path::{Path, PathBuf};
-
 use rtools::{
     data_manager::{DataManager, ResourceLoader},
     managed,
@@ -12,7 +10,7 @@ struct Text {
 }
 
 impl ResourceLoader for Text {
-    fn load_path(path: &Path) -> Self {
+    fn load_path(path: &std::path::Path) -> Self {
         Self {
             text: path.to_string_lossy().to_string(),
         }
@@ -29,7 +27,7 @@ managed!(Text);
 
 #[test]
 fn managed() {
-    Text::set_root_path(&PathBuf::from("hello"));
+    Text::set_root_path(&std::path::PathBuf::from("hello"));
 
     let text1 = Text::get("Sokol");
     let text2 = Text::get("Sokol");

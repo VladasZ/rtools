@@ -1,7 +1,7 @@
 #[macro_export]
 macro_rules! managed {
     ($type:ident) => {
-        static _MANAGED_ROOT_PATH: std::sync::OnceLock<PathBuf> = std::sync::OnceLock::new();
+        static _MANAGED_ROOT_PATH: std::sync::OnceLock<std::path::PathBuf> = std::sync::OnceLock::new();
         static mut STORAGE: *mut rtools::data_manager::DataStorage<$type> = std::ptr::null_mut();
 
         impl rtools::data_manager::Managed for $type {}
