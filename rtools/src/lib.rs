@@ -13,7 +13,6 @@ pub mod data;
 pub mod data_manager;
 pub mod debug;
 pub mod file;
-mod file_log;
 mod logger;
 pub mod math;
 mod misc;
@@ -23,27 +22,20 @@ pub mod platform;
 mod random;
 pub mod regex;
 pub mod run;
-mod selectable;
 
 pub mod stored;
 pub mod test;
 mod time;
-mod unwrap;
-pub mod vec;
 
 pub use animation::Animation;
 pub use apply::*;
 pub use debug::*;
-pub use file_log::FileLog;
 pub use logger::*;
 pub use math::{mm_to_inch, IntoF32};
 pub use misc::*;
 pub use random::*;
-pub use selectable::Selectable;
 pub use stored::Stored;
 pub use time::Time;
-pub use unwrap::Unwrap;
-pub use vec::*;
 
 pub trait Remove<T> {
     fn remove(&mut self, val: &T);

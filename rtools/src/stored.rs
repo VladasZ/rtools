@@ -90,6 +90,7 @@ impl<T: Wrappable + Debug> Debug for Stored<T> {
 
 #[cfg(test)]
 mod test {
+    use anyhow::Result;
     use tokio::spawn;
 
     use crate::{random::Random, Stored};
@@ -100,7 +101,7 @@ mod test {
     fn check_sync<T: Sync>(_sync: &T) {}
 
     #[tokio::test]
-    async fn stored() {
+    async fn stored() -> Result<()> {
         check_send(&STORED);
         check_sync(&STORED);
 
@@ -113,14 +114,14 @@ mod test {
             spawn(async move {
                 STORED.set(rand);
             })
-            .await
-            .unwrap();
+            .await?;
 
             spawn(async move {
                 assert_eq!(STORED.get(), rand);
             })
-            .await
-            .unwrap();
+            .await?;
         }
+
+        Ok(())
     }
 }

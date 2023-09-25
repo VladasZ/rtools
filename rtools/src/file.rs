@@ -5,6 +5,8 @@ use std::{
     path::{Path, PathBuf},
 };
 
+use anyhow::Result;
+
 cfg_if::cfg_if! { if #[cfg(android)] {
     use android_ndk_sys::AAsset_getLength;
     use android_ndk_sys::AASSET_MODE_STREAMING;
@@ -21,16 +23,17 @@ impl File {
         Path::new(path.as_ref()).exists()
     }
 
-    pub fn mkdir(path: impl AsRef<Path>) {
+    pub fn mkdir(path: impl AsRef<Path>) -> Result<()> {
         if File::exists(&path) {
-            return;
+            return Ok(());
         }
-        fs::create_dir(path.as_ref())
-            .unwrap_or_else(|_| panic!("Failed to mkdir: {}", path.as_ref().display()))
+        fs::create_dir(path.as_ref())?;
+        Ok(())
     }
 
-    pub fn get_files(path: impl AsRef<Path>) -> Vec<PathBuf> {
-        fs::read_dir(path).unwrap().map(|a| a.unwrap().path()).collect()
+    pub fn get_files(path: impl AsRef<Path>) -> Result<Vec<PathBuf>> {
+        let files: Vec<_> = fs::read_dir(path)?.map(|a| Ok(a?.path())).collect::<Result<_>>()?;
+        Ok(files)
     }
 
     pub fn ls() -> Vec<String> {
