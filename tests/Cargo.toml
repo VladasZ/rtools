@@ -9,4 +9,5 @@ homepage = "https://github.com/VladasZ/rtools"
 repository = "https://github.com/VladasZ/rtools"
 
 [dependencies]
+log = "0.4"
 rtools = { path = "../rtools" }
