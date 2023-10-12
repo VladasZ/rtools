@@ -1,6 +1,6 @@
 [package]
 name = "rtools"
-version = "0.4.0"
+version = "0.4.1"
 authors = ["Vladas Zakrevksis <146100@gmail.com>"]
 edition = "2021"
 description = "Set of tools for my needs"
@@ -12,7 +12,7 @@ repository = "https://github.com/VladasZ/rtools"
 log = "0.4"
 rand = "0.8"
 dirs = "5.0"
-refs = "0.3.1"
+refs = "0.4.0"
 regex = "1.6"
 cfg-if = "1.0"
 anyhow = "1.0.75"
