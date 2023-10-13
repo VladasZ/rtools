@@ -29,10 +29,13 @@ pub trait DataManager<T: Managed> {
 
     fn add_with_hash(hash: u64, resource: T) -> Handle<T> {
         let storage = Self::storage();
-        debug_assert!(
-            !storage.contains_key(&hash),
-            "Object with such hash already exists"
-        );
+        if storage.contains_key(&hash) {
+            warn!(
+                "Object of type '{}' with hash: '{}' already exists",
+                std::any::type_name::<T>().to_string(),
+                hash
+            );
+        }
         storage.insert(hash, Own::new(resource));
         hash.into()
     }
