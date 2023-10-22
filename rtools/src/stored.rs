@@ -7,7 +7,7 @@ use std::{
 
 use serde::{de::DeserializeOwned, Serialize};
 
-use crate::platform::Platform;
+use crate::{file::File, platform::Platform};
 
 pub trait Wrappable: Serialize + DeserializeOwned + Send + Default {}
 impl<T: Serialize + DeserializeOwned + Send + Default> Wrappable for T {}
@@ -34,18 +34,16 @@ fn storage_dir() -> PathBuf {
 fn set_value<T: Serialize>(value: T, key: &str) {
     let json = serde_json::to_string(&value).expect("Failed to serialize data");
     let dir = storage_dir();
-    if !dir.exists() {
-        fs::create_dir(&dir).expect("Failed to create dir")
-    }
+    File::mkdir(&dir).unwrap();
     fs::write(dir.join(key), json).expect("Failed to write to file");
 }
 
 fn get_value<T: Wrappable>(key: &str) -> T {
     let dir = storage_dir();
     let path = dir.join(key);
-    if !dir.exists() {
-        fs::create_dir(dir).expect("Failed to create dir");
-    }
+
+    File::mkdir(&dir).unwrap();
+
     if !path.exists() {
         let new = T::default();
         set_value(&new, key);
@@ -93,7 +91,7 @@ mod test {
     use anyhow::Result;
     use tokio::spawn;
 
-    use crate::{random::Random, Stored};
+    use crate::{random::Random, stored::executable_name, Stored};
 
     static STORED: Stored<i32> = Stored::new("stored_test");
 
@@ -123,5 +121,10 @@ mod test {
         }
 
         Ok(())
+    }
+
+    #[test]
+    fn paths() {
+        assert!(executable_name().starts_with("rtools"));
     }
 }

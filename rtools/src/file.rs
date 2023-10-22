@@ -107,3 +107,29 @@ pub unsafe fn android_read(path: impl AsRef<Path>) -> Vec<u8> {
     AAsset_close(asset);
     data
 }
+
+#[cfg(test)]
+mod test {
+    use std::path::{Path, MAIN_SEPARATOR};
+
+    use crate::file::File;
+
+    #[test]
+    fn test() {
+        assert_eq!(File::ls(), ["build.rs", "Cargo.toml", "src"]);
+
+        let prepend = format!(".{MAIN_SEPARATOR}");
+
+        assert_eq!(
+            File::get_files(".").unwrap(),
+            [
+                Path::new(&format!("{prepend}build.rs")),
+                Path::new(&format!("{prepend}Cargo.toml")),
+                Path::new(&format!("{prepend}src"))
+            ]
+        );
+
+        assert!(File::exists("Cargo.toml"));
+        assert_eq!(File::exists("fksdjflkdsj"), false);
+    }
+}

@@ -4,3 +4,4 @@
 temp/
 extern/
 generated/
+mutants.out*
