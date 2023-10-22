@@ -30,6 +30,9 @@ impl Animation {
 
     pub fn value(&self) -> f32 {
         debug_assert!(self.span != 0.0);
+        if self.finished() {
+            return (self.start + self.span) / SEC;
+        }
         let now = Utc::now().timestamp_millis();
         let delta = (now - self.stamp) as f32;
         let passed = (delta / self.duration) as u64;
@@ -43,5 +46,33 @@ impl Animation {
             self.span - self.span * ratio
         };
         (self.start + span) / SEC
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use crate::{sleep, Animation};
+
+    #[test]
+    fn test() {
+        let anim = Animation::new(0, 1, 0.5);
+
+        assert_eq!(anim.finished(), false);
+        assert_eq!(anim.value(), 0.0);
+
+        sleep(0.25);
+
+        assert_eq!(anim.finished(), false);
+        assert!(anim.value() >= 0.5 && anim.value() <= 0.51);
+
+        sleep(0.10);
+
+        assert_eq!(anim.finished(), false);
+        assert!(anim.value() >= 0.71 && anim.value() <= 0.72);
+
+        sleep(0.15);
+
+        assert_eq!(anim.finished(), true);
+        assert_eq!(anim.value(), 1.0);
     }
 }

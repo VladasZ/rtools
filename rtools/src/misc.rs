@@ -22,7 +22,7 @@ pub fn hash(obj: impl ToString + Hash) -> u64 {
 }
 
 pub fn sleep(duration: impl IntoF32) {
-    thread::sleep(Duration::from_nanos((duration.into_f32() * 1000000000.0) as _));
+    thread::sleep(Duration::from_micros((duration.into_f32() * 1_000_000.0) as _));
 }
 
 pub trait Toggle {
@@ -60,8 +60,8 @@ mod test {
         assert_eq!(5949921715258702887, hash(87));
     }
 
-    #[tokio::test]
-    async fn test_sleep() {
+    #[test]
+    fn test_sleep() {
         let mut pass = Passed::default();
 
         sleep(0.2);
