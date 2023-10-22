@@ -110,23 +110,35 @@ pub unsafe fn android_read(path: impl AsRef<Path>) -> Vec<u8> {
 
 #[cfg(test)]
 mod test {
-    use std::path::{Path, MAIN_SEPARATOR};
+    use std::{
+        collections::HashSet,
+        path::{PathBuf, MAIN_SEPARATOR},
+        str::FromStr,
+    };
 
     use crate::file::File;
 
     #[test]
     fn test() {
-        assert_eq!(File::ls(), ["build.rs", "Cargo.toml", "src"]);
+        assert_eq!(
+            File::ls().into_iter().collect::<HashSet<_>>(),
+            ["build.rs", "Cargo.toml", "src"]
+                .into_iter()
+                .map(ToString::to_string)
+                .collect::<HashSet<_>>()
+        );
 
         let prepend = format!(".{MAIN_SEPARATOR}");
 
         assert_eq!(
-            File::get_files(".").unwrap(),
+            File::get_files(".").unwrap().into_iter().collect::<HashSet<_>>(),
             [
-                Path::new(&format!("{prepend}build.rs")),
-                Path::new(&format!("{prepend}Cargo.toml")),
-                Path::new(&format!("{prepend}src"))
+                PathBuf::from_str(&format!("{prepend}build.rs")).unwrap(),
+                PathBuf::from_str(&format!("{prepend}Cargo.toml")).unwrap(),
+                PathBuf::from_str(&format!("{prepend}src")).unwrap()
             ]
+            .into_iter()
+            .collect::<HashSet<_>>(),
         );
 
         assert!(File::exists("Cargo.toml"));
