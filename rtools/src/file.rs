@@ -20,7 +20,7 @@ pub struct File {}
 
 impl File {
     pub fn exists(path: impl AsRef<Path>) -> bool {
-        Path::new(path.as_ref()).exists()
+        path.as_ref().exists()
     }
 
     pub fn mkdir(path: impl AsRef<Path>) -> Result<()> {
@@ -28,6 +28,15 @@ impl File {
             return Ok(());
         }
         fs::create_dir(path.as_ref())?;
+        Ok(())
+    }
+
+    pub fn rm(path: impl AsRef<Path>) -> Result<()> {
+        let path = path.as_ref();
+        if !File::exists(path) {
+            return Ok(());
+        }
+        fs::remove_dir_all(path)?;
         Ok(())
     }
 
@@ -48,6 +57,7 @@ impl File {
 static mut ASSET_MANAGER: *mut android_ndk_sys::AAssetManager = std::ptr::null_mut();
 
 #[cfg(android)]
+#[mutants::skip]
 pub fn set_asset_manager(env: android_ndk_sys::JNIEnv, asset_manager: android_ndk_sys::jobject) {
     unsafe { ASSET_MANAGER = AAssetManager_fromJava(env as _, asset_manager) }
 }
@@ -116,7 +126,17 @@ mod test {
         str::FromStr,
     };
 
-    use crate::file::File;
+    use anyhow::Result;
+
+    use crate::{file::File, random::Random};
+
+    #[test]
+    fn read() {
+        let string = File::read_to_string("Cargo.toml");
+        let data = File::read("Cargo.toml");
+
+        assert_eq!(string, String::from_utf8(data).unwrap());
+    }
 
     #[test]
     fn test() {
@@ -143,5 +163,18 @@ mod test {
 
         assert!(File::exists("Cargo.toml"));
         assert_eq!(File::exists("fksdjflkdsj"), false);
+    }
+
+    #[test]
+    fn mkdir_and_rm() -> Result<()> {
+        let name = format!("../{}", String::random());
+
+        assert_eq!(File::exists(&name), false);
+        File::mkdir(&name)?;
+        assert_eq!(File::exists(&name), true);
+        File::rm(&name)?;
+        assert_eq!(File::exists(&name), false);
+
+        Ok(())
     }
 }

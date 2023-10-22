@@ -40,14 +40,14 @@ impl<T: Managed> Handle<T> {
 impl<T: Managed> Deref for Handle<T> {
     type Target = T;
     fn deref(&self) -> &T {
-        debug_assert!(self.is_ok(), "Null Handle: {}", std::any::type_name::<T>());
+        assert!(self.is_ok(), "Null Handle: {}", std::any::type_name::<T>());
         T::get_ref_by_hash(self.hash)
     }
 }
 
 impl<T: Managed> DerefMut for Handle<T> {
     fn deref_mut(&mut self) -> &mut Self::Target {
-        debug_assert!(self.is_ok(), "Null Handle: {}", std::any::type_name::<T>());
+        assert!(self.is_ok(), "Null Handle: {}", std::any::type_name::<T>());
         T::get_ref_by_hash_mut(self.hash)
     }
 }

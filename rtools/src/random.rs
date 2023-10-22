@@ -144,7 +144,7 @@ impl Random for f64 {
     }
 }
 
-impl<T: Random> Random<T> for Vec<T> {
+impl<T: Random<T>> Random<Vec<T>> for Vec<T> {
     fn random() -> Self {
         (0..usize::random_in(5..10)).map(|_| T::random()).collect_vec()
     }
@@ -198,6 +198,7 @@ mod test {
 
     #[test]
     fn random_test() {
+        test_random_type::<bool>();
         test_random_type::<char>();
         test_random_type::<u8>();
         test_random_type::<u32>();
@@ -209,6 +210,8 @@ mod test {
         test_random_type::<f32>();
         test_random_type::<f64>();
         test_random_type::<char>();
+        test_random_type::<String>();
+        test_random_type::<Vec<u32>>();
     }
 
     #[test]

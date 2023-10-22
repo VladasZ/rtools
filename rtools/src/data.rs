@@ -91,4 +91,10 @@ mod test {
 
         assert_eq!(data, [10, 20, 30]);
     }
+
+    #[test]
+    #[should_panic]
+    fn wrong_size() {
+        _ = from_bytes::<u8>(&[1, 2, 3, 4])
+    }
 }

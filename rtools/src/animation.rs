@@ -16,9 +16,11 @@ impl Animation {
     pub fn new(start: impl IntoF32, end: impl IntoF32, duration: impl IntoF32) -> Self {
         let start = start.into_f32() * SEC;
         let end = end.into_f32() * SEC;
+        let span = end - start;
+        assert_ne!(span, 0.0);
         Self {
             start,
-            span: end - start,
+            span,
             duration: duration.into_f32() * SEC,
             stamp: Utc::now().timestamp_millis(),
         }
@@ -29,10 +31,6 @@ impl Animation {
     }
 
     pub fn value(&self) -> f32 {
-        debug_assert!(self.span != 0.0);
-        if self.finished() {
-            return (self.start + self.span) / SEC;
-        }
         let now = Utc::now().timestamp_millis();
         let delta = (now - self.stamp) as f32;
         let passed = (delta / self.duration) as u64;
@@ -63,7 +61,7 @@ mod test {
         sleep(0.25);
 
         assert_eq!(anim.finished(), false);
-        assert!(anim.value() >= 0.5 && anim.value() <= 0.51);
+        assert!(anim.value() >= 0.48 && anim.value() <= 0.52);
 
         sleep(0.10);
 
@@ -73,6 +71,11 @@ mod test {
         sleep(0.15);
 
         assert_eq!(anim.finished(), true);
-        assert_eq!(anim.value(), 1.0);
+        assert!(anim.value() >= 0.96 && anim.value() <= 1.04);
+
+        sleep(0.25);
+
+        assert_eq!(anim.finished(), true);
+        assert!(anim.value() >= 0.40 && anim.value() <= 0.60);
     }
 }

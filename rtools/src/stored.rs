@@ -91,7 +91,12 @@ mod test {
     use anyhow::Result;
     use tokio::spawn;
 
-    use crate::{random::Random, stored::executable_name, Stored};
+    use crate::{
+        file::File,
+        random::Random,
+        stored::{executable_name, storage_dir},
+        Stored,
+    };
 
     static STORED: Stored<i32> = Stored::new("stored_test");
 
@@ -100,9 +105,12 @@ mod test {
 
     #[tokio::test]
     async fn stored() -> Result<()> {
+        File::rm(storage_dir())?;
+
         check_send(&STORED);
         check_sync(&STORED);
 
+        STORED.set(10);
         STORED.reset();
         assert_eq!(STORED.get(), i32::default());
 
@@ -116,6 +124,7 @@ mod test {
 
             spawn(async move {
                 assert_eq!(STORED.get(), rand);
+                assert_eq!(format!("{rand}"), format!("{STORED:?}"));
             })
             .await?;
         }

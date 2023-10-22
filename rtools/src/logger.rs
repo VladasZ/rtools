@@ -20,6 +20,7 @@ pub struct LogBuilder {
 }
 
 #[cfg(not(android))]
+#[mutants::skip]
 pub fn init_log(builder: LogBuilder) {
     extern crate simplelog;
 
@@ -79,6 +80,7 @@ fn from_usize(u: usize) -> LevelFilter {
 }
 
 #[cfg(android)]
+#[mutants::skip]
 pub fn init_log(_builder: LogBuilder) {
     use android_logger::{Config, FilterBuilder};
     use log::Level;

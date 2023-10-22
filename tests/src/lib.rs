@@ -8,7 +8,6 @@ mod test {
     #[test]
     fn times() {
         let ten = &mut 0;
-
         let twenty = &mut 0;
 
         for _ in 0..1000 {

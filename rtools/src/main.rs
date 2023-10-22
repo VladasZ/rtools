@@ -18,6 +18,7 @@ lazy_static! {
     };
 }
 
+#[mutants::skip]
 fn main() {
     init_log(
         LogBuilder::builder()

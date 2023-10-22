@@ -5,15 +5,7 @@ use std::{
     time::Duration,
 };
 
-use backtrace::Backtrace;
-
 use crate::IntoF32;
-
-pub fn backtrace() {
-    let bt = Backtrace::new();
-    println!("{bt:?}");
-    error!("{bt:?}");
-}
 
 pub fn hash(obj: impl ToString + Hash) -> u64 {
     let mut hasher = DefaultHasher::new();

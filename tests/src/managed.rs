@@ -30,6 +30,7 @@ managed!(Text);
 #[test]
 fn managed() {
     Text::set_root_path(&std::path::PathBuf::from("hello"));
+    Text::set_root_path(&std::path::PathBuf::from("alalalla"));
 
     let text1 = Text::get("Sokol");
     let text2 = Text::get("Sokol");
