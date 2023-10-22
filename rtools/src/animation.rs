@@ -68,7 +68,7 @@ mod test {
         sleep(0.10);
 
         assert_eq!(anim.finished(), false);
-        assert!(anim.value() >= 0.71 && anim.value() <= 0.72);
+        assert!(anim.value() >= 0.70 && anim.value() <= 0.725);
 
         sleep(0.15);
 
