@@ -40,7 +40,7 @@ impl Toggle for bool {
 #[cfg(test)]
 mod test {
 
-    use crate::{random::Random, Toggle};
+    use crate::{hash, passed::Passed, random::Random, sleep, Toggle};
 
     #[test]
     fn toggle() {
@@ -51,5 +51,22 @@ mod test {
             assert_eq!(val.toggle(), prev);
             assert_eq!(val, !prev);
         }
+    }
+
+    #[test]
+    fn misc() {
+        assert_eq!(397663693774528972, hash(54325));
+        assert_eq!(13713634450856707654, hash(8657865));
+        assert_eq!(5949921715258702887, hash(87));
+    }
+
+    #[tokio::test]
+    async fn test_sleep() {
+        let mut pass = Passed::default();
+
+        sleep(0.2);
+        let passed = pass.passed();
+        assert!(passed >= 200);
+        assert!(passed < 220);
     }
 }

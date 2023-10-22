@@ -166,15 +166,70 @@ impl<T> RandomContainer<T> for Vec<T> {
 
 #[cfg(test)]
 mod test {
+    use std::ops::Range;
+
+    use itertools::Itertools;
+
     use crate::{random::RandomContainer, Random};
 
+    fn test_random_type<T: Random + PartialEq>() {
+        let data = (0..10).map(|_| T::random()).collect_vec();
+        let first = data.first().unwrap();
+
+        assert_eq!(data.iter().all(|a| *a == *first), false);
+    }
+
     #[test]
-    fn random_int() {
-        for _ in 0..100 {
-            let rang = 5..100;
-            let ran = u32::random_in(rang.clone());
-            assert!(rang.contains(&ran));
+    #[should_panic]
+    fn test_random_type_test() {
+        #[derive(PartialEq)]
+        struct NotRandom {
+            a: i32,
         }
+
+        impl Random for NotRandom {
+            fn random() -> Self {
+                NotRandom { a: 10 }
+            }
+        }
+
+        test_random_type::<NotRandom>()
+    }
+
+    #[test]
+    fn random_test() {
+        test_random_type::<char>();
+        test_random_type::<u8>();
+        test_random_type::<u32>();
+        test_random_type::<i32>();
+        test_random_type::<u64>();
+        test_random_type::<i64>();
+        test_random_type::<isize>();
+        test_random_type::<usize>();
+        test_random_type::<f32>();
+        test_random_type::<f64>();
+        test_random_type::<char>();
+    }
+
+    #[test]
+    fn random_in_test() {
+        fn test_type<T: Random + Clone + PartialOrd>(range: Range<T>) {
+            for _ in 0..1000 {
+                let ran = T::random_in(range.clone());
+                assert!(range.contains(&ran));
+            }
+        }
+
+        test_type::<char>('a'..'z');
+        test_type::<u8>(5..100);
+        test_type::<u32>(5..100);
+        test_type::<i32>(5..100);
+        test_type::<u64>(5..100);
+        test_type::<i64>(5..100);
+        test_type::<isize>(5..100);
+        test_type::<usize>(5..100);
+        test_type::<f32>(5.0..100.0);
+        test_type::<f64>(5.0..100.0);
     }
 
     #[test]

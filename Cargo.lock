@@ -496,9 +496,9 @@ dependencies = [
 
 [[package]]
 name = "refs"
-version = "0.6.5"
+version = "0.6.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e6ee7791bc2ca4db4e55e88ef6d0fdb9b8bd13aa9c65a5967ad0935b7828649e"
+checksum = "194d392cdcf115855e8c553e29276314339544f51378f941e4ae32ecce2f1deb"
 dependencies = [
  "log",
 ]

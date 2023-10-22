@@ -5,10 +5,6 @@ pub struct Passed {
 }
 
 impl Passed {
-    pub fn print(&mut self) {
-        info!("{}", &self.passed());
-    }
-
     pub fn passed(&mut self) -> i64 {
         let now = Utc::now().timestamp_millis();
         let passed = now - self.stamp;
