@@ -1,5 +1,7 @@
 #![cfg(test)]
 
+use std::path::MAIN_SEPARATOR;
+
 use rtools::{
     data_manager::{DataManager, ResourceLoader},
     managed,
@@ -32,8 +34,8 @@ fn managed() {
     let text1 = Text::get("Sokol");
     let text2 = Text::get("Sokol");
 
-    assert_eq!(text1.text, "hello/Sokol");
-    assert_eq!(text2.text, "hello/Sokol");
+    assert_eq!(text1.text, format!("hello{MAIN_SEPARATOR}Sokol"));
+    assert_eq!(text2.text, format!("hello{MAIN_SEPARATOR}Sokol"));
 
     assert_eq!(text1.hash(), text2.hash());
 }
