@@ -502,9 +502,9 @@ dependencies = [
 
 [[package]]
 name = "refs"
-version = "0.6.6"
+version = "0.6.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "194d392cdcf115855e8c553e29276314339544f51378f941e4ae32ecce2f1deb"
+checksum = "504989c2b7474e1b58c1eb4fd7f796ec1c8150881d0a1eca033284b9434e819f"
 dependencies = [
  "log",
 ]
@@ -540,7 +540,7 @@ checksum = "c08c74e62047bb2de4ff487b251e4a92e24f48745648451635cec7d591162d9f"
 
 [[package]]
 name = "rtools"
-version = "0.5.1"
+version = "0.5.2"
 dependencies = [
  "android-ndk-sys",
  "android_logger",
