@@ -2,10 +2,6 @@
 #![feature(const_trait_impl)]
 #![feature(const_fn_floating_point_arithmetic)]
 
-#[macro_use]
-extern crate log;
-extern crate core;
-
 pub mod animation;
 mod apply;
 pub mod data;

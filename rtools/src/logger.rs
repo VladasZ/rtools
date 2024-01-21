@@ -1,6 +1,6 @@
 #![allow(clippy::mismatched_target_os)]
 
-use log::LevelFilter;
+use log::{trace, LevelFilter};
 use typed_builder::TypedBuilder;
 
 #[derive(TypedBuilder)]

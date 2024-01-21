@@ -6,6 +6,7 @@ use std::{
 };
 
 use anyhow::Result;
+use log::error;
 
 cfg_if::cfg_if! { if #[cfg(android)] {
     use android_ndk_sys::AAsset_getLength;
