@@ -141,7 +141,10 @@ mod test {
     #[test]
     fn test() {
         assert_eq!(
-            File::ls().into_iter().collect::<HashSet<_>>(),
+            File::ls()
+                .into_iter()
+                .filter(|file| !file.contains("DS_Store"))
+                .collect::<HashSet<_>>(),
             ["build.rs", "Cargo.toml", "src"]
                 .into_iter()
                 .map(ToString::to_string)
@@ -151,7 +154,11 @@ mod test {
         let prepend = format!(".{MAIN_SEPARATOR}");
 
         assert_eq!(
-            File::get_files(".").unwrap().into_iter().collect::<HashSet<_>>(),
+            File::get_files(".")
+                .unwrap()
+                .into_iter()
+                .filter(|file| !file.to_string_lossy().contains("DS_Store"))
+                .collect::<HashSet<_>>(),
             [
                 PathBuf::from_str(&format!("{prepend}build.rs")).unwrap(),
                 PathBuf::from_str(&format!("{prepend}Cargo.toml")).unwrap(),

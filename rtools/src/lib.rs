@@ -9,7 +9,6 @@ extern crate core;
 pub mod animation;
 mod apply;
 pub mod data;
-pub mod data_manager;
 pub mod debug;
 pub mod file;
 mod logger;

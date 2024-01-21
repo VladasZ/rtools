@@ -1,13 +1,12 @@
 [package]
-name = "tests"
-version = "0.1.0"
 authors = ["Vladas Zakrevksis <146100@gmail.com>"]
-edition = "2021"
 description = "Tests for rtools"
-license = "MIT OR Apache-2.0"
+edition = "2021"
 homepage = "https://github.com/VladasZ/rtools"
+license = "MIT OR Apache-2.0"
+name = "tests"
 repository = "https://github.com/VladasZ/rtools"
+version = "0.1.0"
 
 [dependencies]
-log = "0.4"
 rtools = { path = "../rtools" }

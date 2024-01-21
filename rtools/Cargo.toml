@@ -1,37 +1,35 @@
 [package]
-name = "rtools"
-version = "0.5.3"
 authors = ["Vladas Zakrevksis <146100@gmail.com>"]
-edition = "2021"
 description = "Set of tools for my needs"
-license = "MIT OR Apache-2.0"
+edition = "2021"
 homepage = "https://github.com/VladasZ/rtools"
+license = "MIT OR Apache-2.0"
+name = "rtools"
 repository = "https://github.com/VladasZ/rtools"
+version = "0.6.0"
 
 [dependencies]
-log = "0.4"
-rand = "0.8"
-dirs = "5.0"
-refs = "0.6.8"
-regex = "1.10"
-cfg-if = "1.0"
 anyhow = "1.0.75"
-mutants = "0.0.3"
+cfg-if = "1.0"
 chrono = "0.4"
-itertools = "0.11.0"
-backtrace = "0.3"
-serde_json = "1.0"
+dirs = "5.0"
+itertools = "0.12.0"
 lazy_static = "1.4.0"
+log = "0.4"
+mutants = "0.0.3"
+rand = "0.8"
+regex = "1.10"
+serde_json = "1.0"
 typed-builder = "0.18.0"
 
+serde = { version = "1.0", features = ["derive"] }
 simplelog = { version = "0.12", features = ["paris"] }
 tokio = { version = "1.33.0", features = ["full"] }
-serde = { version = "1.0", features = ["derive"] }
 
 
 [target.'cfg(target_os="android")'.dependencies]
-android_logger = "0.13"
 android-ndk-sys = "0.2"
+android_logger = "0.13"
 
 [build-dependencies]
-cfg_aliases = "0.1"
+cfg_aliases = "0.2.0"
