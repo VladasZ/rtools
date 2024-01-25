@@ -19,7 +19,6 @@ pub mod stored;
 pub use animation::Animation;
 pub use apply::*;
 pub use debug::*;
-pub use logger::*;
 pub use math::{mm_to_inch, IntoF32};
 pub use misc::*;
 pub use random::*;
