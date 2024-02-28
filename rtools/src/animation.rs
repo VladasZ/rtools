@@ -1,7 +1,5 @@
 use chrono::Utc;
 
-use crate::IntoF32;
-
 const SEC: f32 = 1_000.0;
 
 #[derive(Default, Debug)]
@@ -13,15 +11,15 @@ pub struct Animation {
 }
 
 impl Animation {
-    pub fn new(start: impl IntoF32, end: impl IntoF32, duration: impl IntoF32) -> Self {
-        let start = start.into_f32() * SEC;
-        let end = end.into_f32() * SEC;
+    pub fn new(start: impl Into<f32>, end: impl Into<f32>, duration: impl Into<f32>) -> Self {
+        let start = start.into() * SEC;
+        let end = end.into() * SEC;
         let span = end - start;
         assert_ne!(span, 0.0);
         Self {
             start,
             span,
-            duration: duration.into_f32() * SEC,
+            duration: duration.into() * SEC,
             stamp: Utc::now().timestamp_millis(),
         }
     }
@@ -53,7 +51,7 @@ mod test {
 
     #[test]
     fn test() {
-        let anim = Animation::new(0, 1, 0.5);
+        let anim = Animation::new(0.0, 1.0, 0.5);
 
         assert_eq!(anim.finished(), false);
         assert_eq!(anim.value(), 0.0);

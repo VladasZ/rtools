@@ -5,16 +5,14 @@ use std::{
     time::Duration,
 };
 
-use crate::IntoF32;
-
 pub fn hash(obj: impl ToString + Hash) -> u64 {
     let mut hasher = DefaultHasher::new();
     obj.hash(&mut hasher);
     hasher.finish()
 }
 
-pub fn sleep(duration: impl IntoF32) {
-    thread::sleep(Duration::from_micros((duration.into_f32() * 1_000_000.0) as _));
+pub fn sleep(duration: impl Into<f32>) {
+    thread::sleep(Duration::from_micros((duration.into() * 1_000_000.0) as _));
 }
 
 pub trait Toggle {
