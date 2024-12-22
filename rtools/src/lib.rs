@@ -5,6 +5,8 @@ pub mod animation;
 mod apply;
 pub mod data;
 pub mod debug;
+pub mod elapsed;
+pub mod every;
 pub mod file;
 mod logger;
 mod misc;
