@@ -68,7 +68,7 @@ impl<T: Wrappable> Stored<T> {
 
     pub fn set(&self, val: impl Into<T>) {
         let val = val.into();
-        set_value(val, self.name)
+        set_value(val, self.name);
     }
 
     pub fn get(&self) -> T {
@@ -76,7 +76,7 @@ impl<T: Wrappable> Stored<T> {
     }
 
     pub fn reset(&self) {
-        self.set(T::default())
+        self.set(T::default());
     }
 }
 

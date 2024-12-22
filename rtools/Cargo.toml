@@ -13,14 +13,13 @@ anyhow = "1.0"
 cfg-if = "1.0"
 chrono = "0.4"
 dirs = "5.0"
-itertools = "0.12"
+itertools = "0.13"
 lazy_static = "1.4"
 log = "0.4"
 mutants = "0.0.3"
 rand = "0.8"
 regex = "1.10"
 serde_json = "1.0"
-typed-builder = "0.18.0"
 
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1.36", features = ["full"] }
@@ -28,7 +27,7 @@ tokio = { version = "1.36", features = ["full"] }
 
 [target.'cfg(target_os="android")'.dependencies]
 android-ndk-sys = "0.2"
-android_logger = "0.13"
+android_logger = "0.14"
 
 [build-dependencies]
 cfg_aliases = "0.2.0"

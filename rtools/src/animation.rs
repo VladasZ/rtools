@@ -15,7 +15,7 @@ impl Animation {
         let start = start.into() * SEC;
         let end = end.into() * SEC;
         let span = end - start;
-        assert_ne!(span, 0.0);
+        assert!(span != 0.0);
         Self {
             start,
             span,
@@ -24,10 +24,14 @@ impl Animation {
         }
     }
 
+    #[allow(clippy::cast_possible_truncation)]
     pub fn finished(&self) -> bool {
         Utc::now().timestamp_millis() >= self.stamp + self.duration as i64
     }
 
+    #[allow(clippy::cast_possible_truncation)]
+    #[allow(clippy::cast_sign_loss)]
+    #[allow(clippy::cast_precision_loss)]
     pub fn value(&self) -> f32 {
         let now = Utc::now().timestamp_millis();
         let delta = (now - self.stamp) as f32;

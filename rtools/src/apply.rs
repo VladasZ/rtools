@@ -5,8 +5,8 @@ pub trait Apply<T> {
 
 impl<T, I: IntoIterator<Item = T>> Apply<T> for I {
     fn apply(self, mut action: impl FnMut(T)) {
-        for item in self.into_iter() {
-            action(item)
+        for item in self {
+            action(item);
         }
     }
 

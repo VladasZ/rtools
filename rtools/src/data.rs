@@ -4,7 +4,7 @@ use std::{
 };
 
 pub fn to_data<Result: Copy, T>(value: T) -> Vec<Result> {
-    let ptr: *const Result = (&value) as *const T as *const Result;
+    let ptr: *const Result = std::ptr::from_ref::<T>(&value).cast::<Result>();
     let mut result = vec![];
 
     let size = size_of::<T>() / size_of::<Result>();
@@ -26,7 +26,7 @@ pub fn from_bytes<T>(bytes: &[u8]) -> T {
     }
 
     let mut val: T = unsafe { zeroed() };
-    let mut ptr = val.borrow_mut() as *mut T as *mut u8;
+    let mut ptr = std::ptr::from_mut::<T>(val.borrow_mut()).cast::<u8>();
 
     for byte in bytes {
         unsafe {

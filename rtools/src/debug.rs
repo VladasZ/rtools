@@ -6,12 +6,11 @@ pub fn _impl_times(label: impl ToString, counter: usize, mut closure: impl FnMut
     let label = label.to_string();
     let mut storage = STORAGE.lock().unwrap();
 
-    let stored_counter = match storage.get_mut(&label) {
-        Some(counter) => counter,
-        None => {
-            storage.insert(label.clone(), 0);
-            storage.get_mut(&label).unwrap()
-        }
+    let stored_counter = if let Some(counter) = storage.get_mut(&label) {
+        counter
+    } else {
+        storage.insert(label.clone(), 0);
+        storage.get_mut(&label).unwrap()
     };
 
     if *stored_counter >= counter {

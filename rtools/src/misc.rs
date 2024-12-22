@@ -12,7 +12,16 @@ pub fn hash(obj: impl ToString + Hash) -> u64 {
 }
 
 pub fn sleep(duration: impl Into<f32>) {
-    thread::sleep(Duration::from_micros((duration.into() * 1_000_000.0) as _));
+    let duration = duration.into();
+    assert!(duration >= 0.0);
+
+    if duration == 0.0 {
+        return;
+    }
+
+    #[allow(clippy::cast_possible_truncation)]
+    #[allow(clippy::cast_sign_loss)]
+    thread::sleep(Duration::from_micros((duration * 1_000_000.0) as _));
 }
 
 pub trait Toggle {

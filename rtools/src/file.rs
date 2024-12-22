@@ -1,4 +1,4 @@
-#![allow(clippy::mismatched_target_os)]
+#![allow(unexpected_cfgs)]
 
 use std::{
     fs,
