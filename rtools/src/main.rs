@@ -1,4 +1,3 @@
-#![feature(linkage)]
 #![allow(unexpected_cfgs)]
 
 use std::collections::HashMap;

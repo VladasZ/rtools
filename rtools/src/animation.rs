@@ -51,7 +51,7 @@ impl Animation {
 
 #[cfg(test)]
 mod test {
-    use crate::{sleep, Animation};
+    use crate::{Animation, sleep};
 
     #[test]
     fn test() {

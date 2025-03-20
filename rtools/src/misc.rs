@@ -39,11 +39,11 @@ impl Toggle for bool {
 #[cfg(test)]
 mod test {
 
-    use crate::{hash, passed::Passed, random::Random, sleep, Toggle};
+    use crate::{Toggle, hash, passed::Passed, sleep};
 
     #[test]
     fn toggle() {
-        let mut val = bool::random();
+        let mut val = true;
 
         for _ in 0..10 {
             let prev = val;

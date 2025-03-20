@@ -1,23 +1,21 @@
 [package]
 authors = ["Vladas Zakrevksis <146100@gmail.com>"]
 description = "Set of tools for my needs"
-edition = "2021"
+edition = "2024"
 homepage = "https://github.com/VladasZ/rtools"
 license = "MIT OR Apache-2.0"
 name = "rtools"
 repository = "https://github.com/VladasZ/rtools"
-version = "0.8.1"
+version = "0.9.0"
 
 [dependencies]
 anyhow = "1.0"
 cfg-if = "1.0"
 chrono = "0.4"
-dirs = "5.0"
-itertools = "0.13"
+dirs = "6.0"
 lazy_static = "1.4"
 log = "0.4"
 mutants = "0.0.3"
-rand = "0.8"
 regex = "1.10"
 serde_json = "1.0"
 web-time = "1.1"

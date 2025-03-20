@@ -5,7 +5,7 @@ use std::{
     path::PathBuf,
 };
 
-use serde::{de::DeserializeOwned, Serialize};
+use serde::{Serialize, de::DeserializeOwned};
 
 use crate::{file::File, platform::Platform};
 
@@ -92,10 +92,9 @@ mod test {
     use tokio::spawn;
 
     use crate::{
-        file::File,
-        random::Random,
-        stored::{executable_name, storage_dir},
         Stored,
+        file::File,
+        stored::{executable_name, storage_dir},
     };
 
     static STORED: Stored<i32> = Stored::new("stored_test");
@@ -115,7 +114,7 @@ mod test {
         assert_eq!(STORED.get(), i32::default());
 
         for _ in 0..10 {
-            let rand = i32::random();
+            let rand = 7;
 
             spawn(async move {
                 STORED.set(rand);

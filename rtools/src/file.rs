@@ -123,13 +123,13 @@ pub unsafe fn android_read(path: impl AsRef<Path>) -> Vec<u8> {
 mod test {
     use std::{
         collections::HashSet,
-        path::{PathBuf, MAIN_SEPARATOR},
+        path::{MAIN_SEPARATOR, PathBuf},
         str::FromStr,
     };
 
     use anyhow::Result;
 
-    use crate::{file::File, random::Random};
+    use crate::file::File;
 
     #[test]
     fn read() {
@@ -175,7 +175,7 @@ mod test {
 
     #[test]
     fn mkdir_and_rm() -> Result<()> {
-        let name = format!("../{}", String::random());
+        let name = format!("../{}", "sdasdasdsasad");
 
         assert_eq!(File::exists(&name), false);
         File::mkdir(&name)?;
